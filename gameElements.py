@@ -1,4 +1,5 @@
 import enum
+import copy
 
 
 class Tribe(enum.Enum):
@@ -88,23 +89,32 @@ class Stats:
 
 
 class Minion:
-    def __init__(self, tribe, effects, state, stats, position):
+    def __init__(self, tribe, effects, state, stats):
         self.tribe = tribe
         self.effects = effects
         self.state = state
         self.stats = stats
+        self.combat_stats = copy.deepcopy(stats)
         self.isDead = False
 
     def attack(self, target):
-        self.stats.update_stats_after_attack(target.stats)
-        target.stats.update_stats_after_attack(self.stats)
-        if self.stats.health <= 0:
+        self.stats.update_stats_after_attack(target.combat_stats)
+        target.stats.update_stats_after_attack(self.combat_stats)
+        if self.combat_stats.health <= 0:
             self.isDead = True
-        if target.stats.health <= 0:
+            self.check_effects(State.in_play, State.dead, self)
+        if target.combat_stats.health <= 0:
             target.isDead = True
+            target.check_effects(State.in_play, State.dead, self)
 
     def set_position(self, position):
         self.position = position
+
+    def check_effects(self, prev, current, source):
+        pass
+
+    def on_new_turn(self):
+        self.combat_stats = copy.deepcopy(self.stats)
 
 
 class Hero:
@@ -150,6 +160,7 @@ class Hero:
         minion = self.hand.pop(index)
         self.minions.append(minion)
         minion.state = State.in_play
+        minion.check_effects(State.in_hand, State.in_play, minion)
         return True
 
     def sell_minion(self, index):
@@ -157,6 +168,6 @@ class Hero:
         minion.state = State.in_storage
         self.current_gold = min(self.current_gold + 1, Hero.current_max_gold)
 
-    def update_at_new_turn(self):
+    def on_new_turn(self):
         self.current_max_gold = min(self.current_max_gold + 1, Hero.max_gold)
         self.current_gold = self.current_max_gold
