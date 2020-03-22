@@ -59,6 +59,17 @@ class StatBuffEffect(Effect):
             t.stats.update_health(self.health)
 
 
+class EffectManager:
+    def check_effect(self, prev, current, source):
+        pass
+
+    def activate_effects(self, source):
+        pass
+
+    def __init__(self, turn_manager):
+        self.turn_manager = turn_manager
+
+
 class SummonEffect(Effect):
     def __init__(self, minion, condition, triggered_when):
         super().__init__(condition, triggered_when)
@@ -109,9 +120,6 @@ class Minion:
 
     def set_position(self, position):
         self.position = position
-
-    def check_effects(self, prev, current, source):
-        pass
 
     def on_new_turn(self):
         self.combat_stats = copy.deepcopy(self.stats)
