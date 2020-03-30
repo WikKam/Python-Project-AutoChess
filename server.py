@@ -2,13 +2,13 @@ import socket
 from _thread import *
 import sys
 
-server = "IPv4 Address"  # local host
+server = "192.168.0.113"  # local host  cmd -> ipconfig -> IPv4 Address 192.168.0.113
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
-    s.bind((server, port)) # whatever ip to given port
+    s.bind((server, port))  # whatever ip to given port
 except socket.error as e:
     str(e)
 
