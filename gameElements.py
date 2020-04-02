@@ -131,8 +131,18 @@ class Minion:
     def set_state(self, state):
         self.state = state
 
-    def check_effects(self,prev,curr,target):
+    def check_effects(self, prev, curr, target):
         pass
+
+
+def find_first_free_index(lt):
+    ret = -1
+    for i, item in enumerate(lt):
+        if item is None:
+            ret = i
+            break
+    print(ret)
+    return ret
 
 
 class Hero:
@@ -150,8 +160,8 @@ class Hero:
         self.current_tier = 1
         self.current_hp = Hero.start_hp
         self.is_dead = False
-        self.minions = []
-        self.hand = []
+        self.minions = [None, None, None, None, None, None, None]
+        self.hand = [None, None, None, None, None]
         self.current_gold = 3
 
     def upgrade_tier(self):
@@ -165,26 +175,25 @@ class Hero:
             self.is_dead = True
 
     def buy_minion(self, minion):
-        if len(self.hand) == Hero.max_hand_no or self.current_gold < 3:
+        if self.current_gold < 3:
             return False
         else:
-            self.add_minion_in_hand(minion)
-            self.current_gold -= 3
-            minion.set_state(State.in_hand)
-            return True
+             if not self.add_minion_in_hand(minion): return False
+             else:
+                self.current_gold -= 3
+                minion.set_state(State.in_hand)
+                return True
 
     def play_minion(self, minion):
-        if len(self.minions) == Hero.max_minion_no:
-            return False
-        self.add_minion(minion)
-        self.hand.remove(minion)
+        self.hand[minion.position] = None
+        if not self.add_minion(minion): return False
         minion.set_state(State.in_play)
         minion.check_effects(State.in_hand, State.in_play, minion)
         return True
 
     def sell_minion(self, minion):
         if minion.get_state() != State.in_play: return False
-        self.minions.remove(minion)
+        self.minions[minion.position] = None
         minion.state = State.in_storage
         self.current_gold = min(self.current_gold + 1, Hero.current_max_gold)
         return True
@@ -200,23 +209,23 @@ class Hero:
         return self.hand
 
     def add_minion_in_hand(self, minion):
-        self.hand.append(minion)
-        minion.set_position(self.hand.__len__() - 1)
-
-    def add_minion(self, minion, index):
-        self.minions.insert(index, minion)
+        index = find_first_free_index(self.hand)
+        if index < 0: return False
         minion.set_position(index)
+        self.hand[index] = minion
+        return True
+
+    def add_minion(self, minion):
+        index = find_first_free_index(self.minions)
+        if index < 0: return False
+        minion.set_position(index)
+        self.minions[index] = minion
+        return True
+
 
     def get_current_tier(self):
         return self.current_tier
 
-    def find_first_free_index(self, lt):
-        ret = 0
-        for i, item in enumerate(lt):
-            if item:
-                ret = i
-                break
-        return ret-1
 
 class Player:
     def __init__(self, hero):

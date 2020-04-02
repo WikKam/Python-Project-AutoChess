@@ -69,16 +69,19 @@ class ShopVisualiser:
         offset = 50
         minion_btns = []
         for m in self.minions_in_shop:
-            mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 200)
-            minion_btns.append(mb)
+            if not (m is None):
+                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 200)
+                minion_btns.append(mb)
 
-        for m in self.player.get_hero().get_minions():
-            mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 350)
-            minion_btns.append(mb)
+        for m in self.player.hero.minions:
+            if not (m is None):
+                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 350)
+                minion_btns.append(mb)
 
-        for m in self.player.get_hero().get_hand():
-            mb = MinionButton(m, self.player, 2*m.position*50 + offset, 500)
-            minion_btns.append(mb)
+        for m in self.player.hero.hand:
+            if not (m is None):
+                mb = MinionButton(m, self.player, 2*m.position*50 + offset, 500)
+                minion_btns.append(mb)
         self.minion_btns = minion_btns
 
     def get_random_minions(self, tier):
