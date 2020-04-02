@@ -1,59 +1,53 @@
 import pygame
+from gameElements import Minion, Player, Hero
+from gameElements import Tribe
+from gameElements import State
+from gameElements import Stats
+from gui import MinionButton
+from gui import ShopVisualiser
+
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("AutoChess")
-
-playersNumber = 0;
-
-
-class Player():
-    def __init__(self, x, y, width, height, color): ## do usunięcia, chce wiedzieć czy dobrze łacze sie z serverem XD
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.color = color
-        self.rect = (x, y, width, height)
-        self.val = 3
-
-    def draw(self, win): # represent character on to stream
-        pygame.draw.rect(win, self.color, self.rect)
-
-    def move(self):
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_LEFT]:
-            self.x -= self.val
-
-        if keys[pygame.K_RIGHT]:
-            self.x += self.val
-
-        if keys[pygame.K_UP]:
-            self.y -= self.val
-
-        if keys[pygame.K_DOWN]:
-            self.y += self.val
-
-        self.rect = (self.x, self.y, self.width, self.height)
+playersNumber = 0
 
 
-def redraw_window(win, player):
+def redraw_window(win, shop):
     win.fill((255, 255, 255))
-    player.draw(win)
-    pygame.display.update()
+    shop.draw(win)
+    # player.draw(win)
 
 
-p = Player(50, 50, 100, 100, (0, 255, 0))
+hero = Hero("test", None)
+minion = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1))
+minion1 = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1))
+minion2 = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1))
+minion3 = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1))
+
+hminion1 = Minion("first", Tribe.orc, [], State.in_hand, Stats(4, 4, 1))
+hminion2 = Minion("first", Tribe.orc, [], State.in_hand, Stats(4, 4, 1))
+hminion3 = Minion("first", Tribe.orc, [], State.in_hand, Stats(4, 4, 1))
+
+p = Player(hero)
+p.get_hero().add_minion(minion)
+p.get_hero().add_minion(minion1)
+p.get_hero().add_minion(minion2)
+p.get_hero().add_minion(minion3)
+p.get_hero().add_minion_in_hand(hminion1)
+p.get_hero().add_minion_in_hand(hminion2)
+p.get_hero().add_minion_in_hand(hminion3)
 running = True
 clock = pygame.time.Clock()
-
+shop = ShopVisualiser(p)
+redraw_window(screen, shop)
 while running:
     clock.tick(60)
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             running = False
-
-    p.move()
-    redraw_window(screen, p)
-
-
+        if e.type == pygame.MOUSEBUTTONDOWN:
+            for btn in shop.get_buttons():
+                pos = pygame.mouse.get_pos()
+                if btn.onclick(pos, shop):
+                    redraw_window(screen, shop)
+    # redraw_window(screen, p)

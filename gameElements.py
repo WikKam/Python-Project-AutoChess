@@ -18,7 +18,7 @@ class State(enum.Enum):
     dead = 5
 
 
-class TriggerOn(enum):
+class TriggerOn(enum.Enum):
     on_enter_play = 1
     on_enter_hand = 2
     on_death = 3
@@ -100,13 +100,14 @@ class Stats:
 
 
 class Minion:
-    def __init__(self, tribe, effects, state, stats):
+    def __init__(self, name, tribe, effects, state, stats):
         self.tribe = tribe
         self.effects = effects
         self.state = state
         self.stats = stats
         self.combat_stats = copy.deepcopy(stats)
         self.isDead = False
+        self.name = name
 
     def attack(self, target):
         self.stats.update_stats_after_attack(target.combat_stats)
@@ -124,10 +125,19 @@ class Minion:
     def on_new_turn(self):
         self.combat_stats = copy.deepcopy(self.stats)
 
+    def get_state(self):
+        return self.state
+
+    def set_state(self, state):
+        self.state = state
+
+    def check_effects(self,prev,curr,target):
+        pass
+
 
 class Hero:
     max_minion_no = 7
-    max_hand_no = 10
+    max_hand_no = 6
     start_hp = 30
     max_tier = 6
     starting_tier = 1
@@ -158,24 +168,59 @@ class Hero:
         if len(self.hand) == Hero.max_hand_no or self.current_gold < 3:
             return False
         else:
-            self.hand.append(minion)
-            minion.state = State.in_hand
+            self.add_minion_in_hand(minion)
+            self.current_gold -= 3
+            minion.set_state(State.in_hand)
             return True
 
-    def play_minion(self, index):
+    def play_minion(self, minion):
         if len(self.minions) == Hero.max_minion_no:
             return False
-        minion = self.hand.pop(index)
-        self.minions.append(minion)
-        minion.state = State.in_play
+        self.add_minion(minion)
+        self.hand.remove(minion)
+        minion.set_state(State.in_play)
         minion.check_effects(State.in_hand, State.in_play, minion)
         return True
 
-    def sell_minion(self, index):
-        minion = self.minions.pop(index)
+    def sell_minion(self, minion):
+        if minion.get_state() != State.in_play: return False
+        self.minions.remove(minion)
         minion.state = State.in_storage
         self.current_gold = min(self.current_gold + 1, Hero.current_max_gold)
+        return True
 
     def on_new_turn(self):
         self.current_max_gold = min(self.current_max_gold + 1, Hero.max_gold)
         self.current_gold = self.current_max_gold
+
+    def get_minions(self):
+        return self.minions
+
+    def get_hand(self):
+        return self.hand
+
+    def add_minion_in_hand(self, minion):
+        self.hand.append(minion)
+        minion.set_position(self.hand.__len__() - 1)
+
+    def add_minion(self, minion, index):
+        self.minions.insert(index, minion)
+        minion.set_position(index)
+
+    def get_current_tier(self):
+        return self.current_tier
+
+    def find_first_free_index(self, lt):
+        ret = 0
+        for i, item in enumerate(lt):
+            if item:
+                ret = i
+                break
+        return ret-1
+
+class Player:
+    def __init__(self, hero):
+        self.hero = Hero("test", None)
+
+    def get_hero(self):
+        return self.hero
