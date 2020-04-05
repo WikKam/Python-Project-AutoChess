@@ -222,7 +222,6 @@ class Hero:
         self.minions[index] = minion
         return True
 
-
     def get_current_tier(self):
         return self.current_tier
 
