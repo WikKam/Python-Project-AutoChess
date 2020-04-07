@@ -6,6 +6,7 @@ from gameElements import Stats
 from gui import MinionButton
 from gui import ShopVisualiser
 from network import Network
+import static_resources as sr
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -17,6 +18,7 @@ def redraw_window(win, shop): # need separate func for shop and combat
     win.fill((255, 255, 255))
     win.blit(board, (0, 0))
     shop.draw(win)
+    pygame.display.flip()
     # player.draw(win)
     #pygame.display.update()
 
@@ -38,14 +40,15 @@ def redraw_window(win, shop): # need separate func for shop and combat
 #p.get_hero().add_minion_in_hand(hminion1)
 #p.get_hero().add_minion_in_hand(hminion2)
 #p.get_hero().add_minion_in_hand(hminion3)
-
 running = True
 n = Network()
 p = n.getP() # actual player
 print(p)
 clock = pygame.time.Clock()
 shop = ShopVisualiser(p)
+shop_timer = 40
 redraw_window(screen, shop)
+
 
 while running:
     clock.tick(60)
@@ -57,4 +60,6 @@ while running:
                 pos = pygame.mouse.get_pos()
                 if btn.onclick(pos, shop):
                     redraw_window(screen, shop)
+
+    #sr.timer_display(shop_timer, 400, 500, screen)
     # redraw_window(screen, p)

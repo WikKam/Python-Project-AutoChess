@@ -100,7 +100,7 @@ class Stats:
 
 
 class Minion:
-    def __init__(self, name, tribe, effects, state, stats):
+    def __init__(self, name, tribe, effects, state, stats, icon_path):
         self.tribe = tribe
         self.effects = effects
         self.state = state
@@ -108,6 +108,7 @@ class Minion:
         self.combat_stats = copy.deepcopy(stats)
         self.isDead = False
         self.name = name
+        self.icon_path = icon_path
 
     def attack(self, target):
         self.stats.update_stats_after_attack(target.combat_stats)
@@ -209,6 +210,7 @@ class Hero:
         return self.hand
 
     def add_minion_in_hand(self, minion):
+        minion.state = State.in_hand
         index = find_first_free_index(self.hand)
         if index < 0: return False
         minion.set_position(index)
@@ -216,6 +218,7 @@ class Hero:
         return True
 
     def add_minion(self, minion):
+        minion.set_state = State.in_play
         index = find_first_free_index(self.minions)
         if index < 0: return False
         minion.set_position(index)

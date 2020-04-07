@@ -4,6 +4,7 @@ from gameElements import Minion, Player, Hero
 from gameElements import Tribe
 from gameElements import State
 from gameElements import Stats
+import static_resources as sr
 import pickle
 
 server = "192.168.0.113"  # local host  cmd -> ipconfig -> IPv4 Address 192.168.0.113
@@ -16,14 +17,14 @@ try:
 except socket.error as e:
     str(e)
 
+
 s.listen(2)  # then we can have multiply client connected, 2 people max connected so far
 print("Waiting for connection, Server started")
-minion = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1))
+minion = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1), "minions_icons/Axe.png")
 
 players = [Player(Hero("test", None)), Player(Hero("test2", None))]
-hminion1 = Minion("first", Tribe.orc, [], State.in_hand, Stats(4, 4, 1))
-players[0].get_hero().add_minion(minion)
-players[0].get_hero().add_minion_in_hand(hminion1)
+players[0].get_hero().add_minion(sr.minions[0])
+players[0].get_hero().add_minion_in_hand(sr.minions[1])
 
 
 def threaded_client(conn, current_player):

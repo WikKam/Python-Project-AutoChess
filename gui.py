@@ -15,12 +15,18 @@ class MinionButton:
         self.y = y
         self.width = 50
         self.height = 50
+        self.icon = self.create_icon()
 
     def draw(self, win):
-        pygame.draw.rect(win, (0, 200, 0), (self.x, self.y, self.width, self.height))
+        # pygame.draw.rect(win, (0, 200, 0), (self.x, self.y, self.width, self.height))
+        win.blit(self.icon, (self.x, self.y))
 
     def get_minion(self):
         return self.minion
+
+    def create_icon(self):
+        result = pygame.image.load(self.minion.icon_path)
+        return pygame.transform.scale(result, (50, 50))
 
     def onclick(self, pos, shop):
         x1 = pos[0]
@@ -87,7 +93,7 @@ class ShopVisualiser:
     def get_random_minions(self, tier):
         index = 0
         while index < 7:
-            minion = Minion("test", Tribe.orc, [], State.in_shop, Stats(4, 4, tier))
+            minion = Minion("test", Tribe.orc, [], State.in_shop, Stats(4, 4, tier), "minions_icons/Axe.png")
             minion.set_position(index)
             self.minions_in_shop.append(minion)
             index += 1
