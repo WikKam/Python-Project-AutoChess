@@ -230,8 +230,13 @@ class Hero:
 
 
 class Player:
-    def __init__(self, hero):
-        self.hero = Hero("test", None)
+    def __init__(self, hero, id):
+        self.hero = hero
+        self.id = id
+        self.ready = False
 
     def get_hero(self):
         return self.hero
+
+    def recruit_hero(self):
+        self.hero = Hero("test", None)

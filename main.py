@@ -1,3 +1,5 @@
+from time import sleep
+
 import pygame
 from gameElements import Minion, Player, Hero
 from gameElements import Tribe
@@ -11,19 +13,17 @@ import static_resources as sr
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("AutoChess")
-board = pygame.image.load("tmp_board.jpg")
 
 
 def redraw_window(win, shop): # need separate func for shop and combat
     win.fill((255, 255, 255))
-    win.blit(board, (0, 0))
+    win.blit(sr.board, (0, 0))
     shop.draw(win)
     pygame.display.flip()
     # player.draw(win)
     #pygame.display.update()
 
 
-# hero = Hero("test", None)
 # minion = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1))
 # minion1 = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1))
 # minion2 = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1))
@@ -40,26 +40,71 @@ def redraw_window(win, shop): # need separate func for shop and combat
 #p.get_hero().add_minion_in_hand(hminion1)
 #p.get_hero().add_minion_in_hand(hminion2)
 #p.get_hero().add_minion_in_hand(hminion3)
-running = True
+
 n = Network()
-p = n.getP() # actual player
-print(p)
 clock = pygame.time.Clock()
-shop = ShopVisualiser(p)
-shop_timer = 40
-redraw_window(screen, shop)
 
 
-while running:
-    clock.tick(60)
-    for e in pygame.event.get():
-        if e.type == pygame.QUIT:
+def shop(current_player):
+    shop = ShopVisualiser(current_player)
+    shop_timer = 40
+    redraw_window(screen, shop)
+    running = True
+    while running:
+        palyer2 = n.send(current_player)
+        clock.tick(60)
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                running = False
+            if e.type == pygame.MOUSEBUTTONDOWN:
+                for btn in shop.get_buttons():
+                    pos = pygame.mouse.get_pos()
+                    if btn.onclick(pos, shop):
+                        redraw_window(screen, shop)
+        n.send(current_player)
+        #sr.timer_display(shop_timer, 400, 500, screen)
+        # redraw_window(screen, p)
+
+
+def combat():
+    pass
+
+
+def recruitment(current_player):
+    screen.fill((255, 255, 255))
+    screen.blit(sr.board, (0, 0))
+    pygame.display.flip()
+    screen.blit(sr.recruitment_background, (0, 0))
+    pygame.display.flip()
+    running = True
+    while running:
+        clock.tick(60)
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                running = False
+        #click event to pick hero and redirect to shop
+        current_player.recruit_hero()
+        n.send(current_player)
+        running = False
+        shop(current_player)
+
+def waiting():
+    current_player = n.getP()  # actual player
+    current_player.get_hero().add_minion(Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1), "minions_icons/Axe.png"))
+    screen.fill((255, 255, 255))
+    screen.blit(sr.waiting_background, (0, 0))
+    pygame.display.flip()
+    running = True
+    while running:
+        clock.tick(60)
+        player2 = n.send(current_player)
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                running = False
+        if player2.ready:
             running = False
-        if e.type == pygame.MOUSEBUTTONDOWN:
-            for btn in shop.get_buttons():
-                pos = pygame.mouse.get_pos()
-                if btn.onclick(pos, shop):
-                    redraw_window(screen, shop)
+            recruitment(current_player)
 
-    #sr.timer_display(shop_timer, 400, 500, screen)
-    # redraw_window(screen, p)
+
+# waiting()
+recruitment(n.getP())

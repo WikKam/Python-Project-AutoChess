@@ -51,3 +51,6 @@ digits = {
 }
 
 
+board = create_image_with_size("tmp_board.jpg", 800, 600)
+waiting_background = create_image_with_size("waiting_background.png", 800, 600)
+recruitment_background = create_image_with_size("recruitment_backgound.png", 800, 600)

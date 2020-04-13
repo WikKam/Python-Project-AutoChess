@@ -15,20 +15,17 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
     s.bind((server, port))  # whatever ip to given port
 except socket.error as e:
-    str(e)
-
+     str(e)
 
 s.listen(2)  # then we can have multiply client connected, 2 people max connected so far
 print("Waiting for connection, Server started")
-minion = Minion("first", Tribe.orc, [], State.in_play, Stats(4, 4, 1), "minions_icons/Axe.png")
-
-players = [Player(Hero("test", None)), Player(Hero("test2", None))]
-players[0].get_hero().add_minion(sr.minions[0])
-players[0].get_hero().add_minion_in_hand(sr.minions[1])
+players = [Player(None , 0), Player(None, 1)]
 
 
 def threaded_client(conn, current_player):
+    players[current_player].ready = True
     conn.send(pickle.dumps(players[current_player])) # send to player
+    print(current_player)
     reply = ""
     while True:
         try:
@@ -46,11 +43,9 @@ def threaded_client(conn, current_player):
 
                 print("Received: ", data, " ", current_player)
                 print("Sending : ", reply)
-            print(current_player)
             conn.sendall(pickle.dumps(reply))
         except:
             break
-
     print("Lost connection")
     conn.close()
 
@@ -59,6 +54,5 @@ current_player = 0
 while True:
     conn, address = s.accept() # what's connected and ip adress
     print("Connected to: ", address)
-
     start_new_thread(threaded_client, (conn, current_player))
     current_player += 1
