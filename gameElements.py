@@ -164,6 +164,7 @@ class Hero:
         self.minions = [None, None, None, None, None, None, None]
         self.hand = [None, None, None, None, None]
         self.current_gold = 3
+        #self.upgrade_cost = 6
 
     def upgrade_tier(self):
         if self.current_tier < Hero.max_tier: self.current_tier += 1
@@ -218,7 +219,6 @@ class Hero:
         return True
 
     def add_minion(self, minion):
-        minion.set_state = State.in_play
         index = find_first_free_index(self.minions)
         if index < 0: return False
         minion.set_position(index)

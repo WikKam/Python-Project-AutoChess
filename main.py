@@ -57,8 +57,11 @@ def shop(current_player):
             if e.type == pygame.QUIT:
                 running = False
             if e.type == pygame.MOUSEBUTTONDOWN:
-                for btn in shop.get_buttons():
-                    pos = pygame.mouse.get_pos()
+                pos = pygame.mouse.get_pos()
+                if shop.upgradeButton.onclick(pos,shop):
+                    redraw_window(screen,shop)
+                for btn in shop.minion_btns:
+                    #pos = pygame.mouse.get_pos()
                     if btn.onclick(pos, shop):
                         redraw_window(screen, shop)
         n.send(current_player)
