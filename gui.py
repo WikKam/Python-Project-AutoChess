@@ -36,20 +36,26 @@ class MinionButton:
         self.player = player
         self.x = x
         self.y = y
-        self.width = 75
-        self.height = 75
+        self.width = 65
+        self.height = 65
         self.icon = self.create_icon()
+        self.font = pygame.font.SysFont('Arial', 25)
 
     def draw(self, win):
         # pygame.draw.rect(win, (0, 200, 0), (self.x, self.y, self.width, self.height))
         win.blit(self.icon, (self.x, self.y))
+        win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)), (self.x, self.y + self.height/2))
+        win.blit(self.font.render(str(self.minion.stats.health), True,
+                (255, 255, 255)), (self.x + self.width - 10, self.y + self.height/2))
+        win.blit(self.font.render(str(self.minion.stats.tier), True, (255, 255, 255)), (self.x + self.width/2 - 5, self.y))
+        pygame.display.update()
 
     def get_minion(self):
         return self.minion
 
     def create_icon(self):
         result = pygame.image.load(self.minion.icon_path)
-        return pygame.transform.scale(result, (50, 50))
+        return pygame.transform.scale(result, (65, 65))
 
     def onclick(self, pos, shop):
         if is_clicked(pos,self.x,self.y,self.width,self.height):
@@ -152,11 +158,13 @@ class UpgradeTavernButton:
         self.width = 100
         self.height = 100
         self.isEnabled = True
+        self.font = pygame.font.SysFont('Arial', 25)
 
     def draw(self, screen):
         color = (0, 0, 200) if self.isEnabled and self.hero.can_upgrade_tier() else (220, 220, 220)
-        font = pygame.font.SysFont('Arial', 25)
         pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
+        screen.blit(self.font.render(str(self.hero.current_upgrade_cost), True, (0, 0, 0)),
+                    (self.x + self.width / 2 - 5, self.y))
 
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
@@ -175,7 +183,8 @@ class RollMinionsButton:
         self.y = 50
         self.width = 50
         self.height = 50
-        self.reroll_cost = 1
+        self.font = pygame.font.SysFont('Arial', 25)
+
 
     def get_random_minions(self, all_minions):
         ret = []
@@ -188,9 +197,10 @@ class RollMinionsButton:
         return ret
 
     def draw(self, screen):
-        color = (0, 0, 200) if self.hero.can_reroll_tavern() else (220, 220, 220)
-        font = pygame.font.SysFont('Arial', 25)
+        color = (100, 100, 100) if self.hero.can_reroll_tavern() else (220, 220, 220)
         pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
+        screen.blit(self.font.render(str(self.hero.reroll_cost), True, (0, 0, 0)),
+                    (self.x + self.width / 2 - 5, self.y))
 
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):

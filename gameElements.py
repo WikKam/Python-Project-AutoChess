@@ -166,6 +166,7 @@ class Hero:
         self.current_gold = 3
         self.current_upgrade_cost = 6
         self.max_upgrade_cost = 6
+        self.reroll_cost = 1
 
     def can_upgrade_tier(self):
         return self.current_upgrade_cost < self.current_gold and self.current_tier < Hero.max_tier
@@ -238,10 +239,10 @@ class Hero:
         return self.current_tier
 
     def on_tavern_reroll(self):
-        self.current_gold -= 1
+        self.current_gold -= self.reroll_cost
 
     def can_reroll_tavern(self):
-        return self.current_gold > 0
+        return self.current_gold >= self.reroll_cost
 
 class Player:
     def __init__(self, hero, id):
