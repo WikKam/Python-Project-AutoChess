@@ -1,0 +1,412 @@
+{
+  "minions": [
+    {
+      "name": "Alchemist",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 3,
+        "attack": 2,
+        "tier": 1
+      },
+      "icon_path": "minions_icons/Alchemist.png"
+    },
+    {
+      "name": "Anti Mage",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 2,
+        "attack": 3,
+        "tier": 1
+      },
+      "icon_path": "minions_icons/Anti_Mage.png"
+    },
+    {
+      "name": "Axe",
+      "tribe": 3,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 2,
+        "attack": 2,
+        "tier": 1
+      },
+      "icon_path": "minions_icons/Axe.png"
+    },
+    {
+      "name": "Bat Rider",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 3,
+        "attack": 3,
+        "tier": 1
+      },
+      "icon_path": "minions_icons/Batrider.png"
+    },
+    {
+      "name": "Beastmaster",
+      "tribe": 2,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 2,
+        "attack": 1,
+        "tier": 1
+      },
+      "icon_path": "minions_icons/Beastmaster.png"
+    },
+    {
+      "name": "Bounty Hunter",
+      "tribe": 2,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 2,
+        "attack": 2,
+        "tier": 1
+      },
+      "icon_path": "minions_icons/Bounty_Hunter.png"
+    },
+    {
+      "name": "Chaos Knight",
+      "tribe": 4,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 2,
+        "attack": 4,
+        "tier": 1
+      },
+      "icon_path": "minions_icons/Chaos_Knight.png"
+    },
+    {
+      "name": "Clockwerk",
+      "tribe": 4,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 4,
+        "attack": 3,
+        "tier": 1
+      },
+      "icon_path": "minions_icons/Clockwerk.png"
+    },
+    {
+      "name": "Drow Ranger",
+      "tribe": 4,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 4,
+        "attack": 5,
+        "tier": 2
+      },
+      "icon_path": "minions_icons/Drow_Ranger.png"
+    },
+    {
+      "name": "Enchantress",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 4,
+        "attack": 3,
+        "tier": 2
+      },
+      "icon_path": "minions_icons/Enchantress.png"
+    },
+    {
+      "name": "Enigma",
+      "tribe": 5,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 5,
+        "attack": 5,
+        "tier": 2
+      },
+      "icon_path": "minions_icons/Enigma.png"
+    },
+    {
+      "name": "Gyrocopter",
+      "tribe": 2,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 3,
+        "attack": 3,
+        "tier": 2
+      },
+      "icon_path": "minions_icons/Gyrocopter.png"
+    },
+    {
+      "name": "Lone Druid",
+      "tribe": 4,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 3,
+        "attack": 4,
+        "tier": 2
+      },
+      "icon_path": "minions_icons/Lone_Druid.png"
+    },
+    {
+      "name": "Mars",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 2,
+        "attack": 7,
+        "tier": 2
+      },
+      "icon_path": "minions_icons/Mars.png"
+    },
+    {
+      "name": "Medusa",
+      "tribe": 4,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 4,
+        "attack": 5,
+        "tier": 3
+      },
+      "icon_path": "minions_icons/Medusa.png"
+    },
+    {
+      "name": "Ogre Magi",
+      "tribe": 3,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 6,
+        "attack": 6,
+        "tier": 3
+      },
+      "icon_path": "minions_icons/Medusa.png"
+    },
+    {
+      "name": "Omniknight",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 4,
+        "attack": 6,
+        "tier": 3
+      },
+      "icon_path": "minions_icons/Omniknight.png"
+    },
+     {
+      "name": "Queen Of Pain",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 2,
+        "attack": 9,
+        "tier": 3
+      },
+      "icon_path": "minions_icons/Queen_Of_Pain.png"
+    },
+     {
+      "name": "Shadow Fiend",
+      "tribe": 5,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 6,
+        "attack": 6,
+        "tier": 3
+      },
+      "icon_path": "minions_icons/Shadow_Fiend.png"
+    },
+     {
+      "name": "Shadow Shaman",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 6,
+        "attack": 6,
+        "tier": 4
+      },
+      "icon_path": "minions_icons/Shadow_Shaman.png"
+    },
+     {
+      "name": "Slardar",
+      "tribe": 5,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 5,
+        "attack": 6,
+        "tier": 4
+      },
+      "icon_path": "minions_icons/Slardar.png"
+    },
+    {
+      "name": "Sven",
+      "tribe": 5,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 15,
+        "attack": 1,
+        "tier": 4
+      },
+      "icon_path": "minions_icons/Sven.png"
+    },
+    {
+      "name": "Techies",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 4,
+        "attack": 4,
+        "tier": 4
+      },
+      "icon_path": "minions_icons/Techies.png"
+    },
+    {
+      "name": "Templar Assasin",
+      "tribe": 4,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 5,
+        "attack": 8,
+        "tier": 4
+      },
+      "icon_path": "minions_icons/Templar_Assasin.png"
+    },
+    {
+      "name": "Terrorblade",
+      "tribe": 3,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 7,
+        "attack": 10,
+        "tier": 5
+      },
+      "icon_path": "minions_icons/Terrorblade.png"
+    },
+     {
+      "name": "Tidehunter",
+      "tribe": 2,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 8,
+        "attack": 8,
+        "tier": 5
+      },
+      "icon_path": "minions_icons/Tidehunter.png"
+    },
+     {
+      "name": "Tinker",
+      "tribe": 2,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 12,
+        "attack": 5,
+        "tier": 5
+      },
+      "icon_path": "minions_icons/Tinker.png"
+    },
+     {
+      "name": "Tiny",
+      "tribe": 3,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 1,
+        "attack": 1,
+        "tier": 5
+      },
+      "icon_path": "minions_icons/Tiny.png"
+    },
+     {
+      "name": "Troll Warlord",
+      "tribe": 2,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 12,
+        "attack": 16,
+        "tier": 6
+      },
+      "icon_path": "minions_icons/Troll_Warlord.png"
+    },
+     {
+      "name": "Tusk",
+      "tribe": 2,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 14,
+        "attack": 14,
+        "tier": 6
+      },
+      "icon_path": "minions_icons/Tusk.png"
+    },
+     {
+      "name": "Venomancer",
+      "tribe": 4,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 14,
+        "attack": 1,
+        "tier": 6
+      },
+      "icon_path": "minions_icons/Venomancer.png"
+    },
+     {
+      "name": "Windranger",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 12,
+        "attack": 10,
+        "tier": 6
+      },
+      "icon_path": "minions_icons/Windranger.png"
+    },
+     {
+      "name": "Witch Doctor",
+      "tribe": 2,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 18,
+        "attack": 7,
+        "tier": 6
+      },
+      "icon_path": "minions_icons/Witch_Doctor.png"
+    },
+     {
+      "name": "Zeus",
+      "tribe": 1,
+      "effects": [],
+      "state": 1,
+      "stats": {
+        "health": 20,
+        "attack": 20,
+        "tier": 6
+      },
+      "icon_path": "minions_icons/Zeus.png"
+    }
+  ]
+}

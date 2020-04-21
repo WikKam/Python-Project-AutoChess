@@ -164,10 +164,18 @@ class Hero:
         self.minions = [None, None, None, None, None, None, None]
         self.hand = [None, None, None, None, None]
         self.current_gold = 3
-        #self.upgrade_cost = 6
+        self.current_upgrade_cost = 6
+        self.max_upgrade_cost = 6
+
+    def can_upgrade_tier(self):
+        return self.current_upgrade_cost < self.current_gold and self.current_tier < Hero.max_tier
 
     def upgrade_tier(self):
-        if self.current_tier < Hero.max_tier: self.current_tier += 1
+        if not self.can_upgrade_tier(): return False
+        self.current_tier += 1
+        self.current_gold -= self.current_upgrade_cost
+        self.current_upgrade_cost = self.max_upgrade_cost
+        return True
 
     def update_HP(self, val):
         self.current_hp += val
@@ -203,6 +211,7 @@ class Hero:
     def on_new_turn(self):
         self.current_max_gold = min(self.current_max_gold + 1, Hero.max_gold)
         self.current_gold = self.current_max_gold
+        self.current_upgrade_cost = max(self.current_upgrade_cost - 1, 0)
 
     def get_minions(self):
         return self.minions
@@ -228,6 +237,11 @@ class Hero:
     def get_current_tier(self):
         return self.current_tier
 
+    def on_tavern_reroll(self):
+        self.current_gold -= 1
+
+    def can_reroll_tavern(self):
+        return self.current_gold > 0
 
 class Player:
     def __init__(self, hero, id):

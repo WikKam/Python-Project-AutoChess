@@ -3,8 +3,31 @@ from gameElements import Minion
 from gameElements import Tribe
 from gameElements import State
 from gameElements import Stats
+import json
+import random
+import copy
+from pprint import pprint
+
 from gameElements import Hero
 from gameElements import Player
+
+
+def get_minions_from_Json():
+    ret = []
+    with open('minions.json') as json_file:
+        data = json.load(json_file)
+        for minion in data['minions']:
+            m = Minion(minion["name"], Tribe(minion["tribe"]), minion["effects"], State(minion["state"]),
+                       Stats(minion["stats"]["health"], minion["stats"]["attack"], minion["stats"]["tier"]),
+                       minion["icon_path"])
+            ret.append(m)
+    return ret
+
+
+def is_clicked(pos, x, y, width, height):
+    x1 = pos[0]
+    y1 = pos[1]
+    return x <= x1 <= (x + width) and y <= y1 <= (y + height)
 
 
 class MinionButton:
@@ -13,8 +36,8 @@ class MinionButton:
         self.player = player
         self.x = x
         self.y = y
-        self.width = 50
-        self.height = 50
+        self.width = 75
+        self.height = 75
         self.icon = self.create_icon()
 
     def draw(self, win):
@@ -29,9 +52,7 @@ class MinionButton:
         return pygame.transform.scale(result, (50, 50))
 
     def onclick(self, pos, shop):
-        x1 = pos[0]
-        y1 = pos[1]
-        if self.x <= x1 <= (self.x + self.width) and self.y <= y1 <= (self.y + self.height):
+        if is_clicked(pos,self.x,self.y,self.width,self.height):
             if self.minion.get_state() == State.in_shop:  # buying
                 print("KLIK")
                 if self.player.get_hero().buy_minion(self.minion):
@@ -55,12 +76,13 @@ class ShopVisualiser:
     def __init__(self, player):
         self.player = player
         self.minions_in_shop = []
-        self.get_random_minions(self.player.get_hero().get_current_tier())
         print(self.minions_in_shop.__len__())
-        self.make_minion_buttons()
         self.gold = GoldVisualiser(player.hero)
         self.upgradeButton = UpgradeTavernButton(player.hero)
-        print(self.minion_btns.__len__())
+        self.roll = RollMinionsButton(player.hero)
+        self.all_minions = get_minions_from_Json()
+        self.get_random_minions()
+        self.make_minion_buttons()
 
     def draw(self, screen):
         pygame.display.update()
@@ -71,6 +93,7 @@ class ShopVisualiser:
         pygame.draw.line(screen, (0, 255, 255), (650, 600), (650, 450))
         self.gold.draw(screen)
         self.upgradeButton.draw(screen)
+        self.roll.draw(screen)
         for mb in self.minion_btns:
             mb.draw(screen)
         pygame.display.flip()
@@ -94,13 +117,10 @@ class ShopVisualiser:
                 minion_btns.append(mb)
         self.minion_btns = minion_btns
 
-    def get_random_minions(self, tier):
-        index = 0
-        while index < 7:
-            minion = Minion("test", Tribe.orc, [], State.in_shop, Stats(4, 4, tier), "minions_icons/Axe.png")
-            minion.set_position(index)
-            self.minions_in_shop.append(minion)
-            index += 1
+    def get_random_minions(self):
+        self.minions_in_shop = self.roll.get_random_minions(self.all_minions)
+        print("start");
+        for m in self.minions_in_shop: pprint(vars(m))
 
     def get_buttons(self):
         return self.minion_btns
@@ -116,7 +136,7 @@ class GoldVisualiser:
 
     def draw(self, win):
         counter = 0
-        offset = 50
+        offset = 25
         print(self.hero.current_gold)
         while counter < self.hero.current_gold:
             pygame.draw.rect(win, (255, 255, 10), (500 + counter * offset, 100, 20, 20))
@@ -134,14 +154,52 @@ class UpgradeTavernButton:
         self.isEnabled = True
 
     def draw(self, screen):
-        color = (0, 0, 200) if self.isEnabled else (200, 0, 0)
+        color = (0, 0, 200) if self.isEnabled and self.hero.can_upgrade_tier() else (220, 220, 220)
+        font = pygame.font.SysFont('Arial', 25)
         pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
 
     def onclick(self, pos, shop):
-        x1 = pos[0]
-        y1 = pos[1]
-        if self.x <= x1 <= (self.x + self.width) and self.y <= y1 <= (self.y + self.height):
+        if is_clicked(pos, self.x, self.y, self.width, self.height):
             self.isEnabled = False
-            self.hero.upgrade_tier()
-            print("upgraded")
+            success = self.hero.upgrade_tier()
+            if success: print("upgraded")
             return True
+        return False
+
+
+class RollMinionsButton:
+
+    def __init__(self, hero):
+        self.hero = hero
+        self.x = 320
+        self.y = 50
+        self.width = 50
+        self.height = 50
+        self.reroll_cost = 1
+
+    def get_random_minions(self, all_minions):
+        ret = []
+        correct_tier_minions = [m for m in all_minions if m.stats.tier <= self.hero.current_tier]
+        for x in range(self.hero.max_minion_no):
+            index = random.randint(0, len(correct_tier_minions) - 1)
+            m = copy.deepcopy(correct_tier_minions[index])
+            m.set_position(x)
+            ret.append(m)
+        return ret
+
+    def draw(self, screen):
+        color = (0, 0, 200) if self.hero.can_reroll_tavern() else (220, 220, 220)
+        font = pygame.font.SysFont('Arial', 25)
+        pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
+
+    def onclick(self, pos, shop):
+        if is_clicked(pos, self.x, self.y, self.width, self.height):
+            if self.hero.can_reroll_tavern():
+                shop.get_random_minions()
+                self.hero.on_tavern_reroll()
+                shop.make_minion_buttons()
+                return True
+        return False
+
+
+
