@@ -155,7 +155,7 @@ class Hero:
     max_gold = 10
     current_max_gold = 3
 
-    def __init__(self, name, hero_power):
+    def __init__(self, name, hero_power, icon):
         self.name = name
         self.hero_power = hero_power
         self.current_tier = 1
@@ -167,6 +167,7 @@ class Hero:
         self.current_upgrade_cost = 6
         self.max_upgrade_cost = 6
         self.reroll_cost = 1
+        self.icon = icon
 
     def can_upgrade_tier(self):
         return self.current_upgrade_cost < self.current_gold and self.current_tier < Hero.max_tier
@@ -254,5 +255,5 @@ class Player:
     def get_hero(self):
         return self.hero
 
-    def recruit_hero(self):
-        self.hero = Hero("test", None)
+    def recruit_hero(self, hero):
+        self.hero = hero

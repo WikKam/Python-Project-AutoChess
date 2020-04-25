@@ -78,7 +78,6 @@ class MinionButton:
 
 
 class ShopVisualiser:
-
     def __init__(self, player):
         self.player = player
         self.minions_in_shop = []
@@ -210,6 +209,8 @@ class RollMinionsButton:
                 shop.make_minion_buttons()
                 return True
         return False
+
+
 
 
 

@@ -1,0 +1,49 @@
+{
+  "heroes": [
+    {
+      "name": "akali",
+      "power" : null,
+      "image": "heroes_icons/akali.jpg"
+    },
+    {
+      "name": "darius",
+      "power" : null,
+      "image": "heroes_icons/darius.jpg"
+    },
+    {
+      "name": "draven",
+      "power" : null,
+      "image": "heroes_icons/draven.jpg"
+    },
+    {
+      "name": "katarina",
+      "power" : null,
+      "image": "heroes_icons/katarina.jpg"
+    },
+    {
+      "name": "kha'zix",
+      "power" : null,
+      "image": "heroes_icons/kha_zix.jpg"
+    },
+    {
+      "name": "lee sin",
+      "power" : null,
+      "image": "heroes_icons/lee_sin.jpg"
+    },
+    {
+      "name": "veigar",
+      "power" : null,
+      "image": "heroes_icons/veigar.jpg"
+    },
+    {
+      "name": "vladimir",
+      "power" : null,
+      "image": "heroes_icons/vladimir.jpg"
+    },
+    {
+      "name": "volibear",
+      "power" : null,
+      "image": "heroes_icons/volibear.jpg"
+    }
+  ]
+}

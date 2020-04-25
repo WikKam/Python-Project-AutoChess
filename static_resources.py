@@ -1,6 +1,10 @@
 from gameElements import *
 import pygame
 import time
+import json
+
+
+recruitment_time = 12
 
 
 def create_image_with_size(path, x, y):
@@ -14,29 +18,35 @@ def timer_display(time, x, y, win, content):
                 win.blit(digits[time // 10].convert_alpha(), (x, y))
                 win.blit(digits[time % 10].convert_alpha(), (x + 50, y))
             else:
+                win.blit(create_image_with_size("images/beam_texture.jpg", 140, 80), (x-10, y-10))
                 win.blit(recruitment_digits[time // 10].convert_alpha(), (x, y))
                 win.blit(recruitment_digits[time % 10].convert_alpha(), (x + 50, y))
         else:
             if content == "shop":
                 win.blit(digits[time].convert_alpha(), (x, y))
             else:
+                win.blit(create_image_with_size("images/beam_texture.jpg", 140, 80), (x-10, y-10))
                 win.blit(recruitment_digits[time].convert_alpha(), (x, y))
         pygame.display.update()
 
 
+def redraw_shop(win, shop): # need separate func for shop and combat
+    win.blit(board, (0, 0))
+    shop.draw(win)
+    pygame.display.flip()
+    # player.draw(win)
+    #pygame.display.update()
 
-minions = [Minion("Axe", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Axe.png"),
-           Minion("Mars", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Mars.png"),
-           Minion("Enigma", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Enigma.png"),
-           Minion("Medusa", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Medusa.png"),
-           Minion("Sven", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Sven.png"),
-           Minion("Slardar", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Slardar.png"),
-           Minion("Zeus", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Zeus.png"),
-           Minion("Tinker", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Tinker.png"),
-           Minion("Tusk", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Tusk.png"),
-           Minion("Windranger", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Windranger.png"),
-           Minion("Clockwerk", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Clockwerk.png"),
-           Minion("Templar_Assassin", Tribe.orc, [], None, Stats(4, 4, 1), "minions_icons/Templar_Assassin.png")]
+
+def get_heroes_from_Json():
+    res = []
+    with open('heroes.json') as json_file:
+        data = json.load(json_file)
+        for hero in data['heroes']:
+            h = Hero(hero["name"], hero["power"], hero["image"])
+            res.append(h)
+    return res
+
 
 # DIGITS
 digits = {
@@ -66,6 +76,7 @@ recruitment_digits = {
 }
 
 
-board = create_image_with_size("tmp_board.jpg", 800, 600)
-waiting_background = create_image_with_size("waiting_background.png", 800, 600)
-recruitment_background = create_image_with_size("recruitment_backgound.png", 800, 600)
+board = create_image_with_size("images/tmp_board.jpg", 800, 600)
+waiting_background = create_image_with_size("images/waiting_background.png", 800, 600)
+recruitment_background = create_image_with_size("images/recruitment_backgound.png", 800, 600)
+heroes = get_heroes_from_Json()

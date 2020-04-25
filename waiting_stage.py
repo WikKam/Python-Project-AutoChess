@@ -1,6 +1,7 @@
 import pygame
 import static_resources as sr
 from network import Network
+from recruitment_stage import recruitment
 
 
 def waiting(n, screen, clock):
@@ -17,4 +18,4 @@ def waiting(n, screen, clock):
                 running = False
         if player2.ready:
             running = False
-            recruitment(current_player)
+            recruitment(current_player, n, clock, screen)
