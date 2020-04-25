@@ -7,7 +7,7 @@ from gameElements import Stats
 import static_resources as sr
 import pickle
 
-server = "192.168.1.103"  # local host  cmd -> ipconfig -> IPv4 Address 192.168.0.113
+server = "192.168.0.113"  # local host  cmd -> ipconfig -> IPv4 Address   192.168.1.103
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -19,7 +19,7 @@ except socket.error as e:
 
 s.listen(2)  # then we can have multiply client connected, 2 people max connected so far
 print("Waiting for connection, Server started")
-players = [Player(None , 0), Player(None, 1)]
+players = [Player(None, 0), Player(None, 1)]
 
 
 def threaded_client(conn, current_player):
@@ -41,8 +41,12 @@ def threaded_client(conn, current_player):
                 else:
                     reply = players[1]
 
-                print("Received: ", data, " ", current_player)
-                print("Sending : ", reply)
+                # print("Received: ", data, " ", current_player)
+                # print("Sending : ", reply)
+                # if players[0].ge_hero() is not None:
+                #     print(players[0].get_hero().get_minions())
+                # if players[1].ge_hero() is not None:
+                #     print(players[1].get_hero().get_minions())
             conn.sendall(pickle.dumps(reply))
         except:
             break

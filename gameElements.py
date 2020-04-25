@@ -244,6 +244,7 @@ class Hero:
     def can_reroll_tavern(self):
         return self.current_gold >= self.reroll_cost
 
+
 class Player:
     def __init__(self, hero, id):
         self.hero = hero
