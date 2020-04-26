@@ -13,12 +13,11 @@ from combat_stage import combat
 def shop(players, current_player, n, clock, screen):
     start_time = pygame.time.get_ticks()
     shop = ShopVisualiser(players[current_player])
-    shop_timer = sr.shop_time
     sr.redraw_shop(screen, shop)
     running = True
     while running:
         timer = (sr.shop_time - (pygame.time.get_ticks() - start_time) // 1000)
-        sr.timer_display(timer, 500, 500, screen, "recruitment")
+        sr.timer_display(timer, 665, 500, screen, "shop")
         clock.tick(60)
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
@@ -35,6 +34,3 @@ def shop(players, current_player, n, clock, screen):
         n.send(players[current_player])
         if timer == 0:
             combat(players, current_player, n, clock, screen)
-        #sr.timer_display(shop_timer, 400, 500, screen)
-        # redraw_window(screen, p)
-        # print(player2.get_hero().get_minions())
