@@ -3,7 +3,14 @@
     {
       "name": "Alchemist",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }],
       "state": 1,
       "stats": {
         "health": 3,
@@ -15,7 +22,14 @@
     {
       "name": "Anti Mage",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }],
       "state": 1,
       "stats": {
         "health": 2,
@@ -27,7 +41,14 @@
     {
       "name": "Axe",
       "tribe": 3,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }],
       "state": 1,
       "stats": {
         "health": 2,
@@ -39,7 +60,14 @@
     {
       "name": "Bat Rider",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }],
       "state": 1,
       "stats": {
         "health": 3,
@@ -51,7 +79,14 @@
     {
       "name": "Beastmaster",
       "tribe": 2,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }],
       "state": 1,
       "stats": {
         "health": 2,
@@ -63,7 +98,14 @@
     {
       "name": "Bounty Hunter",
       "tribe": 2,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }],
       "state": 1,
       "stats": {
         "health": 2,
@@ -75,7 +117,14 @@
     {
       "name": "Chaos Knight",
       "tribe": 4,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }],
       "state": 1,
       "stats": {
         "health": 2,
@@ -87,7 +136,14 @@
     {
       "name": "Clockwerk",
       "tribe": 4,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }],
       "state": 1,
       "stats": {
         "health": 4,

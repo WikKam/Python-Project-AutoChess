@@ -1,5 +1,5 @@
 import pygame
-from gameElements import Minion
+from gameElements import Minion, StatBuffEffect, TriggerOn, TargetKind
 from gameElements import Tribe
 from gameElements import State
 from gameElements import Stats
@@ -12,12 +12,21 @@ from gameElements import Hero
 from gameElements import Player
 
 
+def get_effect_from_Json(effects):
+    return [StatBuffEffect(effect["health"],
+                           effect["attack"],
+                           TriggerOn(effect["trigger_when"]),
+                           TargetKind(effect["kind"]),
+                           effect["target_tribe"]) for effect in effects if effect["type"] == "StatBuff"]
+
+
 def get_minions_from_Json():
     ret = []
     with open('minions.json') as json_file:
         data = json.load(json_file)
         for minion in data['minions']:
-            m = Minion(minion["name"], Tribe(minion["tribe"]), minion["effects"], State(minion["state"]),
+            m = Minion(minion["name"], Tribe(minion["tribe"]), get_effect_from_Json(minion["effects"]),
+                       State(minion["state"]),
                        Stats(minion["stats"]["health"], minion["stats"]["attack"], minion["stats"]["tier"]),
                        minion["icon_path"])
             ret.append(m)
@@ -44,10 +53,12 @@ class MinionButton:
     def draw(self, win):
         # pygame.draw.rect(win, (0, 200, 0), (self.x, self.y, self.width, self.height))
         win.blit(self.icon, (self.x, self.y))
-        win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)), (self.x, self.y + self.height/2))
+        win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)),
+                 (self.x, self.y + self.height / 2))
         win.blit(self.font.render(str(self.minion.stats.health), True,
-                (255, 255, 255)), (self.x + self.width - 10, self.y + self.height/2))
-        win.blit(self.font.render(str(self.minion.stats.tier), True, (255, 255, 255)), (self.x + self.width/2 - 5, self.y))
+                                  (255, 255, 255)), (self.x + self.width - 10, self.y + self.height / 2))
+        win.blit(self.font.render(str(self.minion.stats.tier), True, (255, 255, 255)),
+                 (self.x + self.width / 2 - 5, self.y))
         pygame.display.update()
 
     def get_minion(self):
@@ -58,7 +69,7 @@ class MinionButton:
         return pygame.transform.scale(result, (65, 65))
 
     def onclick(self, pos, shop):
-        if is_clicked(pos,self.x,self.y,self.width,self.height):
+        if is_clicked(pos, self.x, self.y, self.width, self.height):
             if self.minion.get_state() == State.in_shop:  # buying
                 print("KLIK")
                 if self.player.get_hero().buy_minion(self.minion):
@@ -184,7 +195,6 @@ class RollMinionsButton:
         self.height = 50
         self.font = pygame.font.SysFont('Arial', 25)
 
-
     def get_random_minions(self, all_minions):
         ret = []
         correct_tier_minions = [m for m in all_minions if m.stats.tier <= self.hero.current_tier]
@@ -209,8 +219,3 @@ class RollMinionsButton:
                 shop.make_minion_buttons()
                 return True
         return False
-
-
-
-
-
