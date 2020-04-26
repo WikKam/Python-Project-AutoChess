@@ -25,11 +25,11 @@ def recruitment_visualizer(screen, heroes, time, active=None):
     pygame.display.update()
 
 
-def recruitment(current_player, n, clock, screen):
+def recruitment(players, current_player, n, clock, screen):
     player_hero = None
     heroes = []
     while len(heroes) < 3:
-        insert =  sr.heroes[random.randint(0, 8)]
+        insert = sr.heroes[random.randint(0, 8)]
         if insert not in heroes:
             heroes.append(insert)
     heroes_display = [sr.create_image_with_size(heroes[i].icon, 150, 250) for i in range(0, 3)]
@@ -49,10 +49,11 @@ def recruitment(current_player, n, clock, screen):
                     if is_clicked(pos, i):
                         recruitment_visualizer(screen, heroes_display, timer, i)
                         player_hero = heroes[i]
-        n.send(current_player)
+        n.send(players[current_player])
         if timer == 0:
             if player_hero is None:
                 player_hero = heroes[0]
-            current_player.recruit_hero(player_hero)
+            players[current_player].recruit_hero(player_hero)
+            n.send(players[current_player])
             running = False
-            shop(current_player, n, clock, screen)
+            shop(players, current_player, n, clock, screen)

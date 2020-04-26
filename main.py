@@ -17,5 +17,5 @@ net = Network()
 clock = pygame.time.Clock()
 
 
-# waiting(net, screen, clock)
-recruitment(net.getP(), net, clock, screen)
+waiting(net, screen, clock)
+# recruitment(net.getP(), net, clock, screen)
