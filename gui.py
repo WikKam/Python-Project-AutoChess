@@ -219,3 +219,26 @@ class RollMinionsButton:
                 shop.make_minion_buttons()
                 return True
         return False
+
+
+class CombatVisualiser:
+    def __init__(self, current_player, opponent):
+        self.current_player = current_player
+        self.opponent = opponent
+        self.minions_buttons = []
+
+    def draw(self, screen):
+        for i, m in enumerate(self.current_player.get_hero().get_minions()):
+            if m is None:
+                break
+            mb = MinionButton(m, self.current_player, 150 +
+                              80 * i, 340)
+            self.minions_buttons.append(mb)
+        for i, m in enumerate(self.opponent.get_hero().get_minions()):
+            if m is None:
+                break
+            mb = MinionButton(m, self.opponent, 150 +
+                              80 * i, 170)
+            self.minions_buttons.append(mb)
+        for mb in self.minions_buttons:
+            mb.draw(screen)

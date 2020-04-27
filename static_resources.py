@@ -5,7 +5,7 @@ import json
 
 
 recruitment_time = 4
-shop_time = 5
+shop_time = 10
 
 
 def create_image_with_size(path, x, y):
