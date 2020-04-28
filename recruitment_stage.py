@@ -1,7 +1,7 @@
 import pygame
 import static_resources as sr
 from network import Network
-from shop_stage import shop
+from shop_stage import shopping
 from gameElements import Minion, Player, Hero
 # from gameElements import Tribe
 # from gameElements import State
@@ -56,4 +56,4 @@ def recruitment(players, current_player, n, clock, screen):
             players[current_player].recruit_hero(player_hero)
             n.send(players[current_player])
             running = False
-            shop(players, current_player, n, clock, screen)
+            shopping(players, current_player, n, clock, screen)

@@ -5,7 +5,8 @@ import json
 
 
 recruitment_time = 5
-shop_time = 60
+shop_time = 20
+combat_time = 15
 
 
 def create_image_with_size(path, x, y):
@@ -14,30 +15,30 @@ def create_image_with_size(path, x, y):
 
 
 def timer_display(time, x, y, win, content):
-        if time <= 0:
-            if content == "shop":
-                win.blit(create_image_with_size("images/black_beam.JPG", 140, 80), (x - 10, y - 10))
-                win.blit(digits[0].convert_alpha(), (x, y))
-            else:
-                win.blit(create_image_with_size("images/beam_texture.jpg", 140, 80), (x-10, y-10))
-                win.blit(recruitment_digits[0].convert_alpha(), (x, y))
-        if time >= 10:
-            if content == "shop":
-                win.blit(create_image_with_size("images/black_beam.JPG", 140, 80), (x - 10, y - 10))
-                win.blit(digits[time // 10].convert_alpha(), (x, y))
-                win.blit(digits[time % 10].convert_alpha(), (x + 50, y))
-            else:
-                win.blit(create_image_with_size("images/beam_texture.jpg", 140, 80), (x-10, y-10))
-                win.blit(recruitment_digits[time // 10].convert_alpha(), (x, y))
-                win.blit(recruitment_digits[time % 10].convert_alpha(), (x + 50, y))
+    if time <= 0:
+        if content == "shop":
+            win.blit(create_image_with_size("images/black_beam.JPG", 140, 80), (x - 10, y - 10))
+            win.blit(digits[0].convert_alpha(), (x+30, y))
         else:
-            if content == "shop":
-                win.blit(create_image_with_size("images/black_beam.JPG", 140, 80), (x - 10, y - 10))
-                win.blit(digits[time].convert_alpha(), (x, y))
-            else:
-                win.blit(create_image_with_size("images/beam_texture.jpg", 140, 80), (x-10, y-10))
-                win.blit(recruitment_digits[time].convert_alpha(), (x, y))
-        pygame.display.update()
+            win.blit(create_image_with_size("images/beam_texture.jpg", 140, 80), (x-10, y-10))
+            win.blit(recruitment_digits[0].convert_alpha(), (x+30, y))
+    if time >= 10:
+        if content == "shop":
+            win.blit(create_image_with_size("images/black_beam.JPG", 140, 80), (x - 10, y - 10))
+            win.blit(digits[time // 10].convert_alpha(), (x, y))
+            win.blit(digits[time % 10].convert_alpha(), (x + 50, y))
+        else:
+            win.blit(create_image_with_size("images/beam_texture.jpg", 140, 80), (x-10, y-10))
+            win.blit(recruitment_digits[time // 10].convert_alpha(), (x, y))
+            win.blit(recruitment_digits[time % 10].convert_alpha(), (x + 50, y))
+    else:
+        if content == "shop":
+            win.blit(create_image_with_size("images/black_beam.JPG", 140, 80), (x - 10, y - 10))
+            win.blit(digits[time].convert_alpha(), (x+30, y))
+        else:
+            win.blit(create_image_with_size("images/beam_texture.jpg", 140, 80), (x-10, y-10))
+            win.blit(recruitment_digits[time].convert_alpha(), (x+30, y))
+    pygame.display.update()
 
 
 def redraw_shop(win, shop): # need separate func for shop and combat

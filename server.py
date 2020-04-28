@@ -7,7 +7,7 @@ from gameElements import Stats
 import static_resources as sr
 import pickle
 
-server = "192.168.1.108"  # local host  cmd -> ipconfig -> IPv4 Address     192.168.1.108
+server = "192.168.0.113"  # local host  cmd -> ipconfig -> IPv4 Address     192.168.1.108
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,7 +24,6 @@ players = [Player(None, 0), Player(None, 1)]
 
 def threaded_client(conn, current_player):
     players[current_player].ready = True
-    # conn.send(pickle.dumps(current_player)) # send to player
     info = players, current_player
     conn.sendall(pickle.dumps(info))
     print(current_player)
