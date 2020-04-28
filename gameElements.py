@@ -3,6 +3,11 @@ import copy
 import random
 
 
+class HeroPowerKind(enum.Enum):
+    passive = 1
+    active = 2
+
+
 class Tribe(enum.Enum):
     human = 1
     orc = 2
@@ -15,6 +20,8 @@ class Tribe(enum.Enum):
 class TargetKind(enum.Enum):
     random = 1
     targeted = 2
+    self = 3
+    all = 4
 
 
 class State(enum.Enum):
@@ -51,7 +58,7 @@ class Effect:
         self.kind = kind
         self.target_tribe = target_tribe
 
-    def trigger_effect(self, caster, target):
+    def trigger_effect(self, caster, targets):
         pass
 
 
@@ -61,36 +68,46 @@ class StatBuffEffect(Effect):
         self.health = health
         self.attack = attack
 
-    def trigger_effect(self, caster, target):
-        target.stats.update_health(self.health)
-        target.stats.update_attack(self.attack)
+    def trigger_effect(self, caster, targets):
+        for target in targets:
+            target.stats.update_health(self.health)
+            target.stats.update_attack(self.attack)
 
 
 class EffectManager:
 
     def activate_effects(self, prev, current, source):
+        target = None
         for effect in source.effects:
             trigger_on = mapStatesToTriggerOn(prev, current)
             if trigger_on == effect.trigger_when:
                 if effect.kind == TargetKind.random:
-                    target = self.pick_random_target(effect,source)
-                    if target:
-                        effect.trigger_effect(self, target)
+                    target = self.pick_random_targets(effect, source)
+                elif effect.kind == TargetKind.self:
+                    target = [source]
+                elif effect.kind == TargetKind.all:
+                    target = self.get_matching_minions_array(effect, source)
+            if target:
+                effect.trigger_effect(source, target)
 
     def __init__(self, minions_in_play):
         self.minions_in_play = minions_in_play
 
-    def pick_random_target(self, effect, source):
-        matching_targets = [minion for minion in self.minions_in_play
-                            if minion is not None and
-                            minion != source and
-                            (minion.tribe == effect.target_tribe or
-                             (effect.target_tribe or minion.tribe == Tribe.all))]
-        if len(matching_targets) == 0:
-            return None
-        else:
-            index = random.randint(0, len(matching_targets) - 1)
-            return matching_targets[index]
+    def pick_random_targets(self, effect, source):
+        if effect.kind == TargetKind.random:
+            matching_targets = self.get_matching_minions_array(effect, source)
+            if len(matching_targets) == 0:
+                return None
+            else:
+                index = random.randint(0, len(matching_targets) - 1)
+                return [matching_targets[index]]
+
+    def get_matching_minions_array(self, effect, source):
+        return [minion for minion in self.minions_in_play
+                if minion is not None and
+                minion != source and
+                (minion.tribe == effect.target_tribe or
+                 (effect.target_tribe or minion.tribe == Tribe.all))]
 
 
 class SummonEffect(Effect):
@@ -98,8 +115,8 @@ class SummonEffect(Effect):
         super().__init__(triggered_when, kind, target_tribe)
         self.minion = minion
 
-    def trigger_effect(self, caster, target):
-        target = self.minion
+    def trigger_effect(self, caster, targets):
+        targets = self.minion
 
 
 class Stats:
@@ -166,32 +183,41 @@ def find_first_free_index(lt):
     return ret
 
 
+class HeroStats:
+
+    def __init__(self):
+        self.max_minion_no = 7
+        self.max_hand_no = 6
+        self.start_hp = 30
+        self.max_tier = 6
+        self.starting_tier = 1
+        self.max_gold = 10
+        self.starting_gold = 3
+        self.max_upgrade_cost = 6
+        self.reroll_cost = 1
+
+
 class Hero:
-    max_minion_no = 7
-    max_hand_no = 6
-    start_hp = 30
-    max_tier = 6
-    starting_tier = 1
-    max_gold = 10
-    current_max_gold = 3
 
     def __init__(self, name, hero_power, icon):
+        self.hero_stats = HeroStats()
         self.name = name
         self.hero_power = hero_power
-        self.current_tier = 1
-        self.current_hp = Hero.start_hp
+        self.current_tier = self.hero_stats.starting_tier
+        self.current_hp = self.hero_stats.start_hp
         self.is_dead = False
         self.minions = [None, None, None, None, None, None, None]
         self.hand = [None, None, None, None, None]
-        self.current_gold = 6
-        self.current_upgrade_cost = 6
+        self.current_gold = self.hero_stats.starting_gold  # later change this
+        self.current_upgrade_cost = self.hero_stats.max_upgrade_cost
         self.max_upgrade_cost = 6
-        self.reroll_cost = 1
+        self.current_max_gold = self.hero_stats.starting_gold
+        self.reroll_cost = self.hero_stats.reroll_cost
         self.icon = icon
         self.effect_manager = EffectManager(self.minions)
 
     def can_upgrade_tier(self):
-        return self.current_upgrade_cost < self.current_gold and self.current_tier < Hero.max_tier
+        return self.current_upgrade_cost < self.current_gold and self.current_tier < self.hero_stats.max_tier
 
     def upgrade_tier(self):
         if not self.can_upgrade_tier(): return False
@@ -202,8 +228,8 @@ class Hero:
 
     def update_HP(self, val):
         self.current_hp += val
-        if self.current_hp > Hero.start_hp:
-            self.current_hp = Hero.start_hp
+        if self.current_hp > self.hero_stats.start_hp:
+            self.current_hp = self.hero_stats.start_hp
         elif self.current_hp < 0:
             self.is_dead = True
 
@@ -230,12 +256,12 @@ class Hero:
         if minion.get_state() != State.in_play: return False
         self.minions[minion.position] = None
         minion.set_state(State.in_storage)
-        self.current_gold = min(self.current_gold + 1, Hero.current_max_gold)
+        self.current_gold = min(self.current_gold + 1, self.current_max_gold)
         self.effect_manager.activate_effects(State.in_shop, State.in_storage, minion)
         return True
 
     def on_new_turn(self):
-        self.current_max_gold = min(self.current_max_gold + 1, Hero.max_gold)
+        self.current_max_gold = min(self.current_max_gold + 1, self.hero_stats.max_gold)
         self.current_gold = self.current_max_gold
         self.current_upgrade_cost = max(self.current_upgrade_cost - 1, 0)
         minions = [minion for minion in self.minions if minion is not None]
@@ -247,7 +273,7 @@ class Hero:
         minions = [minion for minion in self.minions if minion is not None]
         for minion in minions:
             minion.set_state(State.on_battlefield)
-            self.effect_manager.activate_effects(State.in_play,State.on_battlefield, minion)
+            self.effect_manager.activate_effects(State.in_play, State.on_battlefield, minion)
 
     def get_minions(self):
         return self.minions
@@ -279,6 +305,9 @@ class Hero:
     def can_reroll_tavern(self):
         return self.current_gold >= self.reroll_cost
 
+    def override_stats_from_passive(self):
+        pass
+
 
 class Player:
     def __init__(self, hero, id):
@@ -291,3 +320,11 @@ class Player:
 
     def recruit_hero(self, hero):
         self.hero = hero
+
+
+class HeroPower:
+    def __init__(self, hero, kind, active_effects, passive_effects):
+        self.hero = hero
+        self.kind = kind
+        self.active_effects = active_effects
+        self.passive_effects = passive_effects

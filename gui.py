@@ -198,7 +198,7 @@ class RollMinionsButton:
     def get_random_minions(self, all_minions):
         ret = []
         correct_tier_minions = [m for m in all_minions if m.stats.tier <= self.hero.current_tier]
-        for x in range(self.hero.max_minion_no):
+        for x in range(self.hero.hero_stats.max_minion_no):
             index = random.randint(0, len(correct_tier_minions) - 1)
             m = copy.deepcopy(correct_tier_minions[index])
             m.set_position(x)

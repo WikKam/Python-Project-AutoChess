@@ -33,4 +33,5 @@ def shop(players, current_player, n, clock, screen):
                         sr.redraw_shop(screen, shop)
         n.send(players[current_player])
         if timer == 0:
+            shop.player.hero.on_turn_end()
             combat(players, current_player, n, clock, screen)

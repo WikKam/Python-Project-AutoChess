@@ -5,8 +5,8 @@
       "tribe": 1,
       "effects": [{
         "type": "StatBuff",
-        "trigger_when": 1,
-        "kind": 1,
+        "trigger_when": 5,
+        "kind": 3,
         "target_tribe": 6,
         "health": 1,
         "attack": 1
@@ -25,7 +25,7 @@
       "effects": [{
         "type": "StatBuff",
         "trigger_when": 1,
-        "kind": 1,
+        "kind": 4,
         "target_tribe": 6,
         "health": 1,
         "attack": 1
