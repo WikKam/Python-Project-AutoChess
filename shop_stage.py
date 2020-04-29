@@ -6,6 +6,7 @@ from gameElements import Minion, Player, Hero
 from gameElements import Tribe
 from gameElements import State
 from gameElements import Stats
+from combat_logic import attack
 
 
 def shopping(players, current_player, n, clock, screen):
@@ -42,28 +43,36 @@ def shopping(players, current_player, n, clock, screen):
 def combat(players, current_player, n, clock, screen):
     start_time = pygame.time.get_ticks()
     players, opponent = n.send(players[current_player])
+    minions = list(filter(None, copy.deepcopy(players[current_player].get_hero().get_minions())))
+    minions_opponent = list(filter(None, copy.deepcopy(players[opponent].get_hero().get_minions())))
+    n.send(minions_opponent)
     screen.blit(sr.board, (0, 0))
     pygame.display.flip()
     combat_viualiser = CombatVisualiser(players[current_player], players[opponent])
     combat_viualiser.draw(screen)
     running = True
-    minions = list(filter(None, copy.deepcopy(players[current_player].get_hero().get_minions())))
-    minions_opponent = list(filter(None, copy.deepcopy(players[opponent].get_hero().get_minions())))
     minion_attacker = 0
     attack_time = pygame.time.get_ticks()
     if not current_player % 2:
-        attack_time -= 3000
-    print("wchodzę do pentli XDD")
+        attack_time -= 2000
+    print("wchodzę do walki")
     while running:
+        minions = n.send(minions_opponent)
+        for m in minions:
+            print(m.stats.health)
+        for m in minions_opponent:
+            print(m.stats.health)
         timer = (sr.combat_time - (pygame.time.get_ticks() - start_time) // 1000)
         clock.tick(60)
         if current_player % 2:
             if pygame.time.get_ticks() - attack_time > 3000:
-                print("atakuje XD I am current player 1?")
+                minion_attacker = attack(minions, minions_opponent, minion_attacker)
+                n.send(minions_opponent)
                 attack_time = pygame.time.get_ticks()
         else:
             if pygame.time.get_ticks() - attack_time > 3000:
-                print("atakuje XD I am current player 2?")
+                minion_attacker = attack(minions, minions_opponent, minion_attacker)
+                n.send(minions_opponent)
                 attack_time = pygame.time.get_ticks()
         for e in pygame.event.get():
             if e.type == pygame.QUIT:

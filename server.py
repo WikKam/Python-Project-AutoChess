@@ -7,7 +7,7 @@ from gameElements import Stats
 import static_resources as sr
 import pickle
 
-server = "192.168.1.108"  # local host  cmd -> ipconfig -> IPv4 Address     192.168.1.108
+server = "192.168.0.113"  # local host  cmd -> ipconfig -> IPv4 Address     192.168.1.108 192.168.0.113
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -27,20 +27,27 @@ def threaded_client(conn, current_player):
     info = players, current_player
     conn.sendall(pickle.dumps(info))
     print(current_player)
+    player0_minions = []
+    player1_minions = []
     reply = ""
     while True:
         try:
             data = pickle.loads(conn.recv(2048*16))
-            if data is list:
-                players_game = data
+            if data is list: #Walka
+                if current_player == 1:
+                    player0_minions = data
+                    reply = players1_minions
+                else:
+                    player1_minions = data
+                    reply = players0_minions
+
+            elif not data:
+                print("Disconnected")
+                break
+
             else:
                 players[current_player] = data
                 players_game = players
-
-            if not data:
-                print("Disconnected")
-                break
-            else:
                 if current_player == 1:
                     reply = players_game, 0
                 else:
