@@ -326,12 +326,14 @@ class Hero:
             print(self.hero_stats.starting_gold)
 
     def activate_hero_power(self):
-        if self.hero_power.kind == HeroPowerKind.passive:
+        if self.hero_power.kind == HeroPowerKind.passive or not self.can_use_hero_power():
             return
         else:
             self.effect_manager.activate_effects(None, None, self.hero_power)
+            self.current_gold -= self.hero_power.cost
 
-
+    def can_use_hero_power(self):
+        return self.current_gold > self.hero_power.cost
 
 
 class Player:
@@ -348,8 +350,9 @@ class Player:
 
 
 class HeroPower:
-    def __init__(self, kind, active_effects, passive_effects):
+    def __init__(self, kind, active_effects, passive_effects, cost):
         self.kind = kind
         self.active_effects = active_effects
         self.passive_effects = passive_effects
+        self.cost = cost
 

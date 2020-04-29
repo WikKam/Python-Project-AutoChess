@@ -3,6 +3,7 @@
     {
       "name": "akali",
       "power" : {
+        "cost": 2,
         "kind": 2,
         "passive":{},
         "active": [{
@@ -20,6 +21,7 @@
       "name": "darius",
       "power" : {
         "kind": 1,
+        "cost": 0,
         "passive": {
           "starting_tier": 4,
           "starting_gold": 10
@@ -31,6 +33,7 @@
     {
       "name": "draven",
       "power" : {
+        "cost": 2,
         "kind": 2,
         "passive":{},
         "active": [{
@@ -47,6 +50,7 @@
     {
       "name": "katarina",
       "power" : {
+        "cost": 2,
         "kind": 2,
         "passive":{},
         "active": [{
@@ -63,6 +67,7 @@
     {
       "name": "kha'zix",
       "power" : {
+        "cost": 2,
         "kind": 2,
         "passive":{},
         "active": [{
@@ -80,6 +85,7 @@
       "name": "lee sin",
       "power" : {
         "kind": 2,
+        "cost": 2,
         "passive":{},
         "active": [{
         "type": "StatBuff",
@@ -95,6 +101,7 @@
     {
       "name": "veigar",
       "power" : {
+        "cost": 2,
         "kind": 2,
         "passive":{},
         "active": [{
@@ -112,6 +119,7 @@
       "name": "vladimir",
       "power" : {
         "passive":{},
+        "cost": 2,
         "kind": 2,
         "active": [{
         "type": "StatBuff",
@@ -128,6 +136,7 @@
       "name": "volibear",
       "power" : {
         "kind": 2,
+        "cost": 2,
         "passive":{},
         "active": [{
         "type": "StatBuff",

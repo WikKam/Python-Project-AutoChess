@@ -238,7 +238,7 @@ class HeroVisualiser:
         self.is_hero_power_enabled = True
 
     def draw(self, screen):
-        color = (255,255,255) if self.is_hero_power_enabled else (0,0,0)
+        color = (255,255,255) if self.is_hero_power_enabled and self.hero.can_use_hero_power() else (0,0,0)
         screen.blit(self.hero_icon, (self.x, self.y))
         pygame.draw.circle(screen,color, (self.x+self.width + 50, 450 + round(self.height/2)), self.hero_power_radius, 5)
         pygame.display.update()

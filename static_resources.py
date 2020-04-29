@@ -71,7 +71,7 @@ def get_hero_power_from_json(power):
     if power is None:
         return None
     passive = HeroStats()
-    hp = HeroPower(HeroPowerKind(power["kind"]), get_effect_from_Json(power["active"]), passive)
+    hp = HeroPower(HeroPowerKind(power["kind"]), get_effect_from_Json(power["active"]), passive, power["cost"])
     for attr in power["passive"]:
         setattr(passive, attr, power["passive"][attr])
     return hp
