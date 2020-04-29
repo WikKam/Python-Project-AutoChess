@@ -39,9 +39,12 @@ class TriggerOn(enum.Enum):
     on_death = 3
     whenever_minion_played = 4
     on_end_of_turn = 5
+    on_hero_power_pressed = 6
 
 
-def mapStatesToTriggerOn(before, after):
+def mapStatesToTriggerOn(before, after, source):
+    if isinstance(source,HeroPower):
+        return TriggerOn.on_hero_power_pressed
     if before == State.in_hand and after == State.in_play:
         return TriggerOn.on_enter_play
     if before == State.in_shop and after == State.in_hand:
@@ -78,8 +81,13 @@ class EffectManager:
 
     def activate_effects(self, prev, current, source):
         target = None
-        for effect in source.effects:
-            trigger_on = mapStatesToTriggerOn(prev, current)
+        effects = None
+        if isinstance(source,HeroPower):
+            effects = source.active_effects
+        else:
+            effects = source.effects
+        for effect in effects:
+            trigger_on = mapStatesToTriggerOn(prev, current, source)
             if trigger_on == effect.trigger_when:
                 if effect.kind == TargetKind.random:
                     target = self.pick_random_targets(effect, source)
@@ -89,6 +97,7 @@ class EffectManager:
                     target = self.get_matching_minions_array(effect, source)
             if target:
                 effect.trigger_effect(source, target)
+
 
     def __init__(self, minions_in_play):
         self.minions_in_play = minions_in_play
@@ -185,14 +194,14 @@ def find_first_free_index(lt):
 
 class HeroStats:
 
-    def __init__(self):
-        self.max_minion_no = 7
+    def __init__(self, max_minion_no=7, start_hp=30, starting_tier=1, max_gold=10, starting_gold=3):
+        self.max_minion_no = max_minion_no
         self.max_hand_no = 6
-        self.start_hp = 30
+        self.start_hp = start_hp
         self.max_tier = 6
-        self.starting_tier = 1
-        self.max_gold = 10
-        self.starting_gold = 3
+        self.starting_tier = starting_tier
+        self.max_gold = max_gold
+        self.starting_gold = starting_gold
         self.max_upgrade_cost = 6
         self.reroll_cost = 1
 
@@ -201,8 +210,9 @@ class Hero:
 
     def __init__(self, name, hero_power, icon):
         self.hero_stats = HeroStats()
-        self.name = name
         self.hero_power = hero_power
+        self.override_stats_from_passive()
+        self.name = name
         self.current_tier = self.hero_stats.starting_tier
         self.current_hp = self.hero_stats.start_hp
         self.is_dead = False
@@ -223,7 +233,7 @@ class Hero:
         if not self.can_upgrade_tier(): return False
         self.current_tier += 1
         self.current_gold -= self.current_upgrade_cost
-        self.current_upgrade_cost = self.max_upgrade_cost
+        self.current_upgrade_cost = self.current_max_gold + 2
         return True
 
     def update_HP(self, val):
@@ -306,7 +316,22 @@ class Hero:
         return self.current_gold >= self.reroll_cost
 
     def override_stats_from_passive(self):
-        pass
+        if self.hero_power is None: return
+        print("hero power is not none")
+        if self.hero_power.kind == HeroPowerKind.passive:
+           # self.hero_stats = self.hero_power.passive_effects
+            setattr(self,"hero_stats",self.hero_power.passive_effects)
+            print("hero stats should be overwritten")
+            print(self.hero_stats.starting_tier)
+            print(self.hero_stats.starting_gold)
+
+    def activate_hero_power(self):
+        if self.hero_power.kind == HeroPowerKind.passive:
+            return
+        else:
+            self.effect_manager.activate_effects(None, None, self.hero_power)
+
+
 
 
 class Player:
@@ -323,8 +348,8 @@ class Player:
 
 
 class HeroPower:
-    def __init__(self, hero, kind, active_effects, passive_effects):
-        self.hero = hero
+    def __init__(self, kind, active_effects, passive_effects):
         self.kind = kind
         self.active_effects = active_effects
         self.passive_effects = passive_effects
+

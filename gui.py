@@ -10,27 +10,7 @@ from pprint import pprint
 
 from gameElements import Hero
 from gameElements import Player
-
-
-def get_effect_from_Json(effects):
-    return [StatBuffEffect(effect["health"],
-                           effect["attack"],
-                           TriggerOn(effect["trigger_when"]),
-                           TargetKind(effect["kind"]),
-                           effect["target_tribe"]) for effect in effects if effect["type"] == "StatBuff"]
-
-
-def get_minions_from_Json():
-    ret = []
-    with open('minions.json') as json_file:
-        data = json.load(json_file)
-        for minion in data['minions']:
-            m = Minion(minion["name"], Tribe(minion["tribe"]), get_effect_from_Json(minion["effects"]),
-                       State(minion["state"]),
-                       Stats(minion["stats"]["health"], minion["stats"]["attack"], minion["stats"]["tier"]),
-                       minion["icon_path"])
-            ret.append(m)
-    return ret
+from static_resources import create_image_with_size, get_minions_from_Json
 
 
 def is_clicked(pos, x, y, width, height):
@@ -94,6 +74,7 @@ class ShopVisualiser:
         self.minions_in_shop = []
         print(self.minions_in_shop.__len__())
         self.gold = GoldVisualiser(player.hero)
+        self.hero = HeroVisualiser(player.hero)
         self.upgradeButton = UpgradeTavernButton(player.hero)
         self.roll = RollMinionsButton(player.hero)
         self.all_minions = get_minions_from_Json()
@@ -109,6 +90,7 @@ class ShopVisualiser:
         pygame.draw.line(screen, (0, 255, 255), (650, 600), (650, 450))
         self.gold.draw(screen)
         self.upgradeButton.draw(screen)
+        self.hero.draw(screen)
         self.roll.draw(screen)
         for mb in self.minion_btns:
             mb.draw(screen)
@@ -242,3 +224,30 @@ class CombatVisualiser:
             self.minions_buttons.append(mb)
         for mb in self.minions_buttons:
             mb.draw(screen)
+
+
+class HeroVisualiser:
+    def __init__(self, hero):
+        self.hero = hero
+        self.x = 300
+        self.y = 450
+        self.width = 130
+        self.height = 130
+        self.hero_icon = create_image_with_size(hero.icon, self.width, self.height)
+        self.hero_power_radius = 50
+        self.is_hero_power_enabled = True
+
+    def draw(self, screen):
+        color = (255,255,255) if self.is_hero_power_enabled else (0,0,0)
+        screen.blit(self.hero_icon, (self.x, self.y))
+        pygame.draw.circle(screen,color, (self.x+self.width + 50, 450 + round(self.height/2)), self.hero_power_radius, 5)
+        pygame.display.update()
+
+    def onclick(self, pos):
+        distance = ((pos[0] - (self.x+self.width + 50))**2 + (pos[1] - (450 + round(self.height/2)))**2)**(1/2)
+        if distance < self.hero_power_radius and self.is_hero_power_enabled:
+            print("click")
+            self.hero.activate_hero_power()
+            self.is_hero_power_enabled = False
+            return True
+        return False

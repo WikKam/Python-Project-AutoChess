@@ -2,47 +2,142 @@
   "heroes": [
     {
       "name": "akali",
-      "power" : null,
+      "power" : {
+        "kind": 2,
+        "passive":{},
+        "active": [{
+        "type": "StatBuff",
+        "trigger_when": 6,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }]
+      },
       "image": "heroes_icons/akali.jpg"
     },
     {
       "name": "darius",
-      "power" : null,
+      "power" : {
+        "kind": 1,
+        "passive": {
+          "starting_tier": 4,
+          "starting_gold": 10
+        },
+        "active":[]
+      },
       "image": "heroes_icons/darius.jpg"
     },
     {
       "name": "draven",
-      "power" : null,
+      "power" : {
+        "kind": 2,
+        "passive":{},
+        "active": [{
+        "type": "StatBuff",
+        "trigger_when": 6,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }]
+      },
       "image": "heroes_icons/draven.jpg"
     },
     {
       "name": "katarina",
-      "power" : null,
+      "power" : {
+        "kind": 2,
+        "passive":{},
+        "active": [{
+        "type": "StatBuff",
+        "trigger_when": 6,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }]
+      },
       "image": "heroes_icons/katarina.jpg"
     },
     {
       "name": "kha'zix",
-      "power" : null,
+      "power" : {
+        "kind": 2,
+        "passive":{},
+        "active": [{
+        "type": "StatBuff",
+        "trigger_when": 6,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }]
+      },
       "image": "heroes_icons/kha_zix.jpg"
     },
     {
       "name": "lee sin",
-      "power" : null,
+      "power" : {
+        "kind": 2,
+        "passive":{},
+        "active": [{
+        "type": "StatBuff",
+        "trigger_when": 6,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }]
+      },
       "image": "heroes_icons/lee_sin.jpg"
     },
     {
       "name": "veigar",
-      "power" : null,
+      "power" : {
+        "kind": 2,
+        "passive":{},
+        "active": [{
+        "type": "StatBuff",
+        "trigger_when": 6,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }]
+      },
       "image": "heroes_icons/veigar.jpg"
     },
     {
       "name": "vladimir",
-      "power" : null,
+      "power" : {
+        "passive":{},
+        "kind": 2,
+        "active": [{
+        "type": "StatBuff",
+        "trigger_when": 6,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }]
+      },
       "image": "heroes_icons/vladimir.jpg"
     },
     {
       "name": "volibear",
-      "power" : null,
+      "power" : {
+        "kind": 2,
+        "passive":{},
+        "active": [{
+        "type": "StatBuff",
+        "trigger_when": 6,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }]
+      },
       "image": "heroes_icons/volibear.jpg"
     }
   ]

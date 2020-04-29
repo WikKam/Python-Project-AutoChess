@@ -26,6 +26,8 @@ def shopping(players, current_player, n, clock, screen):
                     sr.redraw_shop(screen, shop)
                 if shop.roll.onclick(pos, shop):
                     sr.redraw_shop(screen, shop)
+                if shop.hero.onclick(pos):
+                    sr.redraw_shop(screen,shop)
                 for btn in shop.minion_btns:
                     if btn.onclick(pos, shop):
                         sr.redraw_shop(screen, shop)
@@ -68,4 +70,5 @@ def combat(players, current_player, n, clock, screen):
                 running = False
         if not timer:
             running = False
+            players[current_player].hero.on_new_turn()
             shopping(players, current_player, n, clock, screen)
