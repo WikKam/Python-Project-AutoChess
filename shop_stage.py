@@ -32,6 +32,7 @@ def shopping(players, current_player, n, clock, screen):
                 for btn in shop.minion_btns:
                     if btn.onclick(pos, shop):
                         sr.redraw_shop(screen, shop)
+                n.send(players[current_player])
         if not timer:
             n.send(players[current_player])
             shop.player.hero.on_turn_end()
@@ -42,6 +43,9 @@ def shopping(players, current_player, n, clock, screen):
 
 def combat(players, current_player, n, clock, screen):
     start_time = pygame.time.get_ticks()
+    players, opponent = n.send(players[current_player])
+    print(players[current_player].get_hero().get_minions())
+    print(players[opponent].get_hero().get_minions())
     players, opponent = n.send(players[current_player])
     minions = list(filter(None, copy.deepcopy(players[current_player].get_hero().get_minions())))
     print(players[opponent])
@@ -56,8 +60,11 @@ def combat(players, current_player, n, clock, screen):
     me_target = 0
     enemy_attacker = 0
     attack_time = pygame.time.get_ticks()
-    if not current_player % 2:
-        attack_time -= 2000
+    attack_time_enemy = pygame.time.get_ticks()
+    if current_player % 2:
+        attack_time -= 3000
+    else:
+        attack_time_enemy -= 3000
     print("wchodzę do walki")
     print(minions_opponent)
     print(minions)
@@ -72,13 +79,13 @@ def combat(players, current_player, n, clock, screen):
             if pygame.time.get_ticks() - attack_time > 3000:
                 minion_attacker, target = attack(minions, minions_opponent, minion_attacker, target)
                 attack_time = pygame.time.get_ticks()
-            else:
-                enemy_attacker, me_target = attack(minions_opponent, minions, enemy_attacker, me_target)
+                if pygame.time.get_ticks() - attack_time_enemy > 3000:
+                    enemy_attacker, me_target = attack(minions_opponent, minions, enemy_attacker, me_target)
         else:
             if pygame.time.get_ticks() - attack_time > 3000:
                 minion_attacker, target = attack(minions, minions_opponent, minion_attacker, target)
                 attack_time = pygame.time.get_ticks()
-            else:
+            if pygame.time.get_ticks() - attack_time_enemy > 3000:
                 enemy_attacker, me_target = attack(minions_opponent, minions, enemy_attacker, me_target)
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
