@@ -7,7 +7,7 @@ from gameElements import Stats
 import static_resources as sr
 import pickle
 
-server = "192.168.1.108"  # local host  cmd -> ipconfig -> IPv4 Address     192.168.1.108
+server = "192.168.0.113"  # local host  cmd -> ipconfig -> IPv4 Address     192.168.1.108 192.168.0.113
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,12 +30,10 @@ def threaded_client(conn, current_player):
     reply = ""
     while True:
         try:
-            data = pickle.loads(conn.recv(2048*16))
-            if data is list:
-                players_game = data
-            else:
-                players[current_player] = data
-                players_game = players
+            data = pickle.loads(conn.recv(2048 * 16))
+
+            players[current_player] = data
+            players_game = players
 
             if not data:
                 print("Disconnected")
