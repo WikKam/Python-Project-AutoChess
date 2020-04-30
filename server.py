@@ -27,27 +27,18 @@ def threaded_client(conn, current_player):
     info = players, current_player
     conn.sendall(pickle.dumps(info))
     print(current_player)
-    player0_minions = []
-    player1_minions = []
     reply = ""
     while True:
         try:
-            data = pickle.loads(conn.recv(2048*16))
-            if data is list: #Walka
-                if current_player == 1:
-                    player0_minions = data
-                    reply = players1_minions
-                else:
-                    player1_minions = data
-                    reply = players0_minions
+            data = pickle.loads(conn.recv(2048 * 16))
 
-            elif not data:
+            players[current_player] = data
+            players_game = players
+
+            if not data:
                 print("Disconnected")
                 break
-
             else:
-                players[current_player] = data
-                players_game = players
                 if current_player == 1:
                     reply = players_game, 0
                 else:

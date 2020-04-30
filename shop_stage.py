@@ -44,20 +44,24 @@ def combat(players, current_player, n, clock, screen):
     start_time = pygame.time.get_ticks()
     players, opponent = n.send(players[current_player])
     minions = list(filter(None, copy.deepcopy(players[current_player].get_hero().get_minions())))
+    print(players[opponent])
     minions_opponent = list(filter(None, copy.deepcopy(players[opponent].get_hero().get_minions())))
-    n.send(minions_opponent)
     screen.blit(sr.board, (0, 0))
     pygame.display.flip()
-    combat_viualiser = CombatVisualiser(players[current_player], players[opponent])
-    combat_viualiser.draw(screen)
+    combat_visualiser = CombatVisualiser(players[current_player], players[opponent])
+    combat_visualiser.draw(screen)
     running = True
     minion_attacker = 0
+    target = 0
+    me_target = 0
+    enemy_attacker = 0
     attack_time = pygame.time.get_ticks()
     if not current_player % 2:
         attack_time -= 2000
     print("wchodzę do walki")
+    print(minions_opponent)
+    print(minions)
     while running:
-        minions = n.send(minions_opponent)
         for m in minions:
             print(m.stats.health)
         for m in minions_opponent:
@@ -66,18 +70,25 @@ def combat(players, current_player, n, clock, screen):
         clock.tick(60)
         if current_player % 2:
             if pygame.time.get_ticks() - attack_time > 3000:
-                minion_attacker = attack(minions, minions_opponent, minion_attacker)
-                n.send(minions_opponent)
+                minion_attacker, target = attack(minions, minions_opponent, minion_attacker, target)
                 attack_time = pygame.time.get_ticks()
+            else:
+                enemy_attacker, me_target = attack(minions_opponent, minions, enemy_attacker, me_target)
         else:
             if pygame.time.get_ticks() - attack_time > 3000:
-                minion_attacker = attack(minions, minions_opponent, minion_attacker)
-                n.send(minions_opponent)
+                minion_attacker, target = attack(minions, minions_opponent, minion_attacker, target)
                 attack_time = pygame.time.get_ticks()
+            else:
+                enemy_attacker, me_target = attack(minions_opponent, minions, enemy_attacker, me_target)
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 running = False
-        if not timer:
+        if minions[len(minions)-1].isDead or minions_opponent[len(minions_opponent)-1].isDead:
             running = False
             players[current_player].hero.on_new_turn()
             shopping(players, current_player, n, clock, screen)
+        # if not timer:
+        #     running = False
+        #     players[current_player].hero.on_new_turn()
+        #     shopping(players, current_player, n, clock, screen)
+

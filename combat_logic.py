@@ -8,7 +8,10 @@ from gameElements import State
 from gameElements import Stats
 
 
-def attack(my_minion, opponen_minion, attacker_index):
-    opponen_minion[random.randin(0, len(opponen_minion))].stats.health -= my_minion[attacker_index].stats.attack
-    attacker_index += 1
-    return attacker_index % len(my_minion)
+def attack(my_minion, opponent_minion, attacker_index, target):
+    if my_minion[attacker_index].isDead:
+        return attack(my_minion, opponent_minion, (attacker_index + 1) % len(my_minion), target)
+    if opponent_minion[target].isDead:
+        return attack(my_minion, opponent_minion, attacker_index, (target+1) % len(opponent_minion))
+    my_minion[attacker_index].attack(opponent_minion[target])
+    return (attacker_index + 1) % len(my_minion), (target + 1) % len(opponent_minion)
