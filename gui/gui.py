@@ -1,15 +1,15 @@
 import pygame
-from gameElements import Minion, StatBuffEffect, TriggerOn, TargetKind
-from gameElements import Tribe
-from gameElements import State
-from gameElements import Stats
+from game_elements.gameElements import Minion, StatBuffEffect, TriggerOn, TargetKind
+from game_elements.gameElements import Tribe
+from game_elements.gameElements import State
+from game_elements.gameElements import Stats
 import json
 import random
 import copy
 from pprint import pprint
 
-from gameElements import Hero
-from gameElements import Player
+from game_elements.gameElements import Hero
+from game_elements.gameElements import Player
 from static_resources import create_image_with_size, get_minions_from_Json
 
 

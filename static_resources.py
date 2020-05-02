@@ -1,11 +1,18 @@
-from gameElements import *
+from game_elements.gameElements import *
 import pygame
 import time
 import json
+from server_communication.network import Network
 
 recruitment_time = 5
 shop_time = 20
 combat_time = 15
+clock = pygame.time.Clock()
+
+
+network = Network()
+current_player = network.get_player()
+
 
 def get_effect_from_Json(effects):
     return [StatBuffEffect(effect["health"],
@@ -17,7 +24,7 @@ def get_effect_from_Json(effects):
 
 def get_minions_from_Json():
     ret = []
-    with open('minions.json') as json_file:
+    with open('json/minions.json') as json_file:
         data = json.load(json_file)
         for minion in data['minions']:
             m = Minion(minion["name"], Tribe(minion["tribe"]), get_effect_from_Json(minion["effects"]),
@@ -26,6 +33,7 @@ def get_minions_from_Json():
                        minion["icon_path"])
             ret.append(m)
     return ret
+
 
 def create_image_with_size(path, x, y):
     result = pygame.image.load(path)
@@ -79,7 +87,7 @@ def get_hero_power_from_json(power):
 
 def get_heroes_from_Json():
     res = []
-    with open('heroes.json') as json_file:
+    with open('json/heroes.json') as json_file:
         data = json.load(json_file)
         for hero in data['heroes']:
             h = Hero(hero["name"], get_hero_power_from_json(hero["power"]), hero["image"])
@@ -89,29 +97,29 @@ def get_heroes_from_Json():
 
 # DIGITS
 digits = {
-    0: create_image_with_size("Digits/zero.PNG", 50, 70),
-    1: create_image_with_size("Digits/one.png", 50, 70),
-    2: create_image_with_size("Digits/two.png", 50, 70),
-    3: create_image_with_size("Digits/three.png", 50, 70),
-    4: create_image_with_size("Digits/four.png", 50, 70),
-    5: create_image_with_size("Digits/five.png", 50, 70),
-    6: create_image_with_size("Digits/six.png", 50, 70),
-    7: create_image_with_size("Digits/seven.png", 50, 70),
-    8: create_image_with_size("Digits/eight.png", 50, 70),
-    9: create_image_with_size("Digits/nine.PNG", 50, 70)
+    0: create_image_with_size("images/Digits/zero.PNG", 50, 70),
+    1: create_image_with_size("images/Digits/one.png", 50, 70),
+    2: create_image_with_size("images/Digits/two.png", 50, 70),
+    3: create_image_with_size("images/Digits/three.png", 50, 70),
+    4: create_image_with_size("images/Digits/four.png", 50, 70),
+    5: create_image_with_size("images/Digits/five.png", 50, 70),
+    6: create_image_with_size("images/Digits/six.png", 50, 70),
+    7: create_image_with_size("images/Digits/seven.png", 50, 70),
+    8: create_image_with_size("images/Digits/eight.png", 50, 70),
+    9: create_image_with_size("images/Digits/nine.PNG", 50, 70)
 }
 
 recruitment_digits = {
-    0: create_image_with_size("Digits/zero_red.png", 50, 70),
-    1: create_image_with_size("Digits/one_red.png", 50, 70),
-    2: create_image_with_size("Digits/two_red.png", 50, 70),
-    3: create_image_with_size("Digits/three_red.png", 50, 70),
-    4: create_image_with_size("Digits/four_red.png", 50, 70),
-    5: create_image_with_size("Digits/five_red.png", 50, 70),
-    6: create_image_with_size("Digits/six_red.png", 50, 70),
-    7: create_image_with_size("Digits/seven_red.png", 50, 70),
-    8: create_image_with_size("Digits/eight_red.png", 50, 70),
-    9: create_image_with_size("Digits/nine_red.png", 50, 70)
+    0: create_image_with_size("images/Digits/zero_red.png", 50, 70),
+    1: create_image_with_size("images/Digits/one_red.png", 50, 70),
+    2: create_image_with_size("images/Digits/two_red.png", 50, 70),
+    3: create_image_with_size("images/Digits/three_red.png", 50, 70),
+    4: create_image_with_size("images/Digits/four_red.png", 50, 70),
+    5: create_image_with_size("images/Digits/five_red.png", 50, 70),
+    6: create_image_with_size("images/Digits/six_red.png", 50, 70),
+    7: create_image_with_size("images/Digits/seven_red.png", 50, 70),
+    8: create_image_with_size("images/Digits/eight_red.png", 50, 70),
+    9: create_image_with_size("images/Digits/nine_red.png", 50, 70)
 }
 
 board = create_image_with_size("images/tmp_board.jpg", 800, 600)

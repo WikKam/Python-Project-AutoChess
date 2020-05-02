@@ -17,7 +17,7 @@
         "attack": 2,
         "tier": 1
       },
-      "icon_path": "minions_icons/Alchemist.png"
+      "icon_path": "images/minions_icons/Alchemist.png"
     },
     {
       "name": "Anti Mage",
@@ -36,7 +36,7 @@
         "attack": 3,
         "tier": 1
       },
-      "icon_path": "minions_icons/Anti_Mage.png"
+      "icon_path": "images/minions_icons/Anti_Mage.png"
     },
     {
       "name": "Axe",
@@ -55,7 +55,7 @@
         "attack": 2,
         "tier": 1
       },
-      "icon_path": "minions_icons/Axe.png"
+      "icon_path": "images/minions_icons/Axe.png"
     },
     {
       "name": "Bat Rider",
@@ -74,7 +74,7 @@
         "attack": 3,
         "tier": 1
       },
-      "icon_path": "minions_icons/Batrider.png"
+      "icon_path": "images/minions_icons/Batrider.png"
     },
     {
       "name": "Beastmaster",
@@ -93,7 +93,7 @@
         "attack": 1,
         "tier": 1
       },
-      "icon_path": "minions_icons/Beastmaster.png"
+      "icon_path": "images/minions_icons/Beastmaster.png"
     },
     {
       "name": "Bounty Hunter",
@@ -112,7 +112,7 @@
         "attack": 2,
         "tier": 1
       },
-      "icon_path": "minions_icons/Bounty_Hunter.png"
+      "icon_path": "images/minions_icons/Bounty_Hunter.png"
     },
     {
       "name": "Chaos Knight",
@@ -131,7 +131,7 @@
         "attack": 4,
         "tier": 1
       },
-      "icon_path": "minions_icons/Chaos_Knight.png"
+      "icon_path": "images/minions_icons/Chaos_Knight.png"
     },
     {
       "name": "Clockwerk",
@@ -150,7 +150,7 @@
         "attack": 3,
         "tier": 1
       },
-      "icon_path": "minions_icons/Clockwerk.png"
+      "icon_path": "images/minions_icons/Clockwerk.png"
     },
     {
       "name": "Drow Ranger",
@@ -162,7 +162,7 @@
         "attack": 5,
         "tier": 2
       },
-      "icon_path": "minions_icons/Drow_Ranger.png"
+      "icon_path": "images/minions_icons/Drow_Ranger.png"
     },
     {
       "name": "Enchantress",
@@ -174,7 +174,7 @@
         "attack": 3,
         "tier": 2
       },
-      "icon_path": "minions_icons/Enchantress.png"
+      "icon_path": "images/minions_icons/Enchantress.png"
     },
     {
       "name": "Enigma",
@@ -186,7 +186,7 @@
         "attack": 5,
         "tier": 2
       },
-      "icon_path": "minions_icons/Enigma.png"
+      "icon_path": "images/minions_icons/Enigma.png"
     },
     {
       "name": "Gyrocopter",
@@ -198,7 +198,7 @@
         "attack": 3,
         "tier": 2
       },
-      "icon_path": "minions_icons/Gyrocopter.png"
+      "icon_path": "images/minions_icons/Gyrocopter.png"
     },
     {
       "name": "Lone Druid",
@@ -210,7 +210,7 @@
         "attack": 4,
         "tier": 2
       },
-      "icon_path": "minions_icons/Lone_Druid.png"
+      "icon_path": "images/minions_icons/Lone_Druid.png"
     },
     {
       "name": "Mars",
@@ -222,7 +222,7 @@
         "attack": 7,
         "tier": 2
       },
-      "icon_path": "minions_icons/Mars.png"
+      "icon_path": "images/minions_icons/Mars.png"
     },
     {
       "name": "Medusa",
@@ -234,7 +234,7 @@
         "attack": 5,
         "tier": 3
       },
-      "icon_path": "minions_icons/Medusa.png"
+      "icon_path": "images/minions_icons/Medusa.png"
     },
     {
       "name": "Ogre Magi",
@@ -246,7 +246,7 @@
         "attack": 6,
         "tier": 3
       },
-      "icon_path": "minions_icons/Medusa.png"
+      "icon_path": "images/minions_icons/Medusa.png"
     },
     {
       "name": "Omniknight",
@@ -258,7 +258,7 @@
         "attack": 6,
         "tier": 3
       },
-      "icon_path": "minions_icons/Omniknight.png"
+      "icon_path": "images/minions_icons/Omniknight.png"
     },
      {
       "name": "Queen Of Pain",
@@ -270,7 +270,7 @@
         "attack": 9,
         "tier": 3
       },
-      "icon_path": "minions_icons/Queen_Of_Pain.png"
+      "icon_path": "images/minions_icons/Queen_Of_Pain.png"
     },
      {
       "name": "Shadow Fiend",
@@ -282,7 +282,7 @@
         "attack": 6,
         "tier": 3
       },
-      "icon_path": "minions_icons/Shadow_Fiend.png"
+      "icon_path": "images/minions_icons/Shadow_Fiend.png"
     },
      {
       "name": "Shadow Shaman",
@@ -294,7 +294,7 @@
         "attack": 6,
         "tier": 4
       },
-      "icon_path": "minions_icons/Shadow_Shaman.png"
+      "icon_path": "images/minions_icons/Shadow_Shaman.png"
     },
      {
       "name": "Slardar",
@@ -306,7 +306,7 @@
         "attack": 6,
         "tier": 4
       },
-      "icon_path": "minions_icons/Slardar.png"
+      "icon_path": "images/minions_icons/Slardar.png"
     },
     {
       "name": "Sven",
@@ -318,7 +318,7 @@
         "attack": 1,
         "tier": 4
       },
-      "icon_path": "minions_icons/Sven.png"
+      "icon_path": "images/minions_icons/Sven.png"
     },
     {
       "name": "Techies",
@@ -330,7 +330,7 @@
         "attack": 4,
         "tier": 4
       },
-      "icon_path": "minions_icons/Techies.png"
+      "icon_path": "images/minions_icons/Techies.png"
     },
     {
       "name": "Templar Assasin",
@@ -342,7 +342,7 @@
         "attack": 8,
         "tier": 4
       },
-      "icon_path": "minions_icons/Templar_Assassin.png"
+      "icon_path": "images/minions_icons/Templar_Assassin.png"
     },
     {
       "name": "Terrorblade",
@@ -354,7 +354,7 @@
         "attack": 10,
         "tier": 5
       },
-      "icon_path": "minions_icons/Terrorblade.png"
+      "icon_path": "images/minions_icons/Terrorblade.png"
     },
      {
       "name": "Tidehunter",
@@ -366,7 +366,7 @@
         "attack": 8,
         "tier": 5
       },
-      "icon_path": "minions_icons/Tidehunter.png"
+      "icon_path": "images/minions_icons/Tidehunter.png"
     },
      {
       "name": "Tinker",
@@ -378,7 +378,7 @@
         "attack": 5,
         "tier": 5
       },
-      "icon_path": "minions_icons/Tinker.png"
+      "icon_path": "images/minions_icons/Tinker.png"
     },
      {
       "name": "Tiny",
@@ -390,7 +390,7 @@
         "attack": 1,
         "tier": 5
       },
-      "icon_path": "minions_icons/Tiny.png"
+      "icon_path": "images/minions_icons/Tiny.png"
     },
      {
       "name": "Troll Warlord",
@@ -402,7 +402,7 @@
         "attack": 16,
         "tier": 6
       },
-      "icon_path": "minions_icons/Troll_Warlord.png"
+      "icon_path": "images/minions_icons/Troll_Warlord.png"
     },
      {
       "name": "Tusk",
@@ -414,7 +414,7 @@
         "attack": 14,
         "tier": 6
       },
-      "icon_path": "minions_icons/Tusk.png"
+      "icon_path": "images/minions_icons/Tusk.png"
     },
      {
       "name": "Venomancer",
@@ -426,7 +426,7 @@
         "attack": 1,
         "tier": 6
       },
-      "icon_path": "minions_icons/Venomancer.png"
+      "icon_path": "images/minions_icons/Venomancer.png"
     },
      {
       "name": "Windranger",
@@ -438,7 +438,7 @@
         "attack": 10,
         "tier": 6
       },
-      "icon_path": "minions_icons/Windranger.png"
+      "icon_path": "images/minions_icons/Windranger.png"
     },
      {
       "name": "Witch Doctor",
@@ -450,7 +450,7 @@
         "attack": 7,
         "tier": 6
       },
-      "icon_path": "minions_icons/Witch_Doctor.png"
+      "icon_path": "images/minions_icons/Witch_Doctor.png"
     },
      {
       "name": "Zeus",
@@ -462,7 +462,7 @@
         "attack": 20,
         "tier": 6
       },
-      "icon_path": "minions_icons/Zeus.png"
+      "icon_path": "images/minions_icons/Zeus.png"
     }
   ]
 }

@@ -1,17 +1,18 @@
 import pygame
 import static_resources as sr
-from network import Network
-from gui import *
-from gameElements import Minion, Player, Hero
-from gameElements import Tribe
-from gameElements import State
-from gameElements import Stats
-from combat_logic import attack
+from gui.gui import *
+from game_elements.gameElements import Minion, Player, Hero
+from game_elements.gameElements import Tribe
+from game_elements.gameElements import State
+from game_elements.gameElements import Stats
+from game_elements.combat_logic import attack
+from static_resources import clock
+from static_resources import current_player, network
 
 
-def shopping(players, current_player, n, clock, screen):
+def shopping(screen):
     start_time = pygame.time.get_ticks()
-    shop = ShopVisualiser(players[current_player])
+    shop = ShopVisualiser(current_player)
     sr.redraw_shop(screen, shop)
     running = True
     while running:
@@ -32,27 +33,27 @@ def shopping(players, current_player, n, clock, screen):
                 for btn in shop.minion_btns:
                     if btn.onclick(pos, shop):
                         sr.redraw_shop(screen, shop)
-                n.send(players[current_player])
+                network.send(current_player)
         if not timer:
-            n.send(players[current_player])
+            network.send(current_player)
             shop.player.hero.on_turn_end()
             pygame.time.delay(2500)
             running = False
-            combat(players, current_player, n, clock, screen)
+            combat(screen)
 
 
-def combat(players, current_player, n, clock, screen):
+def combat(screen):
     start_time = pygame.time.get_ticks()
-    players, opponent = n.send(players[current_player])
-    print(players[current_player].get_hero().get_minions())
+    players, opponent = network.send(current_player)
+    print(current_player.get_hero().get_minions())
     print(players[opponent].get_hero().get_minions())
-    players, opponent = n.send(players[current_player])
-    minions = list(filter(None, copy.deepcopy(players[current_player].get_hero().get_minions())))
+    players, opponent = n.send(current_player)
+    minions = list(filter(None, copy.deepcopy(current_player.get_hero().get_minions())))
     print(players[opponent])
     minions_opponent = list(filter(None, copy.deepcopy(players[opponent].get_hero().get_minions())))
     screen.blit(sr.board, (0, 0))
     pygame.display.flip()
-    combat_visualiser = CombatVisualiser(players[current_player], players[opponent])
+    combat_visualiser = CombatVisualiser(current_player, players[opponent])
     combat_visualiser.draw(screen)
     running = True
     minion_attacker = 0
@@ -61,7 +62,7 @@ def combat(players, current_player, n, clock, screen):
     enemy_attacker = 0
     attack_time = pygame.time.get_ticks()
     attack_time_enemy = pygame.time.get_ticks()
-    if current_player % 2:
+    if current_player.id % 2:
         attack_time -= 1000
     else:
         attack_time_enemy -= 1000
@@ -71,7 +72,7 @@ def combat(players, current_player, n, clock, screen):
     while running:
         timer = (sr.combat_time - (pygame.time.get_ticks() - start_time) // 1000)
         clock.tick(60)
-        if current_player % 2:
+        if current_player.id % 2:
             if pygame.time.get_ticks() - attack_time > 3000:
                 minion_attacker, target = attack(minions, minions_opponent, minion_attacker, target)
                 attack_time = pygame.time.get_ticks()
@@ -81,6 +82,7 @@ def combat(players, current_player, n, clock, screen):
                     print(m.stats.health)
             if pygame.time.get_ticks() - attack_time_enemy > 3000:
                 enemy_attacker, me_target = attack(minions_opponent, minions, enemy_attacker, me_target)
+                attack_time_enemy = pygame.time.get_ticks()
         else:
             if pygame.time.get_ticks() - attack_time > 3000:
                 minion_attacker, target = attack(minions, minions_opponent, minion_attacker, target)
@@ -91,18 +93,19 @@ def combat(players, current_player, n, clock, screen):
                     print(m.stats.health)
             if pygame.time.get_ticks() - attack_time_enemy > 3000:
                 enemy_attacker, me_target = attack(minions_opponent, minions, enemy_attacker, me_target)
+                attack_time_enemy = pygame.time.get_ticks()
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 running = False
         if minions[len(minions)-1].isDead or minions_opponent[len(minions_opponent)-1].isDead:
-            if minions[len(minions)-1].isDead:
+            if minions[-1].isDead:
                 print("Opponent won round")
             else:
                 print("You won round")
             running = False
-            players[current_player].hero.on_new_turn()
-            n.send(players[current_player])
-            shopping(players, current_player, n, clock, screen)
+            current_player.hero.on_new_turn()
+            network.send(current_player)
+            shopping(screen)
         # if not timer:
         #     running = False
         #     players[current_player].hero.on_new_turn()

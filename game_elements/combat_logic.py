@@ -1,11 +1,10 @@
 import pygame
 import static_resources as sr
-from network import Network
-from gui import *
-from gameElements import Minion, Player, Hero
-from gameElements import Tribe
-from gameElements import State
-from gameElements import Stats
+from gui.gui import *
+from game_elements.gameElements import Minion, Player, Hero
+from game_elements.gameElements import Tribe
+from game_elements.gameElements import State
+from game_elements.gameElements import Stats
 
 
 def attack(my_minion, opponent_minion, attacker_index, target):
