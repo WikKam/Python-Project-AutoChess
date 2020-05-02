@@ -2,10 +2,9 @@ import pygame
 from game_stages.recruitment_stage import recruitment
 from static_resources import waiting_background
 from static_resources import clock
-from static_resources import current_player, network
 
 
-def waiting(screen):
+def waiting(current_player, network, screen):
     screen.blit(waiting_background, (0, 0))
     pygame.display.flip()
     running = True
@@ -17,4 +16,4 @@ def waiting(screen):
                 running = False
         if players[opponent].ready:
             running = False
-            recruitment(screen)
+            recruitment(current_player, network, screen)

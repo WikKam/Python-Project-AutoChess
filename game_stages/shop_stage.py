@@ -7,10 +7,9 @@ from game_elements.gameElements import State
 from game_elements.gameElements import Stats
 from game_elements.combat_logic import attack
 from static_resources import clock
-from static_resources import current_player, network
 
 
-def shopping(screen):
+def shopping(current_player, network, screen):
     start_time = pygame.time.get_ticks()
     shop = ShopVisualiser(current_player)
     sr.redraw_shop(screen, shop)
@@ -39,10 +38,10 @@ def shopping(screen):
             shop.player.hero.on_turn_end()
             pygame.time.delay(2500)
             running = False
-            combat(screen)
+            combat(current_player, network, screen)
 
 
-def combat(screen):
+def combat(current_player, network, screen):
     start_time = pygame.time.get_ticks()
     players, opponent = network.send(current_player)
     print(current_player.get_hero().get_minions())
@@ -105,7 +104,7 @@ def combat(screen):
             running = False
             current_player.hero.on_new_turn()
             network.send(current_player)
-            shopping(screen)
+            shopping(current_player, network, screen)
         # if not timer:
         #     running = False
         #     players[current_player].hero.on_new_turn()

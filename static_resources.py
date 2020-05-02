@@ -10,10 +10,6 @@ combat_time = 15
 clock = pygame.time.Clock()
 
 
-network = Network()
-current_player = network.get_player()
-
-
 def get_effect_from_Json(effects):
     return [StatBuffEffect(effect["health"],
                            effect["attack"],

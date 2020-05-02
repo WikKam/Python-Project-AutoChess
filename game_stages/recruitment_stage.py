@@ -4,11 +4,10 @@ from game_stages.shop_stage import shopping
 from game_elements.gameElements import Player, Hero
 import random
 from static_resources import clock
-from static_resources import network, current_player
 from Utilities.recruitments_helper import is_clicked, recruitment_visualizer
 
 
-def recruitment(screen):
+def recruitment(current_player, network, screen):
     player_hero = None
     heroes = []
     while len(heroes) < 3:
@@ -39,4 +38,4 @@ def recruitment(screen):
             current_player.recruit_hero(player_hero)
             network.send(current_player)
             running = False
-            shopping(screen)
+            shopping(current_player, network, screen)
