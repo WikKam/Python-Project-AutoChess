@@ -1,16 +1,7 @@
 import pygame
-from gameElements import Minion, StatBuffEffect, TriggerOn, TargetKind
-from gameElements import Tribe
-from gameElements import State
-from gameElements import Stats
-import json
-import random
-import copy
-from pprint import pprint
+from utilities.json_helper import *
 
-from gameElements import Hero
-from gameElements import Player
-from static_resources import create_image_with_size, get_minions_from_Json
+from static_resources import create_image_with_size
 
 
 def is_clicked(pos, x, y, width, height):
@@ -118,7 +109,7 @@ class ShopVisualiser:
     def get_random_minions(self):
         self.minions_in_shop = self.roll.get_random_minions(self.all_minions)
         print("start");
-        for m in self.minions_in_shop: pprint(vars(m))
+        # for m in self.minions_in_shop: pprint(vars(m))
 
     def get_buttons(self):
         return self.minion_btns
