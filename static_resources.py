@@ -1,8 +1,8 @@
-from game_elements.gameElements import *
+from gameElements import *
 import pygame
 import time
 import json
-from server_communication.network import Network
+from network import Network
 
 recruitment_time = 5
 shop_time = 20

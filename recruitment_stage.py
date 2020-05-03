@@ -1,10 +1,10 @@
 import pygame
 import static_resources as sr
-from game_stages.shop_stage import shopping
-from game_elements.gameElements import Player, Hero
+from shop_stage import shopping
+from gameElements import Player, Hero
 import random
 from static_resources import clock
-from Utilities.recruitments_helper import is_clicked, recruitment_visualizer
+from recruitments_helper import is_clicked, recruitment_visualizer
 
 
 def recruitment(current_player, network, screen):

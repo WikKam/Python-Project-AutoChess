@@ -1,9 +1,9 @@
 import socket
 from _thread import *
-from game_elements.gameElements import Minion, Player, Hero
-from game_elements.gameElements import Tribe
-from game_elements.gameElements import State
-from game_elements.gameElements import Stats
+from gameElements import Minion, Player, Hero
+from gameElements import Tribe
+from gameElements import State
+from gameElements import Stats
 import static_resources as sr
 import pickle
 
@@ -25,7 +25,7 @@ players = [Player(None, 0), Player(None, 1)]
 
 def threaded_client(conn, current_player):
     players[current_player].ready = True
-    info = players[current_player]
+    info = players, current_player
     conn.sendall(pickle.dumps(info))
     print(current_player)
     while True:
