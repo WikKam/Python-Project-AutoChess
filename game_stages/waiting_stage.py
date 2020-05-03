@@ -1,5 +1,5 @@
 import pygame
-from recruitment_stage import recruitment
+from game_stages.recruitment_stage import recruitment
 from static_resources import waiting_background
 from static_resources import clock
 

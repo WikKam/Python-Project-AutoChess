@@ -1,22 +1,20 @@
 import pygame
 import static_resources as sr
-from gui import *
-from gameElements import Minion, Player, Hero
-from gameElements import Tribe
-from gameElements import State
-from gameElements import Stats
-from combat_logic import attack
+from gui.gui import *
+from game_elements.combat_logic import attack
 from static_resources import clock
+from utilities.timer_helper import shop_time, combat_time, timer_display
+from gui.stages_visualiser import redraw_shop
 
 
 def shopping(current_player, network, screen):
     start_time = pygame.time.get_ticks()
     shop = ShopVisualiser(current_player)
-    sr.redraw_shop(screen, shop)
+    redraw_shop(screen, shop)
     running = True
     while running:
-        timer = (sr.shop_time - (pygame.time.get_ticks() - start_time) // 1000)
-        sr.timer_display(timer, 665, 500, screen, "shop")
+        timer = (shop_time - (pygame.time.get_ticks() - start_time) // 1000)
+        timer_display(timer, 665, 500, screen, "shop")
         clock.tick(60)
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
@@ -24,14 +22,14 @@ def shopping(current_player, network, screen):
             if e.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if shop.upgradeButton.onclick(pos,shop):
-                    sr.redraw_shop(screen, shop)
+                    redraw_shop(screen, shop)
                 if shop.roll.onclick(pos, shop):
-                    sr.redraw_shop(screen, shop)
+                    redraw_shop(screen, shop)
                 if shop.hero.onclick(pos):
-                    sr.redraw_shop(screen,shop)
+                    redraw_shop(screen,shop)
                 for btn in shop.minion_btns:
                     if btn.onclick(pos, shop):
-                        sr.redraw_shop(screen, shop)
+                        redraw_shop(screen, shop)
                 network.send(current_player)
         if not timer:
             network.send(current_player)
@@ -44,9 +42,6 @@ def shopping(current_player, network, screen):
 def combat(current_player, network, screen):
     start_time = pygame.time.get_ticks()
     players, opponent = network.send(current_player)
-    print(current_player.get_hero().get_minions())
-    print(players[opponent].get_hero().get_minions())
-    players, opponent = n.send(current_player)
     minions = list(filter(None, copy.deepcopy(current_player.get_hero().get_minions())))
     print(players[opponent])
     minions_opponent = list(filter(None, copy.deepcopy(players[opponent].get_hero().get_minions())))
@@ -66,10 +61,8 @@ def combat(current_player, network, screen):
     else:
         attack_time_enemy -= 1000
     print("wchodzę do walki")
-    print(minions_opponent)
-    print(minions)
     while running:
-        timer = (sr.combat_time - (pygame.time.get_ticks() - start_time) // 1000)
+        timer = (combat_time - (pygame.time.get_ticks() - start_time) // 1000)
         clock.tick(60)
         if current_player.id % 2:
             if pygame.time.get_ticks() - attack_time > 3000:

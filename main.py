@@ -1,6 +1,6 @@
 import pygame
-from waiting_stage import waiting
-from network import Network
+from game_stages.waiting_stage import waiting
+from server_comunication.network import Network
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
