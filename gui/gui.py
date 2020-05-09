@@ -36,7 +36,7 @@ class MinionButton:
                                   (255, 255, 255)), (self.x + self.width - 10, self.y + self.height / 2))
         win.blit(self.font.render(str(self.minion.stats.tier), True, (255, 255, 255)),
                  (self.x + self.width / 2 - 5, self.y))
-        pygame.display.update()
+        #pygame.display.update()
 
     def get_minion(self):
         return self.minion
@@ -72,13 +72,13 @@ class MinionButton:
             self.is_hovered = True
             img = create_image_with_size("images/minions_cards/Alchemist.png", 200, 300);
             screen.blit(img, (self.hover_x, self.y - 50, 100, 100))
-            pygame.display.update((self.hover_x, self.y - 50, 100, 100))
+            #pygame.display.update((self.hover_x, self.y - 50, 100, 100))
             print("hovered over minion button")
             return False
         else:
             self.is_hovered = False
             if current_state:
-                pygame.display.update((self.hover_x, self.y - 50, 100, 100))
+                #pygame.display.update((self.hover_x, self.y - 50, 100, 100))
                 return True
         return False
 
@@ -109,7 +109,7 @@ class ShopVisualiser:
         self.roll.draw(screen)
         for mb in self.minion_btns:
             mb.draw(screen)
-        pygame.display.flip()
+        #pygame.display.flip()
 
     def make_minion_buttons(self):
         offset = 50
@@ -204,9 +204,11 @@ class RollMinionsButton:
 
     def draw(self, screen):
         color = (100, 100, 100) if self.hero.can_reroll_tavern() else (220, 220, 220)
-        pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
-        screen.blit(self.font.render(str(self.hero.reroll_cost), True, (0, 0, 0)),
-                    (self.x + self.width / 2 - 5, self.y))
+        img = pygame.image.load("images/Buttons/roll.png")
+        #pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
+        screen.blit(img,(self.x, self.y))
+        screen.blit(self.font.render(str(self.hero.reroll_cost), True, color),
+                    (self.x + self.width / 2 + 8, self.y))
 
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
@@ -259,7 +261,7 @@ class HeroVisualiser:
         #screen.blit(img, (self.x + self.width, 450))
         pygame.draw.circle(screen, color, (self.x + self.width + 50, 450 + round(self.height / 2)),
                            self.hero_power_radius, 5)
-        pygame.display.update()
+ #       pygame.display.update()
 
     def onclick(self, pos):
         distance = ((pos[0] - (self.x + self.width + 50)) ** 2 + (pos[1] - (450 + round(self.height / 2))) ** 2) ** (

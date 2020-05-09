@@ -13,36 +13,39 @@ def shopping(current_player, network, screen):
     redraw_shop(screen, shop)
     running = True
     while running:
+        clock.tick(60)
+        #redraw_shop(screen,shop)
         timer = (shop_time - (pygame.time.get_ticks() - start_time) // 1000)
         timer_display(timer, 665, 500, screen, "shop")
-        clock.tick(60)
         for e in pygame.event.get():
+            needs_update = False
             pos = pygame.mouse.get_pos()
             if e.type == pygame.QUIT:
                 running = False
             if e.type == pygame.MOUSEBUTTONDOWN:
                 if shop.upgradeButton.onclick(pos,shop):
-                    redraw_shop(screen, shop)
+                    needs_update = True
                 if shop.roll.onclick(pos, shop):
-                    redraw_shop(screen, shop)
+                    needs_update = True
                 if shop.hero.onclick(pos):
-                    redraw_shop(screen,shop)
+                    needs_update = True
                 for btn in shop.minion_btns:
                     if btn.onclick(pos, shop):
-                        redraw_shop(screen, shop)
+                        needs_update = True
                 network.send(current_player)
             if e.type == pygame.MOUSEMOTION:
                 for btn in shop.minion_btns:
                      if btn.update_hover(pos,screen):
-                       redraw_shop(screen,shop)
-
+                         needs_update = True
+            if needs_update:
+                redraw_shop(screen,shop)
         if not timer:
             network.send(current_player)
             shop.player.hero.on_turn_end()
             pygame.time.delay(2500)
             running = False
             combat(current_player, network, screen)
-
+        #redraw_shop(screen, shop)
 
 def combat(current_player, network, screen):
     start_time = pygame.time.get_ticks()
