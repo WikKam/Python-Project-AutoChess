@@ -15,7 +15,7 @@
         "attack": 1
       }]
       },
-      "image": "images/heroes_icons/akali.jpg"
+      "image": "images/heroes_portraits/Akali.png"
     },
     {
       "name": "darius",
@@ -28,7 +28,7 @@
         },
         "active":[]
       },
-      "image": "images/heroes_icons/darius.jpg"
+      "image": "images/heroes_portraits/Darius.png"
     },
     {
       "name": "draven",
@@ -45,7 +45,7 @@
         "attack": 1
       }]
       },
-      "image": "images/heroes_icons/draven.jpg"
+      "image": "images/heroes_portraits/Draven.png"
     },
     {
       "name": "katarina",
@@ -62,7 +62,7 @@
         "attack": 1
       }]
       },
-      "image": "images/heroes_icons/katarina.jpg"
+      "image": "images/heroes_portraits/Katarina.png"
     },
     {
       "name": "kha'zix",
@@ -79,7 +79,7 @@
         "attack": 1
       }]
       },
-      "image": "images/heroes_icons/kha_zix.jpg"
+      "image": "images/heroes_portraits/Kha Zix.png"
     },
     {
       "name": "lee sin",
@@ -96,7 +96,7 @@
         "attack": 1
       }]
       },
-      "image": "images/heroes_icons/lee_sin.jpg"
+      "image": "images/heroes_portraits/Lee Sin.png"
     },
     {
       "name": "veigar",
@@ -113,7 +113,7 @@
         "attack": 1
       }]
       },
-      "image": "images/heroes_icons/veigar.jpg"
+      "image": "images/heroes_portraits/Veigar.png"
     },
     {
       "name": "vladimir",
@@ -130,7 +130,7 @@
         "attack": 1
       }]
       },
-      "image": "images/heroes_icons/vladimir.jpg"
+      "image": "images/heroes_portraits/Vladimir.png"
     },
     {
       "name": "volibear",
@@ -147,7 +147,7 @@
         "attack": 1
       }]
       },
-      "image": "images/heroes_icons/volibear.jpg"
+      "image": "images/heroes_portraits/Volibear.png"
     }
   ]
 }

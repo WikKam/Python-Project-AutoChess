@@ -20,6 +20,12 @@ class MinionButton:
         self.height = 65
         self.icon = self.create_icon()
         self.font = pygame.font.SysFont('Arial', 25)
+        self.is_hovered = False
+        self.hover_x = self.calculate_hover_x()
+
+    def calculate_hover_x(self):
+        w, h = pygame.display.get_surface().get_size()
+        return self.x + self.width + 10 if self.x + self.width + 10 + 200 < w else self.x - 210
 
     def draw(self, win):
         # pygame.draw.rect(win, (0, 200, 0), (self.x, self.y, self.width, self.height))
@@ -57,6 +63,24 @@ class MinionButton:
                     return True
         else:
             return False
+
+    def update_hover(self, pos, screen):
+        current_state = self.is_hovered
+        if is_clicked(pos, self.x, self.y, self.width, self.height):
+            if current_state:
+                return False
+            self.is_hovered = True
+            img = create_image_with_size("images/minions_cards/Alchemist.png", 200, 300);
+            screen.blit(img, (self.hover_x, self.y - 50, 100, 100))
+            pygame.display.update((self.hover_x, self.y - 50, 100, 100))
+            print("hovered over minion button")
+            return False
+        else:
+            self.is_hovered = False
+            if current_state:
+                pygame.display.update((self.hover_x, self.y - 50, 100, 100))
+                return True
+        return False
 
 
 class ShopVisualiser:
@@ -108,7 +132,7 @@ class ShopVisualiser:
 
     def get_random_minions(self):
         self.minions_in_shop = self.roll.get_random_minions(self.all_minions)
-        print("start");
+        print("start")
         # for m in self.minions_in_shop: pprint(vars(m))
 
     def get_buttons(self):
@@ -220,22 +244,26 @@ class CombatVisualiser:
 class HeroVisualiser:
     def __init__(self, hero):
         self.hero = hero
-        self.x = 300
-        self.y = 450
-        self.width = 130
-        self.height = 130
+        self.x = 285
+        self.y = 430
+        self.width = 150
+        self.height = 200
         self.hero_icon = create_image_with_size(hero.icon, self.width, self.height)
         self.hero_power_radius = 50
         self.is_hero_power_enabled = True
 
     def draw(self, screen):
-        color = (255,255,255) if self.is_hero_power_enabled and self.hero.can_use_hero_power() else (0,0,0)
+        color = (255, 255, 255) if self.is_hero_power_enabled and self.hero.can_use_hero_power() else (0, 0, 0)
         screen.blit(self.hero_icon, (self.x, self.y))
-        pygame.draw.circle(screen,color, (self.x+self.width + 50, 450 + round(self.height/2)), self.hero_power_radius, 5)
+        #img = create_image_with_size("images/hero_powers_pic/sample.png",150,150)
+        #screen.blit(img, (self.x + self.width, 450))
+        pygame.draw.circle(screen, color, (self.x + self.width + 50, 450 + round(self.height / 2)),
+                           self.hero_power_radius, 5)
         pygame.display.update()
 
     def onclick(self, pos):
-        distance = ((pos[0] - (self.x+self.width + 50))**2 + (pos[1] - (450 + round(self.height/2)))**2)**(1/2)
+        distance = ((pos[0] - (self.x + self.width + 50)) ** 2 + (pos[1] - (450 + round(self.height / 2))) ** 2) ** (
+                    1 / 2)
         if distance < self.hero_power_radius and self.is_hero_power_enabled:
             print("click")
             self.hero.activate_hero_power()
