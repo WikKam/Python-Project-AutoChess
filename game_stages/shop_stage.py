@@ -10,20 +10,19 @@ from gui.stages_visualiser import redraw_shop
 def shopping(current_player, network, screen):
     start_time = pygame.time.get_ticks()
     shop = ShopVisualiser(current_player)
-    redraw_shop(screen, shop)
+    redraw_shop(screen, shop,[0,0],shop_time)
     running = True
     while running:
         clock.tick(60)
-        #redraw_shop(screen,shop)
+        # redraw_shop(screen,shop)
         timer = (shop_time - (pygame.time.get_ticks() - start_time) // 1000)
-        timer_display(timer, 665, 500, screen, "shop")
+        pos = pygame.mouse.get_pos()
         for e in pygame.event.get():
             needs_update = False
-            pos = pygame.mouse.get_pos()
             if e.type == pygame.QUIT:
                 running = False
             if e.type == pygame.MOUSEBUTTONDOWN:
-                if shop.upgradeButton.onclick(pos,shop):
+                if shop.upgradeButton.onclick(pos, shop):
                     needs_update = True
                 if shop.roll.onclick(pos, shop):
                     needs_update = True
@@ -33,19 +32,14 @@ def shopping(current_player, network, screen):
                     if btn.onclick(pos, shop):
                         needs_update = True
                 network.send(current_player)
-            if e.type == pygame.MOUSEMOTION:
-                for btn in shop.minion_btns:
-                     if btn.update_hover(pos,screen):
-                         needs_update = True
-            if needs_update:
-                redraw_shop(screen,shop)
+        redraw_shop(screen, shop, pos, timer)
         if not timer:
             network.send(current_player)
             shop.player.hero.on_turn_end()
             pygame.time.delay(2500)
             running = False
             combat(current_player, network, screen)
-        #redraw_shop(screen, shop)
+
 
 def combat(current_player, network, screen):
     start_time = pygame.time.get_ticks()
@@ -97,7 +91,7 @@ def combat(current_player, network, screen):
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 running = False
-        if minions[len(minions)-1].isDead or minions_opponent[len(minions_opponent)-1].isDead:
+        if minions[len(minions) - 1].isDead or minions_opponent[len(minions_opponent) - 1].isDead:
             if minions[-1].isDead:
                 print("Opponent won round")
             else:
@@ -110,4 +104,3 @@ def combat(current_player, network, screen):
         #     running = False
         #     players[current_player].hero.on_new_turn()
         #     shopping(players, current_player, n, clock, screen)
-

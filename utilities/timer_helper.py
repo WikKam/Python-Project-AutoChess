@@ -30,8 +30,6 @@ def timer_display(time, x, y, win, content):
         else:
             win.blit(create_image_with_size("images/beam_texture.jpg", 140, 80), (x - 10, y - 10))
             win.blit(recruitment_digits[time].convert_alpha(), (x + 30, y))
-    pygame.display.update()
-
 
 # DIGITS
 digits = {

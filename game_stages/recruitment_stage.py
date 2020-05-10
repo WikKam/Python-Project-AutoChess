@@ -39,6 +39,7 @@ def recruitment(current_player, network, screen):
             network.send(current_player)
             running = False
             shopping(current_player, network, screen)
+        pygame.display.flip()
 
 
 def is_clicked(pos, hero_nr):

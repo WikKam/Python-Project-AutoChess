@@ -28,7 +28,6 @@ class MinionButton:
         return self.x + self.width + 10 if self.x + self.width + 10 + 200 < w else self.x - 210
 
     def draw(self, win):
-        # pygame.draw.rect(win, (0, 200, 0), (self.x, self.y, self.width, self.height))
         win.blit(self.icon, (self.x, self.y))
         win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)),
                  (self.x, self.y + self.height / 2))
@@ -36,7 +35,6 @@ class MinionButton:
                                   (255, 255, 255)), (self.x + self.width - 10, self.y + self.height / 2))
         win.blit(self.font.render(str(self.minion.stats.tier), True, (255, 255, 255)),
                  (self.x + self.width / 2 - 5, self.y))
-        #pygame.display.update()
 
     def get_minion(self):
         return self.minion
@@ -48,7 +46,6 @@ class MinionButton:
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
             if self.minion.get_state() == State.in_shop:  # buying
-                print("KLIK")
                 if self.player.get_hero().buy_minion(self.minion):
                     shop.remove_from_shop(self.get_minion())
                     shop.make_minion_buttons()
@@ -65,23 +62,14 @@ class MinionButton:
             return False
 
     def update_hover(self, pos, screen):
-        current_state = self.is_hovered
         if is_clicked(pos, self.x, self.y, self.width, self.height):
-            if current_state:
-                return False
             self.is_hovered = True
-            img = create_image_with_size("images/minions_cards/Alchemist.png", 200, 300);
+            img = create_image_with_size("images/minions_cards/Alchemist.png", 200, 300)
             screen.blit(img, (self.hover_x, self.y - 50, 100, 100))
-            #pygame.display.update((self.hover_x, self.y - 50, 100, 100))
-            print("hovered over minion button")
-            return False
+            print("hover img blitted")
         else:
             self.is_hovered = False
-            if current_state:
-                #pygame.display.update((self.hover_x, self.y - 50, 100, 100))
-                return True
-        return False
-
+        #pygame.display.update((self.hover_x, self.y - 50, 100, 100))
 
 class ShopVisualiser:
     def __init__(self, player):
@@ -97,7 +85,6 @@ class ShopVisualiser:
         self.make_minion_buttons()
 
     def draw(self, screen):
-        pygame.display.update()
         pygame.draw.line(screen, (0, 255, 255), (0, 150), (800, 150))
         pygame.draw.line(screen, (0, 255, 255), (0, 450), (800, 450))
         pygame.draw.line(screen, (0, 255, 255), (0, 300), (800, 300))
@@ -109,7 +96,6 @@ class ShopVisualiser:
         self.roll.draw(screen)
         for mb in self.minion_btns:
             mb.draw(screen)
-        #pygame.display.flip()
 
     def make_minion_buttons(self):
         offset = 50
@@ -132,7 +118,6 @@ class ShopVisualiser:
 
     def get_random_minions(self):
         self.minions_in_shop = self.roll.get_random_minions(self.all_minions)
-        print("start")
         # for m in self.minions_in_shop: pprint(vars(m))
 
     def get_buttons(self):
@@ -150,7 +135,6 @@ class GoldVisualiser:
     def draw(self, win):
         counter = 0
         offset = 25
-        print(self.hero.current_gold)
         while counter < self.hero.current_gold:
             pygame.draw.rect(win, (255, 255, 10), (500 + counter * offset, 100, 20, 20))
             counter += 1
@@ -177,7 +161,6 @@ class UpgradeTavernButton:
         if is_clicked(pos, self.x, self.y, self.width, self.height):
             self.isEnabled = False
             success = self.hero.upgrade_tier()
-            if success: print("upgraded")
             return True
         return False
 
@@ -257,11 +240,8 @@ class HeroVisualiser:
     def draw(self, screen):
         color = (255, 255, 255) if self.is_hero_power_enabled and self.hero.can_use_hero_power() else (0, 0, 0)
         screen.blit(self.hero_icon, (self.x, self.y))
-        #img = create_image_with_size("images/hero_powers_pic/sample.png",150,150)
-        #screen.blit(img, (self.x + self.width, 450))
         pygame.draw.circle(screen, color, (self.x + self.width + 50, 450 + round(self.height / 2)),
                            self.hero_power_radius, 5)
- #       pygame.display.update()
 
     def onclick(self, pos):
         distance = ((pos[0] - (self.x + self.width + 50)) ** 2 + (pos[1] - (450 + round(self.height / 2))) ** 2) ** (
