@@ -14,7 +14,6 @@ def shopping(current_player, network, screen):
     running = True
     while running:
         clock.tick(60)
-        # redraw_shop(screen,shop)
         timer = (shop_time - (pygame.time.get_ticks() - start_time) // 1000)
         pos = pygame.mouse.get_pos()
         for e in pygame.event.get():

@@ -18,7 +18,7 @@ def get_minions_from_Json():
             m = Minion(minion["name"], Tribe(minion["tribe"]), get_effect_from_Json(minion["effects"]),
                        State(minion["state"]),
                        Stats(minion["stats"]["health"], minion["stats"]["attack"], minion["stats"]["tier"]),
-                       minion["icon_path"])
+                       minion["icon_path"], minion["card_path"])
             ret.append(m)
     return ret
 

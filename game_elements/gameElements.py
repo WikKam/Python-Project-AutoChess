@@ -22,6 +22,7 @@ class TargetKind(enum.Enum):
     targeted = 2
     self = 3
     all = 4
+    minion_that_changed_state = 5
 
 
 class State(enum.Enum):
@@ -40,10 +41,13 @@ class TriggerOn(enum.Enum):
     whenever_minion_played = 4
     on_end_of_turn = 5
     on_hero_power_pressed = 6
+    whenever_minion_bought = 7
+    whenever_minion_sold = 8
+    on_enter_shop = 9
 
 
 def mapStatesToTriggerOn(before, after, source):
-    if isinstance(source,HeroPower):
+    if isinstance(source, HeroPower):
         return TriggerOn.on_hero_power_pressed
     if before == State.in_hand and after == State.in_play:
         return TriggerOn.on_enter_play
@@ -53,7 +57,8 @@ def mapStatesToTriggerOn(before, after, source):
         return TriggerOn.on_death
     if before == State.in_play and after == State.on_battlefield:
         return TriggerOn.on_end_of_turn
-
+    if before == State.in_play and after == State.in_storage:
+        return TriggerOn.on_enter_shop
 
 class Effect:
     def __init__(self, trigger_when, kind, target_tribe):
@@ -72,32 +77,61 @@ class StatBuffEffect(Effect):
         self.attack = attack
 
     def trigger_effect(self, caster, targets):
+        if targets is None: return
         for target in targets:
+            print("efect from: " + caster.name)
             target.stats.update_health(self.health)
             target.stats.update_attack(self.attack)
+
+
+def pairs_match(source, current):
+    if source == TriggerOn.on_enter_play \
+            and current == TriggerOn.whenever_minion_played:
+        return True
+    elif source == TriggerOn.on_enter_hand \
+            and current == TriggerOn.whenever_minion_bought:
+        return True
+    elif source == TriggerOn.on_enter_shop \
+            and current == TriggerOn.whenever_minion_sold:
+        return True
+    return False
 
 
 class EffectManager:
 
     def activate_effects(self, prev, current, source):
-        target = None
         effects = None
-        if isinstance(source,HeroPower):
+        if isinstance(source, HeroPower):
             effects = source.active_effects
         else:
             effects = source.effects
+        trigger_on = mapStatesToTriggerOn(prev, current, source)
+        # checking effect of source minion
         for effect in effects:
-            trigger_on = mapStatesToTriggerOn(prev, current, source)
-            if trigger_on == effect.trigger_when:
-                if effect.kind == TargetKind.random:
-                    target = self.pick_random_targets(effect, source)
-                elif effect.kind == TargetKind.self:
-                    target = [source]
-                elif effect.kind == TargetKind.all:
-                    target = self.get_matching_minions_array(effect, source)
-            if target:
-                effect.trigger_effect(source, target)
+            if effect.trigger_when == trigger_on:
+                target = self.pick_target(effect, source)
+                if target:
+                    effect.trigger_effect(source, target)
+        # checking effects of minions on board
+        for m in self.minions_in_play:
+            if m is not None and m is not source:
+                for effect in m.effects:
+                    if pairs_match(trigger_on, effect.trigger_when):
+                        target = [source] if\
+                            effect.kind == \
+                            TargetKind.minion_that_changed_state else self.pick_target(effect, m)
+                        print("triggering effect of: " + m.name)
+                        effect.trigger_effect(m, target)
 
+    def pick_target(self, effect, source):
+        target = []
+        if effect.kind == TargetKind.random:
+            target = self.pick_random_targets(effect, source)
+        elif effect.kind == TargetKind.self:
+            target = [source]
+        elif effect.kind == TargetKind.all:
+            target = self.get_matching_minions_array(effect, source)
+        return target
 
     def __init__(self, minions_in_play):
         self.minions_in_play = minions_in_play
@@ -146,7 +180,7 @@ class Stats:
 
 
 class Minion:
-    def __init__(self, name, tribe, effects, state, stats, icon_path):
+    def __init__(self, name, tribe, effects, state, stats, icon_path, card_path):
         self.tribe = tribe
         self.effects = effects
         self.state = state
@@ -155,6 +189,7 @@ class Minion:
         self.isDead = False
         self.name = name
         self.icon_path = icon_path
+        self.card_path = card_path
 
     def attack(self, target):
         self.stats.update_stats_after_attack(target.combat_stats)
@@ -319,8 +354,8 @@ class Hero:
         if self.hero_power is None: return
         print("hero power is not none")
         if self.hero_power.kind == HeroPowerKind.passive:
-           # self.hero_stats = self.hero_power.passive_effects
-            setattr(self,"hero_stats",self.hero_power.passive_effects)
+            # self.hero_stats = self.hero_power.passive_effects
+            setattr(self, "hero_stats", self.hero_power.passive_effects)
             print("hero stats should be overwritten")
             print(self.hero_stats.starting_tier)
             print(self.hero_stats.starting_gold)
@@ -355,4 +390,3 @@ class HeroPower:
         self.active_effects = active_effects
         self.passive_effects = passive_effects
         self.cost = cost
-

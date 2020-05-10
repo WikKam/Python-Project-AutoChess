@@ -17,7 +17,8 @@
         "attack": 2,
         "tier": 1
       },
-      "icon_path": "images/minions_icons/Alchemist.png"
+      "icon_path": "images/minions_icons/Alchemist.png",
+      "card_path": "images/minions_cards/Alchemist.png"
     },
     {
       "name": "Anti Mage",
@@ -32,11 +33,12 @@
       }],
       "state": 1,
       "stats": {
-        "health": 2,
-        "attack": 3,
+        "health": 1,
+        "attack": 1,
         "tier": 1
       },
-      "icon_path": "images/minions_icons/Anti_Mage.png"
+      "icon_path": "images/minions_icons/Anti_Mage.png",
+      "card_path": "images/minions_cards/Anti_Mage.png"
     },
     {
       "name": "Axe",
@@ -51,41 +53,36 @@
       }],
       "state": 1,
       "stats": {
-        "health": 2,
+        "health": 3,
         "attack": 2,
         "tier": 1
       },
-      "icon_path": "images/minions_icons/Axe.png"
+      "icon_path": "images/minions_icons/Axe.png",
+      "card_path": "images/minions_cards/Axe.png"
     },
     {
       "name": "Bat Rider",
-      "tribe": 1,
-      "effects": [{
-        "type": "StatBuff",
-        "trigger_when": 1,
-        "kind": 1,
-        "target_tribe": 6,
-        "health": 1,
-        "attack": 1
-      }],
+      "tribe": 2,
+      "effects": [],
       "state": 1,
       "stats": {
         "health": 3,
         "attack": 3,
         "tier": 1
       },
-      "icon_path": "images/minions_icons/Batrider.png"
+      "icon_path": "images/minions_icons/Batrider.png",
+      "card_path": "images/minions_cards/Batrider.png"
     },
     {
       "name": "Beastmaster",
-      "tribe": 2,
+      "tribe": 1,
       "effects": [{
         "type": "StatBuff",
-        "trigger_when": 1,
+        "trigger_when": 4,
         "kind": 1,
-        "target_tribe": 6,
-        "health": 1,
-        "attack": 1
+        "target_tribe": 5,
+        "health": 0,
+        "attack": 2
       }],
       "state": 1,
       "stats": {
@@ -93,7 +90,9 @@
         "attack": 1,
         "tier": 1
       },
-      "icon_path": "images/minions_icons/Beastmaster.png"
+      "icon_path": "images/minions_icons/Beastmaster.png",
+      "card_path": "images/minions_cards/Beastmaster.png"
+
     },
     {
       "name": "Bounty Hunter",
@@ -103,16 +102,17 @@
         "trigger_when": 1,
         "kind": 1,
         "target_tribe": 6,
-        "health": 1,
-        "attack": 1
+        "health": 0,
+        "attack": 2
       }],
       "state": 1,
       "stats": {
         "health": 2,
-        "attack": 2,
+        "attack": 0,
         "tier": 1
       },
-      "icon_path": "images/minions_icons/Bounty_Hunter.png"
+      "icon_path": "images/minions_icons/Bounty_Hunter.png",
+      "card_path": "images/minions_cards/Bounty_Hunter.png"
     },
     {
       "name": "Chaos Knight",
@@ -120,9 +120,9 @@
       "effects": [{
         "type": "StatBuff",
         "trigger_when": 1,
-        "kind": 1,
-        "target_tribe": 6,
-        "health": 1,
+        "kind": 4,
+        "target_tribe": 4,
+        "health": 0,
         "attack": 1
       }],
       "state": 1,
@@ -131,338 +131,599 @@
         "attack": 4,
         "tier": 1
       },
-      "icon_path": "images/minions_icons/Chaos_Knight.png"
+      "icon_path": "images/minions_icons/Chaos_Knight.png",
+      "card_path": "images/minions_cards/Chaos_Knight.png"
     },
     {
       "name": "Clockwerk",
-      "tribe": 4,
-      "effects": [{
-        "type": "StatBuff",
-        "trigger_when": 1,
-        "kind": 1,
-        "target_tribe": 6,
-        "health": 1,
-        "attack": 1
-      }],
+      "tribe": 3,
+      "effects": [],
       "state": 1,
       "stats": {
         "health": 4,
         "attack": 3,
         "tier": 1
       },
-      "icon_path": "images/minions_icons/Clockwerk.png"
+      "icon_path": "images/minions_icons/Clockwerk.png",
+      "card_path": "images/minions_cards/Alchemist.png"
     },
     {
       "name": "Drow Ranger",
       "tribe": 4,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 2,
+        "health": 0,
+        "attack": -1
+      }],
       "state": 1,
       "stats": {
         "health": 4,
         "attack": 5,
         "tier": 2
       },
-      "icon_path": "images/minions_icons/Drow_Ranger.png"
+      "icon_path": "images/minions_icons/Drow_Ranger.png",
+      "card_path": "images/minions_cards/Drow_Ranger.png"
     },
     {
       "name": "Enchantress",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 4,
+        "kind": 5,
+        "target_tribe": 4,
+        "health": 3,
+        "attack": 0
+      }],
       "state": 1,
       "stats": {
         "health": 4,
         "attack": 3,
         "tier": 2
       },
-      "icon_path": "images/minions_icons/Enchantress.png"
+      "icon_path": "images/minions_icons/Enchantress.png",
+      "card_path": "images/minions_cards/Enchantress.png"
     },
     {
       "name": "Enigma",
       "tribe": 5,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 5,
+        "kind": 3,
+        "target_tribe": 6,
+        "health": 0,
+        "attack": 3
+      }],
       "state": 1,
       "stats": {
         "health": 5,
         "attack": 5,
         "tier": 2
       },
-      "icon_path": "images/minions_icons/Enigma.png"
+      "icon_path": "images/minions_icons/Enigma.png",
+      "card_path": "images/minions_cards/Enigma.png"
     },
     {
       "name": "Gyrocopter",
-      "tribe": 2,
-      "effects": [],
+      "tribe": 3,
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 3,
+        "health": 2,
+        "attack": 1
+      },
+      {
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 3,
+        "health": 2,
+        "attack": 1
+      }],
       "state": 1,
       "stats": {
         "health": 3,
         "attack": 3,
         "tier": 2
       },
-      "icon_path": "images/minions_icons/Gyrocopter.png"
+      "icon_path": "images/minions_icons/Gyrocopter.png",
+      "card_path": "images/minions_cards/Gyrocopter.png"
     },
     {
       "name": "Lone Druid",
       "tribe": 4,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 5,
+        "kind": 3,
+        "target_tribe": 6,
+        "health": 0,
+        "attack": -1
+      }],
       "state": 1,
       "stats": {
-        "health": 3,
-        "attack": 4,
+        "health": 7,
+        "attack": 7,
         "tier": 2
       },
-      "icon_path": "images/minions_icons/Lone_Druid.png"
+      "icon_path": "images/minions_icons/Lone_Druid.png",
+      "card_path": "images/minions_cards/Lone_Druid.png"
     },
     {
       "name": "Mars",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 0,
+        "attack": 1
+      },
+      {
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 2,
+        "health": 0,
+        "attack": 2
+      }],
       "state": 1,
       "stats": {
-        "health": 2,
-        "attack": 7,
+        "health": 1,
+        "attack": 3,
         "tier": 2
       },
-      "icon_path": "images/minions_icons/Mars.png"
+      "icon_path": "images/minions_icons/Mars.png",
+      "card_path": "images/minions_cards/Mars.png"
     },
     {
       "name": "Medusa",
       "tribe": 4,
-      "effects": [],
+      "effects": [
+       {
+        "type": "StatBuff",
+        "trigger_when": 8,
+        "kind": 3,
+        "target_tribe": 6,
+        "health": 1,
+        "attack": 1
+      }
+      ],
       "state": 1,
       "stats": {
         "health": 4,
         "attack": 5,
         "tier": 3
       },
-      "icon_path": "images/minions_icons/Medusa.png"
+      "icon_path": "images/minions_icons/Medusa.png",
+      "card_path": "images/minions_cards/Medusa.png"
     },
     {
       "name": "Ogre Magi",
       "tribe": 3,
-      "effects": [],
+      "effects": [
+        {
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 2,
+        "health": 2,
+        "attack": 2
+      }
+      ],
       "state": 1,
       "stats": {
-        "health": 6,
-        "attack": 6,
+        "health": 3,
+        "attack": 3,
         "tier": 3
       },
-      "icon_path": "images/minions_icons/Medusa.png"
+      "icon_path": "images/minions_icons/Ogre_Magi.png",
+      "card_path": "images/minions_cards/Ogre_Magi.png"
     },
     {
       "name": "Omniknight",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 5,
+        "kind": 4,
+        "target_tribe": 1,
+        "health": 2,
+        "attack": 2
+      }],
       "state": 1,
       "stats": {
         "health": 4,
         "attack": 6,
         "tier": 3
       },
-      "icon_path": "images/minions_icons/Omniknight.png"
+      "icon_path": "images/minions_icons/Omniknight.png",
+      "card_path": "images/minions_cards/Omniknight.png"
     },
      {
       "name": "Queen Of Pain",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 5,
+        "kind": 4,
+        "target_tribe": 5,
+        "health": 0,
+        "attack": 5
+      }],
       "state": 1,
       "stats": {
         "health": 2,
         "attack": 9,
         "tier": 3
       },
-      "icon_path": "images/minions_icons/Queen_Of_Pain.png"
+      "icon_path": "images/minions_icons/Queen_Of_Pain.png",
+      "card_path": "images/minions_cards/Queen_Of_Pain.png"
     },
      {
       "name": "Shadow Fiend",
       "tribe": 5,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 5,
+        "health": 3,
+        "attack": 3
+      },
+      {
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 4,
+        "health": 0,
+        "attack": -6
+      }],
       "state": 1,
       "stats": {
         "health": 6,
         "attack": 6,
         "tier": 3
       },
-      "icon_path": "images/minions_icons/Shadow_Fiend.png"
+      "icon_path": "images/minions_icons/Shadow_Fiend.png",
+      "card_path": "images/minions_cards/Shadow_Fiend.png"
     },
      {
       "name": "Shadow Shaman",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 4,
+        "kind": 3,
+        "target_tribe": 6,
+        "health": 3,
+        "attack": 3
+      },
+      {
+        "type": "StatBuff",
+        "trigger_when": 4,
+        "kind": 5,
+        "target_tribe": 6,
+        "health": 0,
+        "attack": -5
+      }],
       "state": 1,
       "stats": {
         "health": 6,
         "attack": 6,
         "tier": 4
       },
-      "icon_path": "images/minions_icons/Shadow_Shaman.png"
+      "icon_path": "images/minions_icons/Shadow_Shaman.png",
+      "card_path": "images/minions_cards/Shadow_Shaman.png"
     },
      {
       "name": "Slardar",
       "tribe": 5,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 2,
+        "health": 2,
+        "attack": 2
+      }],
       "state": 1,
       "stats": {
         "health": 5,
         "attack": 6,
         "tier": 4
       },
-      "icon_path": "images/minions_icons/Slardar.png"
+      "icon_path": "images/minions_icons/Slardar.png",
+      "card_path": "images/minions_cards/Slardar.png"
     },
     {
       "name": "Sven",
       "tribe": 5,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 5,
+        "kind": 3,
+        "target_tribe": 6,
+        "health": 0,
+        "attack": 5
+      }],
       "state": 1,
       "stats": {
         "health": 15,
         "attack": 1,
         "tier": 4
       },
-      "icon_path": "images/minions_icons/Sven.png"
+      "icon_path": "images/minions_icons/Sven.png",
+      "card_path": "images/minions_cards/Sven.png"
     },
     {
       "name": "Techies",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 3,
+        "health": 5,
+        "attack": 5
+      }],
       "state": 1,
       "stats": {
         "health": 4,
         "attack": 4,
         "tier": 4
       },
-      "icon_path": "images/minions_icons/Techies.png"
+      "icon_path": "images/minions_icons/Techies.png",
+      "card_path": "images/minions_cards/Techies.png"
     },
     {
       "name": "Templar Assasin",
       "tribe": 4,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 4,
+        "health": 0,
+        "attack": 10
+      }],
       "state": 1,
       "stats": {
         "health": 5,
         "attack": 8,
         "tier": 4
       },
-      "icon_path": "images/minions_icons/Templar_Assassin.png"
+      "icon_path": "images/minions_icons/Templar_Assassin.png",
+      "card_path": "images/minions_cards/Templar_Assasin.png"
     },
     {
       "name": "Terrorblade",
       "tribe": 3,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 5,
+        "kind": 3,
+        "target_tribe": 6,
+        "health": 0,
+        "attack": 5
+      }],
       "state": 1,
       "stats": {
         "health": 7,
         "attack": 10,
         "tier": 5
       },
-      "icon_path": "images/minions_icons/Terrorblade.png"
+      "icon_path": "images/minions_icons/Terrorblade.png",
+      "card_path": "images/minions_cards/Terrorblade.png"
     },
      {
       "name": "Tidehunter",
       "tribe": 2,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 2,
+        "health": 5,
+        "attack": 5
+      },{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 1,
+        "target_tribe": 5,
+        "health": 5,
+        "attack": 5
+      }],
       "state": 1,
       "stats": {
         "health": 8,
         "attack": 8,
         "tier": 5
       },
-      "icon_path": "images/minions_icons/Tidehunter.png"
+      "icon_path": "images/minions_icons/Tidehunter.png",
+      "card_path": "images/minions_cards/Tidehunter.png"
     },
      {
       "name": "Tinker",
       "tribe": 2,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 4,
+        "kind": 5,
+        "target_tribe": 3,
+        "health": 5,
+        "attack": 5
+      }],
       "state": 1,
       "stats": {
         "health": 12,
         "attack": 5,
         "tier": 5
       },
-      "icon_path": "images/minions_icons/Tinker.png"
+      "icon_path": "images/minions_icons/Tinker.png",
+      "card_path": "images/minions_cards/Tinker.png"
     },
      {
       "name": "Tiny",
       "tribe": 3,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 4,
+        "kind": 3,
+        "target_tribe": 6,
+        "health": 3,
+        "attack": 6
+      }],
       "state": 1,
       "stats": {
         "health": 1,
         "attack": 1,
         "tier": 5
       },
-      "icon_path": "images/minions_icons/Tiny.png"
+      "icon_path": "images/minions_icons/Tiny.png",
+      "card_path": "images/minions_cards/Tiny.png"
     },
      {
       "name": "Troll Warlord",
       "tribe": 2,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 5,
+        "kind": 4,
+        "target_tribe": 2,
+        "health": 2,
+        "attack": 2
+      }],
       "state": 1,
       "stats": {
         "health": 12,
         "attack": 16,
         "tier": 6
       },
-      "icon_path": "images/minions_icons/Troll_Warlord.png"
+      "icon_path": "images/minions_icons/Troll_Warlord.png",
+      "card_path": "images/minions_cards/Troll_Warlord.png"
     },
      {
       "name": "Tusk",
-      "tribe": 2,
-      "effects": [],
+      "tribe": 5,
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 3,
+        "health": 7,
+        "attack": 7
+      },{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 1,
+        "health": 7,
+        "attack": 7
+      },
+      {
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 4,
+        "health": 7,
+        "attack": 7
+      }],
       "state": 1,
       "stats": {
         "health": 14,
         "attack": 14,
         "tier": 6
       },
-      "icon_path": "images/minions_icons/Tusk.png"
+      "icon_path": "images/minions_icons/Tusk.png",
+      "card_path": "images/minions_cards/Tusk.png"
     },
      {
       "name": "Venomancer",
-      "tribe": 4,
-      "effects": [],
+      "tribe": 5,
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 4,
+        "kind": 3,
+        "target_tribe": 6,
+        "health": 0,
+        "attack": 8
+      }],
       "state": 1,
       "stats": {
         "health": 14,
         "attack": 1,
         "tier": 6
       },
-      "icon_path": "images/minions_icons/Venomancer.png"
+      "icon_path": "images/minions_icons/Venomancer.png",
+      "card_path": "images/minions_cards/Venomancer.png"
     },
      {
       "name": "Windranger",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 4,
+        "kind": 1,
+        "target_tribe": 1,
+        "health": 10,
+        "attack": 10
+      }],
       "state": 1,
       "stats": {
         "health": 12,
         "attack": 10,
         "tier": 6
       },
-      "icon_path": "images/minions_icons/Windranger.png"
+      "icon_path": "images/minions_icons/Windranger.png",
+      "card_path": "images/minions_cards/Windranger.png"
     },
      {
       "name": "Witch Doctor",
       "tribe": 2,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 4,
+        "kind": 5,
+        "target_tribe": 6,
+        "health": 6,
+        "attack": 6
+      }],
       "state": 1,
       "stats": {
         "health": 18,
         "attack": 7,
         "tier": 6
       },
-      "icon_path": "images/minions_icons/Witch_Doctor.png"
+      "icon_path": "images/minions_icons/Witch_Doctor.png",
+      "card_path": "images/minions_cards/Witch_Doctor.png"
     },
      {
       "name": "Zeus",
       "tribe": 1,
-      "effects": [],
+      "effects": [{
+        "type": "StatBuff",
+        "trigger_when": 1,
+        "kind": 4,
+        "target_tribe": 6,
+        "health": 12,
+        "attack": 12
+      }],
       "state": 1,
       "stats": {
         "health": 20,
         "attack": 20,
         "tier": 6
       },
-      "icon_path": "images/minions_icons/Zeus.png"
+      "icon_path": "images/minions_icons/Zeus.png",
+      "card_path": "images/minions_cards/Zeus.png"
     }
   ]
 }

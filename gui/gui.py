@@ -64,9 +64,8 @@ class MinionButton:
     def update_hover(self, pos, screen):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
             self.is_hovered = True
-            img = create_image_with_size("images/minions_cards/Alchemist.png", 200, 300)
+            img = create_image_with_size(self.minion.card_path, 200, 300)
             screen.blit(img, (self.hover_x, self.y - 50, 100, 100))
-            print("hover img blitted")
         else:
             self.is_hovered = False
         #pygame.display.update((self.hover_x, self.y - 50, 100, 100))
