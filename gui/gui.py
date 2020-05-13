@@ -86,11 +86,11 @@ class ShopVisualiser:
         self.make_minion_buttons()
 
     def draw(self, screen):
-        pygame.draw.line(screen, (0, 255, 255), (0, 150), (800, 150))
-        pygame.draw.line(screen, (0, 255, 255), (0, 450), (800, 450))
-        pygame.draw.line(screen, (0, 255, 255), (0, 300), (800, 300))
-        pygame.draw.line(screen, (0, 255, 255), (150, 0), (150, 150))
-        pygame.draw.line(screen, (0, 255, 255), (650, 600), (650, 450))
+       # pygame.draw.line(screen, (0, 255, 255), (0, 150), (800, 150))
+       # pygame.draw.line(screen, (0, 255, 255), (0, 450), (800, 450))
+       # pygame.draw.line(screen, (0, 255, 255), (0, 300), (800, 300))
+       # pygame.draw.line(screen, (0, 255, 255), (150, 0), (150, 150))
+       # pygame.draw.line(screen, (0, 255, 255), (650, 600), (650, 450))
         self.gold.draw(screen)
         self.upgradeButton.draw(screen)
         self.hero.draw(screen)
@@ -99,21 +99,21 @@ class ShopVisualiser:
             mb.draw(screen)
 
     def make_minion_buttons(self):
-        offset = 50
+        offset = 25
         minion_btns = []
         for m in self.minions_in_shop:
             if not (m is None):
-                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 170)
+                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 150)
                 minion_btns.append(mb)
 
         for m in self.player.hero.minions:
             if not (m is None):
-                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 320)
+                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 290)
                 minion_btns.append(mb)
 
         for m in self.player.hero.hand:
             if not (m is None):
-                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 470)
+                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 450)
                 minion_btns.append(mb)
         self.minion_btns = minion_btns
 
@@ -132,12 +132,13 @@ class GoldVisualiser:
 
     def __init__(self, hero):
         self.hero = hero
+        self.img = create_image_with_size("images/Buttons/coin.png",16,16)
 
     def draw(self, win):
         counter = 0
-        offset = 25
+        offset = 16
         while counter < self.hero.current_gold:
-            pygame.draw.rect(win, (255, 255, 10), (500 + counter * offset, 100, 20, 20))
+            win.blit(self.img, (590 + counter * offset, 578, 20, 20))
             counter += 1
 
 
@@ -145,18 +146,19 @@ class UpgradeTavernButton:
 
     def __init__(self, hero):
         self.hero = hero
-        self.x = 200
-        self.y = 25
-        self.width = 100
-        self.height = 100
+        self.x = 495
+        self.y = 50
+        self.width = 120
+        self.height = 150
         self.isEnabled = True
-        self.font = pygame.font.SysFont('Arial', 25)
+        self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 25)
+        self.img = create_image_with_size("images/Buttons/tier_up.png", 50,100)
 
     def draw(self, screen):
         color = (0, 0, 200) if self.isEnabled and self.hero.can_upgrade_tier() else (220, 220, 220)
-        pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
-        screen.blit(self.font.render(str(self.hero.current_upgrade_cost), True, (0, 0, 0)),
-                    (self.x + self.width / 2 - 5, self.y))
+        screen.blit(self.img,(self.x,self.y))
+        screen.blit(self.font.render(str(self.hero.current_upgrade_cost), True, color),
+                    (self.x + self.width / 7, self.y))
 
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
@@ -170,11 +172,11 @@ class RollMinionsButton:
 
     def __init__(self, hero):
         self.hero = hero
-        self.x = 320
+        self.x = 420
         self.y = 50
         self.width = 50
         self.height = 50
-        self.font = pygame.font.SysFont('Arial', 25)
+        self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 25)
 
     def get_random_minions(self, all_minions):
         ret = []
@@ -230,8 +232,8 @@ class CombatVisualiser:
 class HeroVisualiser:
     def __init__(self, hero):
         self.hero = hero
-        self.x = 285
-        self.y = 430
+        self.x = 300
+        self.y = 400
         self.width = 150
         self.height = 200
         self.hero_icon = create_image_with_size(hero.icon, self.width, self.height)
