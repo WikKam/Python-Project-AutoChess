@@ -16,10 +16,11 @@ class MinionButton:
         self.player = player
         self.x = x
         self.y = y
-        self.width = 65
-        self.height = 65
+        self.width = 100
+        self.height = 120
         self.icon = self.create_icon()
-        self.font = pygame.font.SysFont('Arial', 25)
+        self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 20)
+        self.outline_font = pygame.font.Font('Fonts/Belwe Medium.otf', 22)
         self.is_hovered = False
         self.hover_x = self.calculate_hover_x()
 
@@ -29,19 +30,21 @@ class MinionButton:
 
     def draw(self, win):
         win.blit(self.icon, (self.x, self.y))
+        win.blit(self.outline_font.render(str(self.minion.stats.attack), True, (0,0,0)),
+                 (self.x + 20, self.y - 2 + self.height / 1.5))
+        win.blit(self.outline_font.render(str(self.minion.stats.health), True,
+                                  (0,0,0)), (self.x + self.width - 30, self.y - 2 + self.height / 1.5))
         win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)),
-                 (self.x, self.y + self.height / 2))
+                 (self.x + 20,self.y - 2 + self.height / 1.5))
         win.blit(self.font.render(str(self.minion.stats.health), True,
-                                  (255, 255, 255)), (self.x + self.width - 10, self.y + self.height / 2))
-        win.blit(self.font.render(str(self.minion.stats.tier), True, (255, 255, 255)),
-                 (self.x + self.width / 2 - 5, self.y))
+                                  (255, 255, 255)), (self.x + self.width - 30, self.y - 2 + self.height / 1.5))
 
     def get_minion(self):
         return self.minion
 
     def create_icon(self):
         result = pygame.image.load(self.minion.icon_path)
-        return pygame.transform.scale(result, (65, 65))
+        return pygame.transform.scale(result, (100, 120))
 
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
@@ -68,7 +71,6 @@ class MinionButton:
             screen.blit(img, (self.hover_x, self.y - 50, 100, 100))
         else:
             self.is_hovered = False
-        #pygame.display.update((self.hover_x, self.y - 50, 100, 100))
 
 class ShopVisualiser:
     def __init__(self, player):
@@ -101,17 +103,17 @@ class ShopVisualiser:
         minion_btns = []
         for m in self.minions_in_shop:
             if not (m is None):
-                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 200)
+                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 170)
                 minion_btns.append(mb)
 
         for m in self.player.hero.minions:
             if not (m is None):
-                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 350)
+                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 320)
                 minion_btns.append(mb)
 
         for m in self.player.hero.hand:
             if not (m is None):
-                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 500)
+                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 470)
                 minion_btns.append(mb)
         self.minion_btns = minion_btns
 

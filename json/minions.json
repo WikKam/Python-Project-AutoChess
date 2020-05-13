@@ -145,7 +145,7 @@
         "tier": 1
       },
       "icon_path": "images/minions_icons/Clockwerk.png",
-      "card_path": "images/minions_cards/Alchemist.png"
+      "card_path": "images/minions_cards/Clockwerk.png"
     },
     {
       "name": "Drow Ranger",
@@ -436,8 +436,8 @@
       }],
       "state": 1,
       "stats": {
-        "health": 5,
-        "attack": 6,
+        "health": 6,
+        "attack": 5,
         "tier": 4
       },
       "icon_path": "images/minions_icons/Slardar.png",
