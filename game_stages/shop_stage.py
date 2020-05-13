@@ -1,10 +1,10 @@
 import pygame
 import static_resources as sr
 from gui.gui import *
-from game_elements.combat_logic import attack
 from static_resources import clock
 from utilities.timer_helper import shop_time, combat_time, timer_display
 from gui.stages_visualiser import redraw_shop
+from game_elements.combat_logic import Combat, check_if_players_have_minions
 
 
 def shopping(current_player, network, screen):
@@ -41,65 +41,52 @@ def shopping(current_player, network, screen):
 
 
 def combat(current_player, network, screen):
-    start_time = pygame.time.get_ticks()
     players, opponent = network.send(current_player)
     minions = list(filter(None, copy.deepcopy(current_player.get_hero().get_minions())))
-    print(players[opponent])
     minions_opponent = list(filter(None, copy.deepcopy(players[opponent].get_hero().get_minions())))
+    can_play, status_code = check_if_players_have_minions(minions, minions_opponent)
+    combat = Combat(minions, minions_opponent)
+    print("My HP ", current_player.get_hero().current_hp)
+    print("Opponent HP", players[opponent].get_hero().current_hp)
     screen.blit(sr.board, (0, 0))
     pygame.display.flip()
     combat_visualiser = CombatVisualiser(current_player, players[opponent])
     combat_visualiser.draw(screen)
     running = True
-    minion_attacker = 0
-    target = 0
-    me_target = 0
-    enemy_attacker = 0
     attack_time = pygame.time.get_ticks()
     attack_time_enemy = pygame.time.get_ticks()
     if current_player.id % 2:
         attack_time -= 1000
     else:
         attack_time_enemy -= 1000
-    print("wchodzę do walki")
+    if not can_play:
+        running = False
+        if status_code < 0:
+            current_player.get_hero().current_hp += status_code
     while running:
-        timer = (combat_time - (pygame.time.get_ticks() - start_time) // 1000)
         clock.tick(60)
         if current_player.id % 2:
             if pygame.time.get_ticks() - attack_time > 3000:
-                minion_attacker, target = attack(minions, minions_opponent, minion_attacker, target)
+                combat.current_player_attack()
                 attack_time = pygame.time.get_ticks()
-                for m in minions:
-                    print(m.stats.health)
-                for m in minions_opponent:
-                    print(m.stats.health)
             if pygame.time.get_ticks() - attack_time_enemy > 3000:
-                enemy_attacker, me_target = attack(minions_opponent, minions, enemy_attacker, me_target)
+                combat.opponent_attack()
                 attack_time_enemy = pygame.time.get_ticks()
         else:
             if pygame.time.get_ticks() - attack_time > 3000:
-                minion_attacker, target = attack(minions, minions_opponent, minion_attacker, target)
+                combat.current_player_attack()
                 attack_time = pygame.time.get_ticks()
-                for m in minions:
-                    print(m.stats.health)
-                for m in minions_opponent:
-                    print(m.stats.health)
             if pygame.time.get_ticks() - attack_time_enemy > 3000:
-                enemy_attacker, me_target = attack(minions_opponent, minions, enemy_attacker, me_target)
+                combat.opponent_attack()
                 attack_time_enemy = pygame.time.get_ticks()
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 running = False
-        if minions[len(minions) - 1].isDead or minions_opponent[len(minions_opponent) - 1].isDead:
-            if minions[-1].isDead:
-                print("Opponent won round")
-            else:
-                print("You won round")
+        end_round, hp = combat.check_if_all_minions_dead()
+        if end_round:
+            if hp < 0:
+                current_player.get_hero().current_hp += hp
             running = False
-            current_player.hero.on_new_turn()
-            network.send(current_player)
-            shopping(current_player, network, screen)
-        # if not timer:
-        #     running = False
-        #     players[current_player].hero.on_new_turn()
-        #     shopping(players, current_player, n, clock, screen)
+    current_player.hero.on_new_turn()
+    network.send(current_player)
+    shopping(current_player, network, screen)
