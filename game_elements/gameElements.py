@@ -34,6 +34,20 @@ class State(enum.Enum):
     dead = 6
 
 
+class PlayerState(enum.Enum):
+    not_connected = 1
+    connected = 2
+    in_shop = 3
+    in_combat = 4
+    after_combat = 5
+    dead = 10
+
+
+class AttackTurn(enum.IntEnum):
+    attack_first = 1
+    attack_second = -1
+
+
 class TriggerOn(enum.Enum):
     on_enter_play = 1
     on_enter_hand = 2
@@ -372,10 +386,11 @@ class Hero:
 
 
 class Player:
-    def __init__(self, hero, id):
+    def __init__(self, hero, id, attack_turn=AttackTurn.attack_second):
         self.hero = hero
         self.id = id
-        self.ready = False
+        self.status = PlayerState.not_connected
+        self.attack_turn = attack_turn
 
     def get_hero(self):
         return self.hero

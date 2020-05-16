@@ -1,3 +1,6 @@
+from game_elements.gameElements import AttackTurn
+
+
 def check_if_players_have_minions(current_player_minions, opponent_minions):
     if len(current_player_minions) == 0 and len(opponent_minions) == 0:
         return False, 0
@@ -16,9 +19,24 @@ def is_minion_dead(minion):
         minion.isDead = True
 
 
-def perform_attac(attacker, target):
+def perform_attack(attacker, target):
     target.stats.health -= attacker.stats.attack
 
+
+def resolve_attack_turns(player1, player2):
+    if player1.attack_turn != player2.attack_turn:
+        player2.attack_turn = AttackTurn(player2.attack_turn * -1)
+        player1.attack_turn = AttackTurn(player1.attack_turn * -1)
+    else:
+        # player1.attack_turn = AttackTurn(player1.attack_turn * -1)
+        if player1.get_hero().current_hp == player2.get_hero().current_hp:
+            player1.attack_turn = AttackTurn.attack_first if player1.id < player2.id else \
+                AttackTurn.attack_second
+            player2.attack_turn = AttackTurn(player1.attack_turn * -1)
+        else:
+            player1.attack_turn = AttackTurn.attack_first if player1.get_hero().current_hp < \
+                                                             player2.get_hero().current_hp else AttackTurn.attack_second
+            player2.attack_turn = AttackTurn(player1.attack_turn * -1)
 
 class Combat:
     def __init__(self, current_player_minions, opponent_minions):
@@ -30,13 +48,13 @@ class Combat:
     def current_player_attack(self):
         if len(self.opponent_minions) > self.current_player_index and \
                 not self.opponent_minions[self.current_player_index].isDead:
-            perform_attac(self.current_player_minions[self.current_player_index],
-                               self.opponent_minions[self.current_player_index])
+            perform_attack(self.current_player_minions[self.current_player_index],
+                           self.opponent_minions[self.current_player_index])
             is_minion_dead(self.opponent_minions[self.current_player_index])
         else:
             for minion in self.opponent_minions:
                 if not minion.isDead:
-                    perform_attac(self.current_player_minions[self.current_player_index], minion)
+                    perform_attack(self.current_player_minions[self.current_player_index], minion)
                     is_minion_dead(minion)
                     break
         self.current_player_index = (self.current_player_index + 1) % len(self.current_player_minions)
@@ -44,13 +62,13 @@ class Combat:
     def opponent_attack(self):
         if len(self.current_player_minions) > self.opponent_index and \
                 not self.current_player_minions[self.opponent_index].isDead:
-            perform_attac(self.opponent_minions[self.opponent_index],
-                               self.current_player_minions[self.opponent_index])
+            perform_attack(self.opponent_minions[self.opponent_index],
+                           self.current_player_minions[self.opponent_index])
             is_minion_dead(self.current_player_minions[self.opponent_index])
         else:
             for minion in self.current_player_minions:
                 if not minion.isDead:
-                    perform_attac(self.opponent_minions[self.opponent_index], minion)
+                    perform_attack(self.opponent_minions[self.opponent_index], minion)
                     is_minion_dead(minion)
                     break
         self.opponent_index = (self.opponent_index + 1) % len(self.opponent_minions)

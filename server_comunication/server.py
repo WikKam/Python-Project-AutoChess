@@ -2,6 +2,7 @@ import socket
 from _thread import *
 from game_elements.gameElements import Player
 import pickle
+from game_elements.gameElements import PlayerState
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
@@ -15,19 +16,26 @@ try:
 except socket.error as e:
      str(e)
 
-s.listen(2)  # then we can have multiply client connected, 2 people max connected so far
+s.listen(4)  # then we can have multiply client connected, 2 people max connected so far
 print("Waiting for connection, Server started")
-players = [Player(None, 0), Player(None, 1)]
+players = [Player(None, 0), Player(None, 1), Player(None, 2), Player(None, 3)]
+
+combat_pair = {
+    0: 1,
+    1: 0,
+    2: 3,
+    3: 2
+}
 
 
 def threaded_client(conn, current_player):
-    players[current_player].ready = True
+    players[current_player].status = PlayerState.connected
     info = players, current_player
     conn.sendall(pickle.dumps(info))
     print(current_player)
     while True:
         try:
-            data = pickle.loads(conn.recv(2048 * 16))
+            data = pickle.loads(conn.recv(2048 * 8))
 
             players[current_player] = data
             players_game = players
@@ -37,9 +45,13 @@ def threaded_client(conn, current_player):
                 break
             else:
                 if current_player == 1:
-                    reply = players_game, 0
+                    reply = players_game, combat_pair[1]
+                elif current_player == 0:
+                    reply = players_game, combat_pair[0]
+                elif current_player == 2:
+                    reply = players_game, combat_pair[2]
                 else:
-                    reply = players_game, 1
+                    reply = players_game, combat_pair[3]
             conn.sendall(pickle.dumps(reply))
         except:
             break
