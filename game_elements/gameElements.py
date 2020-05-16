@@ -143,7 +143,8 @@ class EffectManager:
                         target = [source] if\
                             effect.kind == \
                             TargetKind.minion_that_changed_state \
-                            and effect.target_tribe == source.tribe \
+                            and (effect.target_tribe == source.tribe
+                                 or effect.target_tribe == Tribe.all) \
                             else self.pick_target(effect, m)
 
                         print("triggering effect of: " + m.name)
