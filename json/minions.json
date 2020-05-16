@@ -257,7 +257,7 @@
     },
     {
       "name": "Mars",
-      "tribe": 1,
+      "tribe": 2,
       "effects": [{
         "type": "StatBuff",
         "trigger_when": 1,
@@ -307,7 +307,7 @@
     },
     {
       "name": "Ogre Magi",
-      "tribe": 3,
+      "tribe": 2,
       "effects": [
         {
         "type": "StatBuff",
