@@ -1,5 +1,6 @@
 import pygame
 from game_stages.recruitment_stage import recruitment
+from game_elements.gameElements import PlayerState
 from static_resources import waiting_background
 from static_resources import clock
 
@@ -14,6 +15,6 @@ def waiting(current_player, network, screen):
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 running = False
-        if players[opponent].ready:
+        if players[3].status == PlayerState.connected:
             running = False
             recruitment(current_player, network, screen)
