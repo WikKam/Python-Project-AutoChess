@@ -20,6 +20,13 @@ s.listen(4)  # then we can have multiply client connected, 2 people max connecte
 print("Waiting for connection, Server started")
 players = [Player(None, 0), Player(None, 1), Player(None, 2), Player(None, 3)]
 
+combat_pair = {
+    0: 1,
+    1: 0,
+    2: 3,
+    3: 2
+}
+
 
 def threaded_client(conn, current_player):
     players[current_player].status = PlayerState.connected
@@ -38,13 +45,13 @@ def threaded_client(conn, current_player):
                 break
             else:
                 if current_player == 1:
-                    reply = players_game, 0
+                    reply = players_game, combat_pair[1]
                 elif current_player == 0:
-                    reply = players_game, 1
+                    reply = players_game, combat_pair[0]
                 elif current_player == 2:
-                    reply = players_game, 3
+                    reply = players_game, combat_pair[2]
                 else:
-                    reply = players_game, 2
+                    reply = players_game, combat_pair[3]
             conn.sendall(pickle.dumps(reply))
         except:
             break
