@@ -117,7 +117,6 @@ class EffectManager:
         effects = None
         if isinstance(source, HeroPower):
             effects = source.active_effects
-            return
         else:
             effects = source.effects
         trigger_on = mapStatesToTriggerOn(prev, current, source)
@@ -136,6 +135,9 @@ class EffectManager:
         for m in self.minions_in_play:
             if m is not None and m is not source:
                 for effect in m.effects:
+                    if m.name == "Medusa":
+                        print(trigger_on)
+                        print(effect.trigger_when)
                     if pairs_match(trigger_on, effect.trigger_when):
                         target = []
                         target = [source] if\
@@ -143,6 +145,7 @@ class EffectManager:
                             TargetKind.minion_that_changed_state \
                             and effect.target_tribe == source.tribe \
                             else self.pick_target(effect, m)
+
                         print("triggering effect of: " + m.name)
                         print(target)
                         effect.trigger_effect(m, target)
@@ -326,7 +329,7 @@ class Hero:
         self.minions[minion.position] = None
         minion.set_state(State.in_storage)
         self.current_gold = min(self.current_gold + 1, self.current_max_gold)
-        self.effect_manager.activate_effects(State.in_shop, State.in_storage, minion)
+        self.effect_manager.activate_effects(State.in_play, State.in_storage, minion)
         return True
 
     def on_new_turn(self):

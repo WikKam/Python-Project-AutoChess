@@ -153,10 +153,10 @@
       "effects": [{
         "type": "StatBuff",
         "trigger_when": 1,
-        "kind": 1,
+        "kind": 4,
         "target_tribe": 2,
         "health": 0,
-        "attack": -1
+        "attack": -2
       }],
       "state": 1,
       "stats": {
