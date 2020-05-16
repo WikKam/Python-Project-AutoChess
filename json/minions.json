@@ -99,8 +99,8 @@
       "tribe": 2,
       "effects": [{
         "type": "StatBuff",
-        "trigger_when": 1,
-        "kind": 1,
+        "trigger_when": 7,
+        "kind": 3,
         "target_tribe": 6,
         "health": 0,
         "attack": 2
@@ -136,7 +136,7 @@
     },
     {
       "name": "Clockwerk",
-      "tribe": 3,
+      "tribe": 5,
       "effects": [],
       "state": 1,
       "stats": {
@@ -578,8 +578,8 @@
         "trigger_when": 4,
         "kind": 3,
         "target_tribe": 6,
-        "health": 3,
-        "attack": 6
+        "health": 6,
+        "attack": 3
       }],
       "state": 1,
       "stats": {

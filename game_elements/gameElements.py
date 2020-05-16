@@ -117,6 +117,7 @@ class EffectManager:
         effects = None
         if isinstance(source, HeroPower):
             effects = source.active_effects
+            return
         else:
             effects = source.effects
         trigger_on = mapStatesToTriggerOn(prev, current, source)
@@ -136,10 +137,14 @@ class EffectManager:
             if m is not None and m is not source:
                 for effect in m.effects:
                     if pairs_match(trigger_on, effect.trigger_when):
+                        target = []
                         target = [source] if\
                             effect.kind == \
-                            TargetKind.minion_that_changed_state else self.pick_target(effect, m)
+                            TargetKind.minion_that_changed_state \
+                            and effect.target_tribe == source.tribe \
+                            else self.pick_target(effect, m)
                         print("triggering effect of: " + m.name)
+                        print(target)
                         effect.trigger_effect(m, target)
 
     def pick_target(self, effect, source):
@@ -159,7 +164,7 @@ class EffectManager:
         if effect.kind == TargetKind.random:
             matching_targets = self.get_matching_minions_array(effect, source)
             if len(matching_targets) == 0:
-                return None
+                return []
             else:
                 index = random.randint(0, len(matching_targets) - 1)
                 return [matching_targets[index]]
