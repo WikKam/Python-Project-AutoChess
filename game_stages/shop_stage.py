@@ -36,8 +36,8 @@ def shopping(current_player, network, screen):
                 network.send(current_player)
         redraw_shop(screen, shop, pos, timer)
         if not timer:
-            network.send(current_player)
             shop.player.hero.on_turn_end()
+            network.send(current_player)
             pygame.time.delay(2500)
             running = False
             combat(current_player, network, screen)

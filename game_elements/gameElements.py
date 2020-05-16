@@ -124,8 +124,13 @@ class EffectManager:
         for effect in effects:
             if effect.trigger_when == trigger_on:
                 target = self.pick_target(effect, source)
-                if target:
-                    effect.trigger_effect(source, target)
+                if trigger_on == TriggerOn.on_enter_play:
+                    print("#############BATTLECRY###############")
+                    print(str(target))
+                    print(effect.target_tribe)
+
+                ##if target:
+                effect.trigger_effect(source, target)
         # checking effects of minions on board
         for m in self.minions_in_play:
             if m is not None and m is not source:
@@ -164,7 +169,7 @@ class EffectManager:
                 if minion is not None and
                 minion != source and
                 (minion.tribe == effect.target_tribe or
-                 (effect.target_tribe or minion.tribe == Tribe.all))]
+                 (effect.target_tribe == Tribe.all or minion.tribe == Tribe.all))]
 
 
 class SummonEffect(Effect):

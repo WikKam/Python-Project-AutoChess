@@ -240,7 +240,7 @@
       "tribe": 4,
       "effects": [{
         "type": "StatBuff",
-        "trigger_when": 5,
+        "trigger_when": 4,
         "kind": 3,
         "target_tribe": 6,
         "health": 0,

@@ -19,8 +19,8 @@ class MinionButton:
         self.width = 100
         self.height = 120
         self.icon = self.create_icon()
-        self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 20)
-        self.outline_font = pygame.font.Font('Fonts/Belwe Medium.otf', 22)
+        self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 22)
+        self.outline_font = pygame.font.Font('Fonts/Belwe Medium.otf', 24)
         self.is_hovered = False
         self.hover_x = self.calculate_hover_x()
 

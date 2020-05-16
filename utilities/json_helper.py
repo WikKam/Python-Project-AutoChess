@@ -7,7 +7,7 @@ def get_effect_from_Json(effects):
                            effect["attack"],
                            TriggerOn(effect["trigger_when"]),
                            TargetKind(effect["kind"]),
-                           effect["target_tribe"]) for effect in effects if effect["type"] == "StatBuff"]
+                           Tribe(effect["target_tribe"])) for effect in effects if effect["type"] == "StatBuff"]
 
 
 def get_minions_from_Json():
