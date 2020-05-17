@@ -30,12 +30,12 @@ class MinionButton:
 
     def draw(self, win):
         win.blit(self.icon, (self.x, self.y))
-        win.blit(self.outline_font.render(str(self.minion.stats.attack), True, (0,0,0)),
+        win.blit(self.outline_font.render(str(self.minion.stats.attack), True, (0, 0, 0)),
                  (self.x + 20, self.y - 2 + self.height / 1.5))
         win.blit(self.outline_font.render(str(self.minion.stats.health), True,
-                                  (0,0,0)), (self.x + self.width - 30, self.y - 2 + self.height / 1.5))
+                                          (0, 0, 0)), (self.x + self.width - 30, self.y - 2 + self.height / 1.5))
         win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)),
-                 (self.x + 20,self.y - 2 + self.height / 1.5))
+                 (self.x + 20, self.y - 2 + self.height / 1.5))
         win.blit(self.font.render(str(self.minion.stats.health), True,
                                   (255, 255, 255)), (self.x + self.width - 30, self.y - 2 + self.height / 1.5))
 
@@ -72,6 +72,7 @@ class MinionButton:
         else:
             self.is_hovered = False
 
+
 class ShopVisualiser:
     def __init__(self, player):
         self.player = player
@@ -86,11 +87,11 @@ class ShopVisualiser:
         self.make_minion_buttons()
 
     def draw(self, screen):
-       # pygame.draw.line(screen, (0, 255, 255), (0, 150), (800, 150))
-       # pygame.draw.line(screen, (0, 255, 255), (0, 450), (800, 450))
-       # pygame.draw.line(screen, (0, 255, 255), (0, 300), (800, 300))
-       # pygame.draw.line(screen, (0, 255, 255), (150, 0), (150, 150))
-       # pygame.draw.line(screen, (0, 255, 255), (650, 600), (650, 450))
+        # pygame.draw.line(screen, (0, 255, 255), (0, 150), (800, 150))
+        # pygame.draw.line(screen, (0, 255, 255), (0, 450), (800, 450))
+        # pygame.draw.line(screen, (0, 255, 255), (0, 300), (800, 300))
+        # pygame.draw.line(screen, (0, 255, 255), (150, 0), (150, 150))
+        # pygame.draw.line(screen, (0, 255, 255), (650, 600), (650, 450))
         self.gold.draw(screen)
         self.upgradeButton.draw(screen)
         self.hero.draw(screen)
@@ -132,7 +133,7 @@ class GoldVisualiser:
 
     def __init__(self, hero):
         self.hero = hero
-        self.img = create_image_with_size("images/Buttons/coin.png",16,16)
+        self.img = create_image_with_size("images/Buttons/coin.png", 16, 16)
 
     def draw(self, win):
         counter = 0
@@ -152,11 +153,11 @@ class UpgradeTavernButton:
         self.height = 150
         self.isEnabled = True
         self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 25)
-        self.img = create_image_with_size("images/Buttons/tier_up.png", 50,100)
+        self.img = create_image_with_size("images/Buttons/tier_up.png", 50, 100)
 
     def draw(self, screen):
         color = (0, 0, 200) if self.isEnabled and self.hero.can_upgrade_tier() else (220, 220, 220)
-        screen.blit(self.img,(self.x,self.y))
+        screen.blit(self.img, (self.x, self.y))
         screen.blit(self.font.render(str(self.hero.current_upgrade_cost), True, color),
                     (self.x + self.width / 7, self.y))
 
@@ -191,8 +192,8 @@ class RollMinionsButton:
     def draw(self, screen):
         color = (100, 100, 100) if self.hero.can_reroll_tavern() else (220, 220, 220)
         img = pygame.image.load("images/Buttons/roll.png")
-        #pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
-        screen.blit(img,(self.x, self.y))
+        # pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
+        screen.blit(img, (self.x, self.y))
         screen.blit(self.font.render(str(self.hero.reroll_cost), True, color),
                     (self.x + self.width / 2 + 8, self.y))
 
@@ -240,19 +241,40 @@ class HeroVisualiser:
         self.hero_icon = create_image_with_size(hero.icon, self.width, self.height)
         self.hero_power_radius = 50
         self.is_hero_power_enabled = True
+        self.hero_power_icon = create_image_with_size(self.hero.hero_power.icon, 100, 100)
+        self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 25)
+        self.outline_font = pygame.font.Font('Fonts/Belwe Medium.otf', 29)
+        self.hover_y = 200
+        self.is_hovered = False
+        self.blood_img = create_image_with_size('images/hp.png', 30, 30)
 
     def draw(self, screen):
         color = (255, 255, 255) if self.is_hero_power_enabled and self.hero.can_use_hero_power() else (0, 0, 0)
         screen.blit(self.hero_icon, (self.x, self.y))
-        pygame.draw.circle(screen, color, (self.x + self.width + 50, 450 + round(self.height / 2)),
-                           self.hero_power_radius, 5)
+        screen.blit(self.hero_power_icon, (self.x + self.width, 450))
+        screen.blit(self.outline_font.render(str(self.hero.hero_power.cost), True, (0, 0, 0)),
+                    (self.x + self.width + 100 / 2 - 5, self.y + 50))
+        screen.blit(self.font.render(str(self.hero.hero_power.cost), True, color),
+                    (self.x + self.width + 100 / 2 - 5, self.y + 50))
+        screen.blit(self.blood_img, (self.x, self.y + self.height / 1.6))
+        screen.blit(self.outline_font.render(str(self.hero.current_hp), True, (0, 0, 0)),
+                    (self.x + 7, self.y + self.height / 1.6))
+        screen.blit(self.font.render(str(self.hero.current_hp), True, (255,255,255)), (self.x + 7, self.y + self.height / 1.6))
 
     def onclick(self, pos):
-        distance = ((pos[0] - (self.x + self.width + 50)) ** 2 + (pos[1] - (450 + round(self.height / 2))) ** 2) ** (
-                    1 / 2)
+        distance = ((pos[0] - (self.x + self.width + 45)) ** 2 + (pos[1] - (450 + round(self.height / 2))) ** 2) ** (
+                1 / 2)
         if distance < self.hero_power_radius and self.is_hero_power_enabled:
             print("click")
             self.hero.activate_hero_power()
             self.is_hero_power_enabled = False
             return True
         return False
+
+    def update_hover(self, pos, screen):
+        if is_clicked(pos, self.x + self.width, 450, 100, 100):
+            self.is_hovered = True
+            img = create_image_with_size(self.hero.hero_power.hover_icon, 200, 300)
+            screen.blit(img, (self.x + 100, self.hover_y))
+        else:
+            self.is_hovered = False

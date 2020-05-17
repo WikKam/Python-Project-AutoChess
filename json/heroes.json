@@ -5,6 +5,8 @@
       "power" : {
         "cost": 2,
         "kind": 2,
+        "icon": "images/hero_power_icons/Blessing_of_power.png",
+        "hover_icon": "images/hero_power_pic/Blessing_of_power.png",
         "passive":{},
         "active": [{
         "type": "StatBuff",
@@ -22,6 +24,8 @@
       "power" : {
         "kind": 1,
         "cost": 0,
+        "icon": "images/hero_power_icons/Blessing_of_protection.png",
+        "hover_icon": "images/hero_power_pic/Blessing_of_protection.png",
         "passive": {
           "starting_tier": 4,
           "starting_gold": 10
@@ -35,6 +39,8 @@
       "power" : {
         "cost": 2,
         "kind": 2,
+        "hover_icon": "images/hero_power_pic/Commander.png",
+        "icon": "images/hero_power_icons/Commander.png",
         "passive":{},
         "active": [{
         "type": "StatBuff",
@@ -52,6 +58,8 @@
       "power" : {
         "cost": 2,
         "kind": 2,
+        "hover_icon": "images/hero_power_pic/Hail_of_blades.png",
+        "icon": "images/hero_power_icons/Hail_of_blades.png",
         "passive":{},
         "active": [{
         "type": "StatBuff",
@@ -69,6 +77,8 @@
       "power" : {
         "cost": 2,
         "kind": 2,
+        "hover_icon": "images/hero_power_pic/Highborn.png",
+        "icon": "images/hero_power_icons/Highborn.png",
         "passive":{},
         "active": [{
         "type": "StatBuff",
@@ -86,6 +96,8 @@
       "power" : {
         "kind": 2,
         "cost": 2,
+        "hover_icon": "images/hero_power_pic/Holy_spirit.png",
+        "icon": "images/hero_power_icons/Holy_spirit.png",
         "passive":{},
         "active": [{
         "type": "StatBuff",
@@ -103,6 +115,8 @@
       "power" : {
         "cost": 2,
         "kind": 2,
+        "hover_icon": "images/hero_power_pic/Insight.png",
+        "icon": "images/hero_power_icons/Insight.png",
         "passive":{},
         "active": [{
         "type": "StatBuff",
@@ -121,6 +135,8 @@
         "passive":{},
         "cost": 2,
         "kind": 2,
+        "hover_icon": "images/hero_power_pic/Tank.png",
+        "icon": "images/hero_power_icons/Tank.png",
         "active": [{
         "type": "StatBuff",
         "trigger_when": 6,
@@ -137,6 +153,8 @@
       "power" : {
         "kind": 2,
         "cost": 2,
+        "hover_icon": "images/hero_power_pic/Wealth.png",
+        "icon": "images/hero_power_icons/Wealth.png",
         "passive":{},
         "active": [{
         "type": "StatBuff",

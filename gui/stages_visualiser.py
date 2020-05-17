@@ -17,5 +17,6 @@ def redraw_shop(win, shop, pos, timer):
     shop.draw(win)
     for btn in shop.minion_btns:
         btn.update_hover(pos, win)
+    shop.hero.update_hover(pos, win)
     timer_display(timer, 665, 500, win, "shop")
     pygame.display.flip()

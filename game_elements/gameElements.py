@@ -414,8 +414,10 @@ class Player:
 
 
 class HeroPower:
-    def __init__(self, kind, active_effects, passive_effects, cost):
+    def __init__(self, kind, active_effects, passive_effects, cost, icon, hover_icon):
         self.kind = kind
         self.active_effects = active_effects
         self.passive_effects = passive_effects
         self.cost = cost
+        self.icon = icon
+        self.hover_icon = hover_icon
