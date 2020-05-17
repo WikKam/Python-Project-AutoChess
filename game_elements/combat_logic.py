@@ -38,6 +38,7 @@ def resolve_attack_turns(player1, player2):
                                                              player2.get_hero().current_hp else AttackTurn.attack_second
             player2.attack_turn = AttackTurn(player1.attack_turn * -1)
 
+
 class Combat:
     def __init__(self, current_player_minions, opponent_minions):
         self.current_player_minions = current_player_minions

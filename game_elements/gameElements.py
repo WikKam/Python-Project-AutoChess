@@ -277,7 +277,7 @@ class Hero:
         self.override_stats_from_passive()
         self.name = name
         self.current_tier = self.hero_stats.starting_tier
-        self.current_hp = self.hero_stats.start_hp
+        self.current_hp = 8    #self.hero_stats.start_hp
         self.is_dead = False
         self.minions = [None, None, None, None, None, None, None]
         self.hand = [None, None, None, None, None]

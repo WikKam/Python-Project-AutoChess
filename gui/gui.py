@@ -227,6 +227,7 @@ class CombatVisualiser:
             self.minions_buttons.append(mb)
         for mb in self.minions_buttons:
             mb.draw(screen)
+            pygame.display.flip()
 
 
 class HeroVisualiser:

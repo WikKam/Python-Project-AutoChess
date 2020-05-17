@@ -1,9 +1,9 @@
-from static_resources import game_over, clock
+from static_resources import clock
 import pygame
 
 
-def game_over_lost(screen):
-    screen.blit(game_over, (0, 0))
+def game_over(screen, background):
+    screen.blit(background, (0, 0))
     pygame.display.flip()
     running = True
     while running:

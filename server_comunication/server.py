@@ -3,6 +3,7 @@ from _thread import *
 from game_elements.gameElements import Player
 import pickle
 from game_elements.gameElements import PlayerState
+from game_elements.draft_pairs import check_and_draft
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
@@ -39,7 +40,7 @@ def threaded_client(conn, current_player):
 
             players[current_player] = data
             players_game = players
-
+            check_and_draft(players_game, combat_pair)
             if not data:
                 print("Disconnected")
                 break
