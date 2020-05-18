@@ -3,16 +3,17 @@ import random
 
 
 def check_and_draft(players, pairs):
-    count_deads = []
+    players_alive = []
     for player in players:
+        if player.status == PlayerState.after_combat:
+            players_alive.append(player.id)
         if player.status in (PlayerState.in_combat, PlayerState.in_shop, PlayerState.connected,
                              PlayerState.not_connected):
             return
-        if player.status == PlayerState.dead:
-            count_deads.append(player.id)
 
-    if len(count_deads) >= 2:
-        return #TODO
+    if len(players_alive) == 2:
+        pairs[players_alive[0]] = players_alive[1]
+        pairs[players_alive[1]] = players_alive[0]
     else:
         random_opponent = random.randint(1, 3)
         random_opponent = random.randint(1, 3) if random_opponent == pairs[0] else random_opponent
