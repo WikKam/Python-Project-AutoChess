@@ -2,7 +2,7 @@ import pygame
 from game_stages.recruitment_stage import recruitment
 from game_elements.gameElements import PlayerState
 from static_resources import waiting_background
-from static_resources import clock
+from static_resources import clock, heroes
 
 
 def waiting(current_player, network, screen):
@@ -14,6 +14,10 @@ def waiting(current_player, network, screen):
         players, opponent = network.send(current_player)
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
+                current_player.recruit_hero(heroes[0])
+                current_player.get_hero().current_hp = 0
+                current_player.status = PlayerState.dead
+                network.send(current_player)
                 running = False
         if players[3].status == PlayerState.connected:
             running = False

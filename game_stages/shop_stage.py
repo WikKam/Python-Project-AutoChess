@@ -7,13 +7,15 @@ from gui.stages_visualiser import redraw_shop
 from game_elements.combat_logic import Combat, check_if_players_have_minions, resolve_attack_turns
 from game_elements.gameElements import PlayerState, AttackTurn
 from game_stages.end_of_game_stage import game_over
+from gui.scoreboard import draw_scoreboard
 
 
 def shopping(current_player, network, screen):
-    # current_player.status = PlayerState.in_shop
+    players, opponent = network.send(current_player)
+    draw_scoreboard(players, current_player)
     start_time = pygame.time.get_ticks()
     shop = ShopVisualiser(current_player)
-    redraw_shop(screen, shop,[0,0],shop_time)
+    redraw_shop(screen, shop, [0, 0], shop_time)
     running = True
     while running:
         clock.tick(60)
@@ -22,6 +24,9 @@ def shopping(current_player, network, screen):
         for e in pygame.event.get():
             needs_update = False
             if e.type == pygame.QUIT:
+                current_player.get_hero().current_hp = 0
+                current_player.status = PlayerState.dead
+                network.send(current_player)
                 running = False
             if e.type == pygame.MOUSEBUTTONDOWN:
                 if shop.upgradeButton.onclick(pos, shop):
@@ -103,7 +108,9 @@ def combat(current_player, network, screen):
                         attack_time_enemy = pygame.time.get_ticks()
         for e in pygame.event.get():
                 if e.type == pygame.QUIT:
-                    # running = False player dead??? TODO
+                    current_player.get_hero().current_hp = 0
+                    current_player.status = PlayerState.dead
+                    network.send(current_player)
                     return
 
     print("My HP: ", current_player.hero.current_hp, current_player.hero.name)

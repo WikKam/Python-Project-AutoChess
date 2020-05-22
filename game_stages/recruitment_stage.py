@@ -24,6 +24,10 @@ def recruitment(current_player, network, screen):
         clock.tick(60)
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
+                current_player.recruit_hero(heroes[0])
+                current_player.get_hero().current_hp = 0
+                current_player.status = PlayerState.dead
+                network.send(current_player)
                 running = False
             if e.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
