@@ -2,7 +2,7 @@ import socket
 from _thread import *
 from game_elements.gameElements import Player
 import pickle
-from game_elements.gameElements import PlayerState
+from game_elements.game_enums import PlayerState
 from game_elements.draft_pairs import check_and_draft
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

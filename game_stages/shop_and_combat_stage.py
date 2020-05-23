@@ -6,7 +6,7 @@ from static_resources import clock, victory, lost, check_end_of_game
 from utilities.timer_helper import shop_time, combat_time, timer_display
 from gui.stages_visualiser import redraw_shop
 from game_elements.combat_logic import Combat, check_if_players_have_minions, resolve_attack_turns
-from game_elements.gameElements import PlayerState, AttackTurn
+from game_elements.game_enums import PlayerState, AttackTurn
 from game_stages.end_of_game_stage import game_over
 from gui.scoreboard import draw_scoreboard
 

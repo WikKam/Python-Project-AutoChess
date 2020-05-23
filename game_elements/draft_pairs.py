@@ -1,4 +1,4 @@
-from game_elements.gameElements import PlayerState
+from game_elements.game_enums import PlayerState
 import random
 
 

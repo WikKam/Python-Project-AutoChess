@@ -1,4 +1,4 @@
-from game_elements.gameElements import AttackTurn
+from game_elements.game_enums import AttackTurn
 
 
 def check_if_players_have_minions(current_player_minions, opponent_minions):
@@ -28,7 +28,6 @@ def resolve_attack_turns(player1, player2):
         player2.attack_turn = AttackTurn(player2.attack_turn * -1)
         player1.attack_turn = AttackTurn(player1.attack_turn * -1)
     else:
-        # player1.attack_turn = AttackTurn(player1.attack_turn * -1)
         if player1.get_hero().current_hp == player2.get_hero().current_hp:
             player1.attack_turn = AttackTurn.attack_first if player1.id < player2.id else \
                 AttackTurn.attack_second

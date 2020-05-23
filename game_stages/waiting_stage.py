@@ -1,6 +1,6 @@
 import pygame
 from game_stages.recruitment_stage import recruitment
-from game_elements.gameElements import PlayerState
+from game_elements.game_enums import PlayerState
 from static_resources import waiting_background
 from static_resources import clock, heroes
 

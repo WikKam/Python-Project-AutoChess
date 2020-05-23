@@ -5,7 +5,7 @@ from utilities.timer_helper import recruitment_time, timer_display
 import random
 from static_resources import clock
 from gui.stages_visualiser import recruitment_visualizer
-from game_elements.gameElements import PlayerState
+from game_elements.game_enums import PlayerState
 
 
 def recruitment(current_player, network, screen):

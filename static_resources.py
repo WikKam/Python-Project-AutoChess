@@ -22,6 +22,7 @@ def is_clicked(pos, x, y, width, height):
     y1 = pos[1]
     return x <= x1 <= (x + width) and y <= y1 <= (y + height)
 
+
 board = create_image_with_size("images/Background.png", 800, 600)
 waiting_background = create_image_with_size("images/waiting_background.png", 800, 600)
 recruitment_background = create_image_with_size("images/recruitment_backgound.png", 800, 600)

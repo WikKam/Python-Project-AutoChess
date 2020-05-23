@@ -1,5 +1,6 @@
 import json
 from game_elements.gameElements import *
+from game_elements.game_enums import *
 
 
 def get_effect_from_Json(effects):
