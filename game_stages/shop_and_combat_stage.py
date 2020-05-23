@@ -1,5 +1,6 @@
 import pygame
 import static_resources as sr
+from gui.combat_visualiser import *
 from gui.gui import *
 from static_resources import clock, victory, lost, check_end_of_game
 from utilities.timer_helper import shop_time, combat_time, timer_display
@@ -59,7 +60,7 @@ def combat(current_player, network, screen):
     combat = Combat(minions, minions_opponent)
     screen.blit(sr.board, (0, 0))
     pygame.display.flip()
-    combat_visualiser = CombatVisualiser(current_player, players[opponent])
+    combat_visualiser = CombatVisualiser(minions, minions_opponent)
     combat_visualiser.draw(screen)
     running = True
     attack_time = pygame.time.get_ticks()

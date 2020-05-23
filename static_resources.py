@@ -17,6 +17,11 @@ def check_end_of_game(players, current_player_id):
     return True
 
 
+def is_clicked(pos, x, y, width, height):
+    x1 = pos[0]
+    y1 = pos[1]
+    return x <= x1 <= (x + width) and y <= y1 <= (y + height)
+
 board = create_image_with_size("images/Background.png", 800, 600)
 waiting_background = create_image_with_size("images/waiting_background.png", 800, 600)
 recruitment_background = create_image_with_size("images/recruitment_backgound.png", 800, 600)

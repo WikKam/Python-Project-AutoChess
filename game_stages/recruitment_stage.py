@@ -1,6 +1,6 @@
 import pygame
 import static_resources as sr
-from game_stages.shop_stage import shopping
+from game_stages.shop_and_combat_stage import shopping
 from utilities.timer_helper import recruitment_time, timer_display
 import random
 from static_resources import clock

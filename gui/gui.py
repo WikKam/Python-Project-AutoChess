@@ -1,50 +1,13 @@
 import pygame
 from utilities.json_helper import *
-
-from static_resources import create_image_with_size
-
-
-def is_clicked(pos, x, y, width, height):
-    x1 = pos[0]
-    y1 = pos[1]
-    return x <= x1 <= (x + width) and y <= y1 <= (y + height)
+from gui.base_minion import Minion
+from static_resources import create_image_with_size, is_clicked
 
 
-class MinionButton:
+class MinionButton(Minion):
     def __init__(self, minion, player, x, y):
-        self.minion = minion
+        super(MinionButton, self).__init__(minion, x, y)
         self.player = player
-        self.x = x
-        self.y = y
-        self.width = 100
-        self.height = 120
-        self.icon = self.create_icon()
-        self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 22)
-        self.outline_font = pygame.font.Font('Fonts/Belwe Medium.otf', 24)
-        self.is_hovered = False
-        self.hover_x = self.calculate_hover_x()
-
-    def calculate_hover_x(self):
-        w, h = pygame.display.get_surface().get_size()
-        return self.x + self.width + 10 if self.x + self.width + 10 + 200 < w else self.x - 210
-
-    def draw(self, win):
-        win.blit(self.icon, (self.x, self.y))
-        win.blit(self.outline_font.render(str(self.minion.stats.attack), True, (0, 0, 0)),
-                 (self.x + 20, self.y - 2 + self.height / 1.5))
-        win.blit(self.outline_font.render(str(self.minion.stats.health), True,
-                                          (0, 0, 0)), (self.x + self.width - 30, self.y - 2 + self.height / 1.5))
-        win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)),
-                 (self.x + 20, self.y - 2 + self.height / 1.5))
-        win.blit(self.font.render(str(self.minion.stats.health), True,
-                                  (255, 255, 255)), (self.x + self.width - 30, self.y - 2 + self.height / 1.5))
-
-    def get_minion(self):
-        return self.minion
-
-    def create_icon(self):
-        result = pygame.image.load(self.minion.icon_path)
-        return pygame.transform.scale(result, (100, 120))
 
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
@@ -64,13 +27,8 @@ class MinionButton:
         else:
             return False
 
-    def update_hover(self, pos, screen):
-        if is_clicked(pos, self.x, self.y, self.width, self.height):
-            self.is_hovered = True
-            img = create_image_with_size(self.minion.card_path, 200, 300)
-            screen.blit(img, (self.hover_x, self.y - 50, 100, 100))
-        else:
-            self.is_hovered = False
+    def get_minion(self):
+        return self.minion
 
 
 class ShopVisualiser:
@@ -205,30 +163,6 @@ class RollMinionsButton:
                 shop.make_minion_buttons()
                 return True
         return False
-
-
-class CombatVisualiser:
-    def __init__(self, current_player, opponent):
-        self.current_player = current_player
-        self.opponent = opponent
-        self.minions_buttons = []
-
-    def draw(self, screen):
-        for i, m in enumerate(self.current_player.get_hero().get_minions()):
-            if m is None:
-                break
-            mb = MinionButton(m, self.current_player, 150 +
-                              80 * i, 340)
-            self.minions_buttons.append(mb)
-        for i, m in enumerate(self.opponent.get_hero().get_minions()):
-            if m is None:
-                break
-            mb = MinionButton(m, self.opponent, 150 +
-                              80 * i, 170)
-            self.minions_buttons.append(mb)
-        for mb in self.minions_buttons:
-            mb.draw(screen)
-            pygame.display.flip()
 
 
 class HeroVisualiser:
