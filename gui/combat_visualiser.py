@@ -15,7 +15,7 @@ class CombatVisualiser:
             mb = Minion(m, 150 + 80 * i + shift, 340)
             self.minions_buttons.append(mb)
         for i, m in enumerate(self.opponent_minions):
-            shift = 200 - (len(self.opponent_minions) * 50) if len(self.opponent_minions) > 1 else 200
+            shift = 200 - (len(self.opponent_minions) * 25) if len(self.opponent_minions) > 1 else 200
             mb = Minion(m, 150 + 80 * i + shift, 170)
             self.minions_buttons.append(mb)
         for mb in self.minions_buttons:

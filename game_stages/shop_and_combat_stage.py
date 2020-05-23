@@ -13,12 +13,14 @@ from gui.scoreboard import draw_scoreboard
 
 def shopping(current_player, network, screen):
     players, opponent = network.send(current_player)
-    draw_scoreboard(players, current_player)
     start_time = pygame.time.get_ticks()
     shop = ShopVisualiser(current_player)
-    redraw_shop(screen, shop, [0, 0], shop_time)
+    redraw_shop(screen, shop, [0, 0], shop_time, current_player, players)
     running = True
     while running:
+        if check_end_of_game(players, current_player.id):
+            game_over(screen, victory)
+            return
         clock.tick(60)
         timer = (shop_time - (pygame.time.get_ticks() - start_time) // 1000)
         pos = pygame.mouse.get_pos()
@@ -40,7 +42,8 @@ def shopping(current_player, network, screen):
                     if btn.onclick(pos, shop):
                         needs_update = True
                 network.send(current_player)
-        redraw_shop(screen, shop, pos, timer)
+        players, opponent = network.send(current_player)
+        redraw_shop(screen, shop, pos, timer, current_player, players)
         if not timer:
             shop.player.hero.on_turn_end()
             network.send(current_player)
@@ -62,6 +65,8 @@ def combat(current_player, network, screen):
     pygame.display.flip()
     combat_visualiser = CombatVisualiser(minions, minions_opponent)
     combat_visualiser.draw(screen)
+    draw_scoreboard(players, current_player, screen)
+    pygame.display.flip()
     running = True
     attack_time = pygame.time.get_ticks()
     attack_time_enemy = pygame.time.get_ticks()

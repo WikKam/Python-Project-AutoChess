@@ -5,6 +5,7 @@ from utilities.timer_helper import recruitment_time, timer_display
 import random
 from static_resources import clock
 from gui.stages_visualiser import recruitment_visualizer
+from game_elements.gameElements import PlayerState
 
 
 def recruitment(current_player, network, screen):
@@ -35,13 +36,13 @@ def recruitment(current_player, network, screen):
                     if is_clicked(pos, i):
                         recruitment_visualizer(screen, heroes_display, timer, i)
                         player_hero = heroes[i]
-        network.send(current_player)
         if timer == 0:
             if player_hero is None:
                 player_hero = heroes[0]
             current_player.recruit_hero(player_hero)
             network.send(current_player)
             running = False
+            pygame.time.delay(500)
             shopping(current_player, network, screen)
         pygame.display.flip()
 
