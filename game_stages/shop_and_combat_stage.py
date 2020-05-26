@@ -56,14 +56,12 @@ def combat(current_player, network, screen):
     current_player.status = PlayerState.in_combat
     players, opponent = network.send(current_player)
     resolve_attack_turns(current_player, players[opponent])
-
     minions = list(filter(None, copy.deepcopy(current_player.get_hero().get_minions())))
     minions_opponent = list(filter(None, copy.deepcopy(players[opponent].get_hero().get_minions())))
     can_play, status_code = check_if_players_have_minions(minions, minions_opponent)
     combat = Combat(minions, minions_opponent)
     screen.blit(sr.board, (0, 0))
-    pygame.display.flip()
-    combat_visualiser = CombatVisualiser(minions, minions_opponent)
+    combat_visualiser = CombatVisualiser(minions, minions_opponent, combat)
     combat_visualiser.draw(screen)
     draw_scoreboard(players, current_player, screen)
     pygame.display.flip()

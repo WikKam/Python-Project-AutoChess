@@ -38,6 +38,16 @@ def resolve_attack_turns(player1, player2):
             player2.attack_turn = AttackTurn(player1.attack_turn * -1)
 
 
+def pick_minion_pair(attacker_idx, attacker_minions, victim_minions):
+    if len(victim_minions) > attacker_idx and \
+            not victim_minions[attacker_idx].isDead:
+        return attacker_minions[attacker_idx], victim_minions[attacker_idx]
+    else:
+        for minion in victim_minions:
+            if not minion.isDead:
+                return attacker_minions[attacker_idx], minion
+
+
 class Combat:
     def __init__(self, current_player_minions, opponent_minions):
         self.current_player_minions = current_player_minions
@@ -46,31 +56,17 @@ class Combat:
         self.opponent_index = 0
 
     def current_player_attack(self):
-        if len(self.opponent_minions) > self.current_player_index and \
-                not self.opponent_minions[self.current_player_index].isDead:
-            perform_attack(self.current_player_minions[self.current_player_index],
-                           self.opponent_minions[self.current_player_index])
-            is_minion_dead(self.opponent_minions[self.current_player_index])
-        else:
-            for minion in self.opponent_minions:
-                if not minion.isDead:
-                    perform_attack(self.current_player_minions[self.current_player_index], minion)
-                    is_minion_dead(minion)
-                    break
+        attacker, victim = pick_minion_pair(self.current_player_index, self.current_player_minions,
+                                            self.opponent_minions)
+        perform_attack(attacker, victim)
+        is_minion_dead(victim)
         self.current_player_index = (self.current_player_index + 1) % len(self.current_player_minions)
 
     def opponent_attack(self):
-        if len(self.current_player_minions) > self.opponent_index and \
-                not self.current_player_minions[self.opponent_index].isDead:
-            perform_attack(self.opponent_minions[self.opponent_index],
-                           self.current_player_minions[self.opponent_index])
-            is_minion_dead(self.current_player_minions[self.opponent_index])
-        else:
-            for minion in self.current_player_minions:
-                if not minion.isDead:
-                    perform_attack(self.opponent_minions[self.opponent_index], minion)
-                    is_minion_dead(minion)
-                    break
+        attacker, victim = pick_minion_pair(self.opponent_index, self.opponent_minions,
+                                            self.current_player_minions)
+        perform_attack(attacker, victim)
+        is_minion_dead(victim)
         self.opponent_index = (self.opponent_index + 1) % len(self.opponent_minions)
 
     def check_if_all_minions_dead(self):

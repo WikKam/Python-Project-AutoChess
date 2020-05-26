@@ -1,10 +1,10 @@
 import pygame
 from utilities.json_helper import *
-from gui.base_minion import Minion
+from gui.base_minion import MinionVisualiser
 from static_resources import create_image_with_size, is_clicked
 
 
-class MinionButton(Minion):
+class MinionButton(MinionVisualiser):
     def __init__(self, minion, player, x, y):
         super(MinionButton, self).__init__(minion, x, y)
         self.player = player
