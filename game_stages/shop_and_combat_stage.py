@@ -59,7 +59,7 @@ def combat(current_player, network, screen):
     minions = list(filter(None, copy.deepcopy(current_player.get_hero().get_minions())))
     minions_opponent = list(filter(None, copy.deepcopy(players[opponent].get_hero().get_minions())))
     can_play, status_code = check_if_players_have_minions(minions, minions_opponent)
-    combat = Combat(minions, minions_opponent)
+    combat = Combat(minions, minions_opponent, current_player, players[opponent])
     screen.blit(sr.board, (0, 0))
     combat_visualiser = CombatVisualiser(minions, minions_opponent, combat)
     combat_visualiser.draw(screen)

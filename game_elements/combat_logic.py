@@ -49,11 +49,15 @@ def pick_minion_pair(attacker_idx, attacker_minions, victim_minions):
 
 
 class Combat:
-    def __init__(self, current_player_minions, opponent_minions):
+    def __init__(self, current_player_minions, opponent_minions, curr_player, opponent):
         self.current_player_minions = current_player_minions
         self.opponent_minions = opponent_minions
         self.current_player_index = 0
         self.opponent_index = 0
+        self.curr_player = curr_player
+        self.opponent = opponent
+        self.next_attack = self.curr_player if self.curr_player.attack_turn == AttackTurn.attack_first else self.opponent
+        resolve_attack_turns(self.curr_player, self.opponent)
 
     def current_player_attack(self):
         attacker, victim = pick_minion_pair(self.current_player_index, self.current_player_minions,
@@ -85,3 +89,12 @@ class Combat:
                 return True, cur_res
             else:
                 return True, -op_res
+
+    def get_opposing_player(self, player):
+        return self.curr_player if self.opponent == player else self.opponent
+
+    def get_next_pair(self):
+        attacker_idx = self.current_player_index if self.next_attack == self.curr_player else self.opponent_index
+        atacker_minions = self.current_player_minions if self.next_attack == self.curr_player else self.opponent_minions
+        victim_minions = self.opponent_minions if self.next_attack == self.curr_player else self.current_player_minions
+        return pick_minion_pair(attacker_idx, atacker_minions, victim_minions)

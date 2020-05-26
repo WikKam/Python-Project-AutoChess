@@ -188,6 +188,9 @@ class Minion:
     def check_effects(self, prev, curr, target):
         pass
 
+    def set_is_dead(self, val):
+        self.isDead = val
+
 
 def find_first_free_index(lt):
     ret = -1
