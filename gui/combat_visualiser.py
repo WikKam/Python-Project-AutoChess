@@ -23,14 +23,15 @@ class CombatVisualiser:
                 self.attacker_btn.set_target(self.victim_btn)
                 self.is_attack_in_progress = True
         for mb in self.minions_buttons:
-            if mb is self.attacker_btn:
-                if mb.has_already_hit and not self.is_attack_done:
-                    print('HAS ALREADY HIT')
-                    self.combat_manager.do_attack()
-                    self.is_attack_done = True
-                if mb.has_already_returned:
-                    self.is_attack_in_progress = False
-                    self.is_attack_done = False
+            if hasattr(self,"attacker_btn"):
+                if mb is self.attacker_btn:
+                    if mb.has_already_hit and not self.is_attack_done:
+                        print('HAS ALREADY HIT')
+                        self.combat_manager.do_attack()
+                        self.is_attack_done = True
+                    if mb.has_already_returned:
+                        self.is_attack_in_progress = False
+                        self.is_attack_done = False
             mb.draw(screen)
 
 

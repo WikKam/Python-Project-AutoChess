@@ -51,10 +51,13 @@ def shopping(current_player, network, screen):
             running = False
             combat(current_player, network, screen)
 
-def redraw_combat(win,combat_vis):
-        win.blit(sr.board, (0, 0))
-        combat_vis.draw(win)
-        pygame.display.flip()
+
+def redraw_combat(win, combat_vis):
+    win.blit(sr.board, (0, 0))
+    combat_vis.draw(win)
+    pygame.display.flip()
+
+
 def combat(current_player, network, screen):
     current_player.status = PlayerState.in_combat
     players, opponent = network.send(current_player)
@@ -65,7 +68,7 @@ def combat(current_player, network, screen):
     combat = Combat(minions, minions_opponent, current_player, players[opponent])
     screen.blit(sr.board, (0, 0))
     combat_visualiser = CombatVisualiser(minions, minions_opponent, combat)
-    combat_visualiser.draw(screen)
+    #    combat_visualiser.draw(screen)
     draw_scoreboard(players, current_player, screen)
     pygame.display.flip()
     running = True
@@ -83,6 +86,13 @@ def combat(current_player, network, screen):
     while running:
         clock.tick(60)
         players, opponent = network.send(current_player)
+        if current_player.status not in (PlayerState.after_combat, PlayerState.dead):
+            end_round, hp = combat.check_if_all_minions_dead()
+            if end_round and not combat_visualiser.is_attack_in_progress:
+                if hp < 0:
+                    current_player.get_hero().current_hp += hp
+                current_player.status = PlayerState.dead if current_player.get_hero().current_hp <= 0 else \
+                    PlayerState.after_combat
         if current_player.status in (PlayerState.after_combat, PlayerState.dead):
             all_players_finished_combat = True
             for player in players:
@@ -91,19 +101,12 @@ def combat(current_player, network, screen):
                     break
             if all_players_finished_combat:
                 running = False
-        else:
-            end_round, hp = combat.check_if_all_minions_dead()
-            if end_round and not combat_visualiser.is_attack_in_progress:
-                if hp < 0:
-                    current_player.get_hero().current_hp += hp
-                current_player.status = PlayerState.dead if current_player.get_hero().current_hp <= 0 else\
-                    PlayerState.after_combat
         for e in pygame.event.get():
-                if e.type == pygame.QUIT:
-                    current_player.get_hero().current_hp = 0
-                    current_player.status = PlayerState.dead
-                    network.send(current_player)
-                    return
+            if e.type == pygame.QUIT:
+                current_player.get_hero().current_hp = 0
+                current_player.status = PlayerState.dead
+                network.send(current_player)
+                return
         redraw_combat(screen, combat_visualiser)
     print("My HP: ", current_player.hero.current_hp, current_player.hero.name)
     if current_player.status == PlayerState.dead:

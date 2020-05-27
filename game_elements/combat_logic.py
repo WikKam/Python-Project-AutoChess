@@ -39,13 +39,14 @@ def resolve_attack_turns(player1, player2):
 
 
 def pick_minion_pair(attacker_idx, attacker_minions, victim_minions):
-    if len(victim_minions) > attacker_idx and \
-            not victim_minions[attacker_idx].isDead:
-        return attacker_minions[attacker_idx], victim_minions[attacker_idx]
-    else:
-        for minion in victim_minions:
-            if not minion.isDead:
-                return attacker_minions[attacker_idx], minion
+    if len(attacker_minions) > attacker_idx:
+        if len(victim_minions) > attacker_idx and \
+                not victim_minions[attacker_idx].isDead:
+            return attacker_minions[attacker_idx], victim_minions[attacker_idx]
+        else:
+            for minion in victim_minions:
+                if not minion.isDead:
+                    return attacker_minions[attacker_idx], minion
     return None, None
 
 
