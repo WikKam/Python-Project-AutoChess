@@ -14,9 +14,12 @@ class MinionVisualiser:
         self.outline_font = pygame.font.Font('Fonts/Belwe Medium.otf', 24)
         self.is_hovered = False
         self.hover_x = self.calculate_hover_x()
-        self.animation_speed = 50
+        self.animation_speed = 10
         self.current_x = self.x
+        self.is_attacking = False
         self.current_y = self.y
+        self.has_already_hit = False
+        self.has_already_returned = False
 
     def calculate_hover_x(self):
         w, h = pygame.display.get_surface().get_size()
@@ -35,32 +38,40 @@ class MinionVisualiser:
             self.is_hovered = False
 
     def draw(self, win):
+        self.animate_attack()
         win.blit(self.icon, (self.current_x, self.current_y))
         win.blit(self.outline_font.render(str(self.minion.stats.attack), True, (0, 0, 0)),
                  (self.current_x + 20, self.current_y - 2 + self.height / 1.5))
         win.blit(self.outline_font.render(str(self.minion.stats.health), True,
-                                          (0, 0, 0)), (self.current_x + self.width - 30, self.y - 2 + self.height / 1.5))
+                                          (0, 0, 0)), (self.current_x + self.width - 30, self.current_y - 2 + self.height / 1.5))
         win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)),
                  (self.current_x + 20, self.current_y - 2 + self.height / 1.5))
         win.blit(self.font.render(str(self.minion.stats.health), True,
-                                  (255, 255, 255)), (self.current_x + self.width - 30, self.y - 2 + self.height / 1.5))
+                                  (255, 255, 255)), (self.current_x + self.width - 30, self.current_y - 2 + self.height / 1.5))
     def set_target(self, target):
         self.target = target
+        self.is_attacking = True
         self.dx = (self.target.x - self.x)/self.animation_speed
         self.dy = (self.target.y - self.y)/self.animation_speed
         self.has_already_hit = False
         self.has_already_returned = False
 
     def animate_attack(self):
-        if not self.has_already_hit:
-            self.current_x += self.dx
-            self.current_y += self.dy
-            if self.current_x == self.target.x and self.current_y == self.target.y:
-                self.has_already_hit = True
-        else:
-            if self.current_x != self.x and self.current_y != self.y:
-                self.current_x -= self.dx
-                self.current_y -= self.dy
+        if self.is_attacking:
+            print("attacking...")
+            if not self.has_already_hit:
+                self.current_x += self.dx
+                self.current_y += self.dy
+                if abs(self.current_x - self.target.x) < abs(self.dx*5)\
+                        or abs(self.current_y - self.target.y) < abs(self.dy*5):
+                    self.has_already_hit = True
             else:
-                self.has_already_returned = True
+                if self.current_y != self.y or self.current_x != self.x:
+                    self.current_x -= self.dx
+                    self.current_y -= self.dy
+                else:
+                    self.has_already_returned = True
+                    self.is_attacking = False
+                    self.has_already_hit = False
+                    print("FINISHED ATTACK")
 

@@ -46,6 +46,7 @@ def pick_minion_pair(attacker_idx, attacker_minions, victim_minions):
         for minion in victim_minions:
             if not minion.isDead:
                 return attacker_minions[attacker_idx], minion
+    return None, None
 
 
 class Combat:
@@ -62,6 +63,7 @@ class Combat:
     def current_player_attack(self):
         attacker, victim = pick_minion_pair(self.current_player_index, self.current_player_minions,
                                             self.opponent_minions)
+        if victim is None or attacker is None: return
         perform_attack(attacker, victim)
         is_minion_dead(victim)
         self.current_player_index = (self.current_player_index + 1) % len(self.current_player_minions)
@@ -69,6 +71,7 @@ class Combat:
     def opponent_attack(self):
         attacker, victim = pick_minion_pair(self.opponent_index, self.opponent_minions,
                                             self.current_player_minions)
+        if victim is None or attacker is None: return
         perform_attack(attacker, victim)
         is_minion_dead(victim)
         self.opponent_index = (self.opponent_index + 1) % len(self.opponent_minions)
@@ -97,4 +100,11 @@ class Combat:
         attacker_idx = self.current_player_index if self.next_attack == self.curr_player else self.opponent_index
         atacker_minions = self.current_player_minions if self.next_attack == self.curr_player else self.opponent_minions
         victim_minions = self.opponent_minions if self.next_attack == self.curr_player else self.current_player_minions
-        return pick_minion_pair(attacker_idx, atacker_minions, victim_minions)
+        ret1, ret2 = pick_minion_pair(attacker_idx, atacker_minions, victim_minions)
+        return ret1, ret2
+
+    def do_attack(self):
+        if self.curr_player == self.next_attack:
+            self.current_player_attack()
+        else: self.opponent_attack()
+        self.next_attack = self.get_opposing_player(self.next_attack)
