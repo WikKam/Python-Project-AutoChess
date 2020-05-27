@@ -158,7 +158,7 @@ class Minion:
         self.state = state
         self.stats = stats
         self.combat_stats = copy.deepcopy(stats)
-        self.isDead = False
+        self.is_dead = False
         self.name = name
         self.icon_path = icon_path
         self.card_path = card_path
@@ -167,10 +167,10 @@ class Minion:
         self.stats.update_stats_after_attack(target.combat_stats)
         target.stats.update_stats_after_attack(self.combat_stats)
         if self.combat_stats.health <= 0:
-            self.isDead = True
+            self.is_dead = True
             self.check_effects(State.in_play, State.dead, self)
         if target.combat_stats.health <= 0:
-            target.isDead = True
+            target.is_dead = True
             target.check_effects(State.in_play, State.dead, self)
 
     def set_position(self, position):
@@ -189,7 +189,7 @@ class Minion:
         pass
 
     def set_is_dead(self, val):
-        self.isDead = val
+        self.is_dead = val
 
 
 def find_first_free_index(lt):
