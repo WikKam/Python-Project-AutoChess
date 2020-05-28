@@ -107,17 +107,17 @@ class UpgradeTavernButton:
         self.hero = hero
         self.x = 495
         self.y = 50
-        self.width = 120
-        self.height = 150
+        self.width = 50
+        self.height = 100
         self.isEnabled = True
         self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 25)
-        self.img = create_image_with_size("images/Buttons/tier_up.png", 50, 100)
+        self.img = create_image_with_size("images/Buttons/tier_up.png", self.width, self.height)
 
     def draw(self, screen):
         color = (0, 0, 200) if self.isEnabled and self.hero.can_upgrade_tier() else (220, 220, 220)
         screen.blit(self.img, (self.x, self.y))
         screen.blit(self.font.render(str(self.hero.current_upgrade_cost), True, color),
-                    (self.x + self.width / 7, self.y))
+                    (self.x + self.width / 7 + 10, self.y))
 
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
@@ -133,8 +133,8 @@ class RollMinionsButton:
         self.hero = hero
         self.x = 420
         self.y = 50
-        self.width = 50
-        self.height = 50
+        self.width = 83
+        self.height = 106
         self.font = pygame.font.Font('Fonts/Belwe Medium.otf', 25)
 
     def get_random_minions(self, all_minions):
@@ -149,11 +149,11 @@ class RollMinionsButton:
 
     def draw(self, screen):
         color = (100, 100, 100) if self.hero.can_reroll_tavern() else (220, 220, 220)
-        img = pygame.image.load("images/Buttons/roll.png")
+        img = create_image_with_size("images/Buttons/roll.png",self.width, self.height)
         # pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
         screen.blit(img, (self.x, self.y))
         screen.blit(self.font.render(str(self.hero.reroll_cost), True, color),
-                    (self.x + self.width / 2 + 8, self.y))
+                    (self.x + self.width / 2 - 5, self.y))
 
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):

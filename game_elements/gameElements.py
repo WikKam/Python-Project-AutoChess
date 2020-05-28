@@ -37,7 +37,6 @@ class StatBuffEffect(Effect):
     def trigger_effect(self, caster, targets):
         if targets is None: return
         for target in targets:
-            print("efect from: " + caster.name)
             target.stats.update_health(self.health)
             target.stats.update_attack(self.attack)
 
@@ -204,7 +203,7 @@ def find_first_free_index(lt):
 
 class HeroStats:
 
-    def __init__(self, max_minion_no=7, start_hp=30, starting_tier=1, max_gold=10, starting_gold=3):
+    def __init__(self, max_minion_no=7, start_hp=8, starting_tier=1, max_gold=10, starting_gold=3):
         self.max_minion_no = max_minion_no
         self.max_hand_no = 6
         self.start_hp = start_hp
@@ -224,7 +223,7 @@ class Hero:
         self.override_stats_from_passive()
         self.name = name
         self.current_tier = self.hero_stats.starting_tier
-        self.current_hp = 8    #self.hero_stats.start_hp
+        self.current_hp = self.hero_stats.start_hp
         self.is_dead = False
         self.minions = [None, None, None, None, None, None, None]
         self.hand = [None, None, None, None, None]

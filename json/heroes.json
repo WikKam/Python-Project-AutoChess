@@ -11,10 +11,10 @@
         "active": [{
         "type": "StatBuff",
         "trigger_when": 6,
-        "kind": 4,
+        "kind": 1,
         "target_tribe": 6,
-        "health": 1,
-        "attack": 1
+        "health": 0,
+        "attack": 3
       }]
       },
       "image": "images/heroes_portraits/Akali.png"
@@ -22,15 +22,19 @@
     {
       "name": "darius",
       "power" : {
-        "kind": 1,
-        "cost": 0,
+        "kind": 2,
+        "cost": 2,
         "icon": "images/hero_power_icons/Blessing_of_protection.png",
         "hover_icon": "images/hero_power_pic/Blessing_of_protection.png",
-        "passive": {
-          "starting_tier": 4,
-          "starting_gold": 10
-        },
-        "active":[]
+        "passive": {},
+        "active":[{
+        "type": "StatBuff",
+        "trigger_when": 6,
+        "kind": 1,
+        "target_tribe": 6,
+        "health": 0,
+        "attack": 3
+      }]
       },
       "image": "images/heroes_portraits/Darius.png"
     },
@@ -65,9 +69,9 @@
         "type": "StatBuff",
         "trigger_when": 6,
         "kind": 4,
-        "target_tribe": 6,
-        "health": 1,
-        "attack": 1
+        "target_tribe": 1,
+        "health": 0,
+        "attack": 3
       }]
       },
       "image": "images/heroes_portraits/Katarina.png"
@@ -79,15 +83,10 @@
         "kind": 2,
         "hover_icon": "images/hero_power_pic/Highborn.png",
         "icon": "images/hero_power_icons/Highborn.png",
-        "passive":{},
-        "active": [{
-        "type": "StatBuff",
-        "trigger_when": 6,
-        "kind": 4,
-        "target_tribe": 6,
-        "health": 1,
-        "attack": 1
-      }]
+        "passive":{
+          "starting_tier": 1
+        },
+        "active": []
       },
       "image": "images/heroes_portraits/Kha Zix.png"
     },
@@ -103,9 +102,9 @@
         "type": "StatBuff",
         "trigger_when": 6,
         "kind": 4,
-        "target_tribe": 6,
-        "health": 1,
-        "attack": 1
+        "target_tribe": 4,
+        "health": 0,
+        "attack": 2
       }]
       },
       "image": "images/heroes_portraits/Lee Sin.png"
@@ -121,10 +120,10 @@
         "active": [{
         "type": "StatBuff",
         "trigger_when": 6,
-        "kind": 4,
-        "target_tribe": 6,
-        "health": 1,
-        "attack": 1
+        "kind": 1,
+        "target_tribe": 5,
+        "health": 2,
+        "attack": 2
       }]
       },
       "image": "images/heroes_portraits/Veigar.png"
@@ -132,38 +131,28 @@
     {
       "name": "vladimir",
       "power" : {
-        "passive":{},
-        "cost": 2,
-        "kind": 2,
+        "passive":{
+          "start_hp": 14
+        },
+        "cost": 0,
+        "kind": 1,
         "hover_icon": "images/hero_power_pic/Tank.png",
         "icon": "images/hero_power_icons/Tank.png",
-        "active": [{
-        "type": "StatBuff",
-        "trigger_when": 6,
-        "kind": 4,
-        "target_tribe": 6,
-        "health": 1,
-        "attack": 1
-      }]
+        "active": []
       },
       "image": "images/heroes_portraits/Vladimir.png"
     },
     {
       "name": "volibear",
       "power" : {
-        "kind": 2,
-        "cost": 2,
+        "kind": 1,
+        "cost": 0,
         "hover_icon": "images/hero_power_pic/Wealth.png",
         "icon": "images/hero_power_icons/Wealth.png",
-        "passive":{},
-        "active": [{
-        "type": "StatBuff",
-        "trigger_when": 6,
-        "kind": 4,
-        "target_tribe": 6,
-        "health": 1,
-        "attack": 1
-      }]
+        "passive": {
+          "starting_gold": 4
+        },
+        "active": []
       },
       "image": "images/heroes_portraits/Volibear.png"
     }
