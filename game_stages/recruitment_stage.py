@@ -1,6 +1,6 @@
 import pygame
 import static_resources as sr
-from game_stages.shop_and_combat_stage import shopping
+from game_stages.shop_and_combat_stage import shopping, create_image_with_size
 from utilities.timer_helper import recruitment_time, timer_display
 import random
 from static_resources import clock
@@ -17,7 +17,7 @@ def recruitment(current_player, network, screen):
             heroes.append(insert)
     heroes_display = [sr.create_image_with_size(heroes[i].icon, 150, 250) for i in range(0, 3)]
     start_time = pygame.time.get_ticks()
-    recruitment_visualizer(screen, heroes_display, (recruitment_time - (pygame.time.get_ticks()-start_time)//1000))
+    recruitment_visualizer(screen, heroes_display, (recruitment_time - (pygame.time.get_ticks() - start_time) // 1000))
     running = True
     while running:
         timer = (recruitment_time - (pygame.time.get_ticks() - start_time) // 1000)
@@ -30,12 +30,20 @@ def recruitment(current_player, network, screen):
                 current_player.status = PlayerState.dead
                 network.send(current_player)
                 running = False
-            if e.type == pygame.MOUSEBUTTONDOWN:
+            if e.type == pygame.MOUSEBUTTONDOWN or pygame.MOUSEMOTION:
                 pos = pygame.mouse.get_pos()
                 for i in range(len(heroes)):
                     if is_clicked(pos, i):
-                        recruitment_visualizer(screen, heroes_display, timer, i)
-                        player_hero = heroes[i]
+                        if e.type == pygame.MOUSEBUTTONDOWN:
+                            recruitment_visualizer(screen, heroes_display, timer, i)
+                            player_hero = heroes[i]
+                            break
+                        elif e.type == pygame.MOUSEMOTION:
+                            show_hero_power(heroes, i, screen)
+                            break
+                    else:
+                        recruitment_visualizer(screen, heroes_display, timer)
+
         if timer == 0:
             if player_hero is None:
                 player_hero = heroes[0]
@@ -45,6 +53,11 @@ def recruitment(current_player, network, screen):
             pygame.time.delay(500)
             shopping(current_player, network, screen)
         pygame.display.flip()
+
+
+def show_hero_power(heroes, index, screen):
+    img = create_image_with_size(heroes[index].hero_power.hover_icon, 200, 300)
+    screen.blit(img, (160 + index * 175 + 100, 120))
 
 
 def is_clicked(pos, hero_nr):

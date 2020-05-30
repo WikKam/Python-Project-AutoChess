@@ -4,6 +4,8 @@ from utilities.timer_helper import timer_display
 from gui.scoreboard import draw_scoreboard
 
 
+
+
 def recruitment_visualizer(screen, heroes, time, active=None):
     screen.blit(sr.recruitment_background, (0, 0))
     timer_display(time, 350, 400, screen, "recruitment")
