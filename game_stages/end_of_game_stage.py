@@ -1,3 +1,5 @@
+import sys
+
 from static_resources import clock
 import pygame
 
@@ -11,3 +13,4 @@ def game_over(screen, background):
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 running = False
+                sys.exit()

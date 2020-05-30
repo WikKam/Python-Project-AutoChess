@@ -18,7 +18,8 @@ def waiting(current_player, network, screen):
                 current_player.get_hero().current_hp = 0
                 current_player.status = PlayerState.dead
                 network.send(current_player)
-                running = False
+                return True
         if players[3].status == PlayerState.connected:
             running = False
-            recruitment(current_player, network, screen)
+            return False
+            #recruitment(current_player, network, screen)

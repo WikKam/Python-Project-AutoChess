@@ -29,7 +29,7 @@ def recruitment(current_player, network, screen):
                 current_player.get_hero().current_hp = 0
                 current_player.status = PlayerState.dead
                 network.send(current_player)
-                running = False
+                return True
             if e.type == pygame.MOUSEBUTTONDOWN or pygame.MOUSEMOTION:
                 pos = pygame.mouse.get_pos()
                 for i in range(len(heroes)):
@@ -51,7 +51,8 @@ def recruitment(current_player, network, screen):
             network.send(current_player)
             running = False
             pygame.time.delay(500)
-            shopping(current_player, network, screen)
+            return False
+            #shopping(current_player, network, screen)
         pygame.display.flip()
 
 

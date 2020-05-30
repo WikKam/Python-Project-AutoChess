@@ -20,7 +20,7 @@ def shopping(current_player, network, screen):
     while running:
         if check_end_of_game(players, current_player.id):
             game_over(screen, victory)
-            return
+            return False
         clock.tick(60)
         timer = (shop_time - (pygame.time.get_ticks() - start_time) // 1000)
         pos = pygame.mouse.get_pos()
@@ -30,6 +30,7 @@ def shopping(current_player, network, screen):
                 current_player.status = PlayerState.dead
                 network.send(current_player)
                 running = False
+                return True
             if e.type == pygame.MOUSEBUTTONDOWN:
                 shop.upgradeButton.onclick(pos, shop)
                 shop.roll.onclick(pos, shop)
@@ -44,7 +45,8 @@ def shopping(current_player, network, screen):
             network.send(current_player)
             #pygame.time.delay(2500)
             running = False
-            combat(current_player, network, screen)
+            return False
+            #combat(current_player, network, screen)
 
 
 def redraw_combat(win, combat_vis):
@@ -101,7 +103,7 @@ def combat(current_player, network, screen):
                 current_player.get_hero().current_hp = 0
                 current_player.status = PlayerState.dead
                 network.send(current_player)
-                return
+                return True
         redraw_combat(screen, combat_visualiser)
     print("My HP: ", current_player.hero.current_hp, current_player.hero.name)
     if current_player.status == PlayerState.dead:
@@ -111,4 +113,5 @@ def combat(current_player, network, screen):
     else:
         current_player.hero.on_new_turn()
         network.send(current_player)
-        shopping(current_player, network, screen)
+        return False
+        #shopping(current_player, network, screen)
