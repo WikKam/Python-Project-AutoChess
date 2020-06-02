@@ -11,7 +11,7 @@
 
 First off all choose your hero with his own superpower and prepare for first battle.
 
-![](begining.gif)
+![](start.gif)
 
 Then after each round extend your army or upgrade your future soldiers.
 
