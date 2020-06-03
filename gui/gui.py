@@ -9,6 +9,16 @@ class MinionButton(MinionVisualiser):
         super(MinionButton, self).__init__(minion, x, y)
         self.player = player
 
+    def draw(self, win):
+        offset = 2
+        if self.minion.state == State.in_shop and MinionVisualiser.hovered_minion is self:
+            bg_path = "images/Buttons/minion_active.png" if self.player.hero.can_buy_minion() else \
+                "images/Buttons/minion_inactive.png"
+            bg = create_image_with_size(bg_path, self.width + offset, self.height + offset)
+            win.blit(bg, (self.x - offset, self.y - offset))
+        super(MinionButton, self).draw(win)
+
+
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
             MinionVisualiser.hovered_minion = None
@@ -79,7 +89,7 @@ class ShopVisualiser:
 
         for m in self.player.hero.hand:
             if not (m is None):
-                mb = MinionButton(m, self.player, m.position * spacing / 2 + offset / 5, 450)
+                mb = MinionButton(m, self.player, m.position * spacing / 1.5 + offset / 5, 450)
                 minion_btns.append(mb)
         self.minion_btns = minion_btns
 
@@ -112,7 +122,7 @@ class UpgradeTavernButton:
 
     def __init__(self, hero):
         self.hero = hero
-        self.x = 495
+        self.x = 510
         self.y = 50
         self.width = 50
         self.height = 100
@@ -121,7 +131,12 @@ class UpgradeTavernButton:
         self.img = create_image_with_size("images/Buttons/tier_up.png", self.width, self.height)
 
     def draw(self, screen):
-        color = (0, 0, 200) if self.isEnabled and self.hero.can_upgrade_tier() else (220, 220, 220)
+        offset = 4
+        color = (255, 255, 255) if self.isEnabled and self.hero.can_upgrade_tier() else (220, 220, 220)
+        bg_path = "images/Buttons/tier_up_active.png" if self.hero.can_upgrade_tier() else\
+            "images/Buttons/tier_up_inactive.png"
+        bg = create_image_with_size(bg_path, self.width + offset, self.height + offset)
+        screen.blit(bg, (self.x - offset/2, self.y - offset/2))
         screen.blit(self.img, (self.x, self.y))
         screen.blit(self.font.render(str(self.hero.current_upgrade_cost), True, color),
                     (self.x + self.width / 7 + 10, self.y))
@@ -155,9 +170,14 @@ class RollMinionsButton:
         return ret
 
     def draw(self, screen):
-        color = (100, 100, 100) if self.hero.can_reroll_tavern() else (220, 220, 220)
+        color = (255, 255, 255)
+        offset = 4
+        bg_path = "images/Buttons/roll_active.png" if self.hero.can_reroll_tavern() else\
+            "images/Buttons/roll_inactive.png"
+        bg = create_image_with_size(bg_path,self.width + offset, self.height + offset)
         img = create_image_with_size("images/Buttons/roll.png", self.width, self.height)
         # pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
+        screen.blit(bg, (self.x - offset/2, self.y - offset/2))
         screen.blit(img, (self.x, self.y))
         screen.blit(self.font.render(str(self.hero.reroll_cost), True, color),
                     (self.x + self.width / 2 - 5, self.y))
@@ -190,8 +210,13 @@ class HeroVisualiser:
         self.blood_img = create_image_with_size('images/hp.png', 30, 30)
 
     def draw(self, screen):
-        color = (255, 255, 255) if self.is_hero_power_enabled and self.hero.can_use_hero_power() else (0, 0, 0)
+        offset = 6
+        color = (255, 255, 255)
         screen.blit(self.hero_icon, (self.x, self.y))
+        bg_path = "images/hero_power_icons/hero_power_active.png" if self.hero.can_use_hero_power() else \
+            "images/hero_power_icons/hero_power_inactive.png"
+        bg = create_image_with_size(bg_path, 100 + offset, 100 + offset)
+        screen.blit(bg,  (self.x + self.width - offset/2, 450 - offset/2))
         screen.blit(self.hero_power_icon, (self.x + self.width, 450))
         screen.blit(self.outline_font.render(str(self.hero.hero_power.cost), True, (0, 0, 0)),
                     (self.x + self.width + 100 / 2 - 5, self.y + 50))

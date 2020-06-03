@@ -18,7 +18,7 @@ class MinionVisualiser:
         self.outline_font = pygame.font.Font('Fonts/Belwe Medium.otf', 24)
         self.is_hovered = False
         self.hover_x = self.calculate_hover_x()
-        self.animation_speed = 10
+        self.animation_speed = 25
         self.current_x = self.x
         self.is_attacking = False
         self.current_y = self.y

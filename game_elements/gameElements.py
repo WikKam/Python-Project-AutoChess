@@ -344,6 +344,8 @@ class Hero:
     def can_use_hero_power(self):
         return self.current_gold > self.hero_power.cost
 
+    def can_buy_minion(self):
+        return self.current_gold >= 3
 
 class Player:
     def __init__(self, hero, id, attack_turn=AttackTurn.attack_second):
