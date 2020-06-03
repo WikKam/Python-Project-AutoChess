@@ -1,12 +1,12 @@
 import pygame
 from game_stages.recruitment_stage import recruitment
 from game_elements.game_enums import PlayerState
-from static_resources import waiting_background
+from static_resources import get_waiting_background
 from static_resources import clock, heroes
 
 
 def waiting(current_player, network, screen):
-    screen.blit(waiting_background, (0, 0))
+    screen.blit(get_waiting_background(), (0, 0))
     pygame.display.flip()
     running = True
     while running:

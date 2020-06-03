@@ -4,10 +4,16 @@ from game_elements.gameElements import PlayerState
 
 clock = pygame.time.Clock()
 
+images_cache = {}
+
 
 def create_image_with_size(path, x, y):
-    result = pygame.image.load(path)
-    return pygame.transform.scale(result, (x, y))
+    if path in images_cache:
+        return pygame.transform.scale(images_cache.get(path), (x, y))
+    else:
+        result = pygame.image.load(path).convert_alpha()
+        images_cache[path] = result
+        return pygame.transform.scale(result, (x, y))
 
 
 def check_end_of_game(players, current_player_id):
@@ -23,9 +29,24 @@ def is_clicked(pos, x, y, width, height):
     return x <= x1 <= (x + width) and y <= y1 <= (y + height)
 
 
-board = create_image_with_size("images/Background.png", 800, 600)
-waiting_background = create_image_with_size("images/waiting_background.png", 800, 600)
-recruitment_background = create_image_with_size("images/recruitment_backgound.png", 800, 600)
 heroes = get_heroes_from_Json()
-lost = create_image_with_size("images/game_over.JPG", 800, 600)
-victory = create_image_with_size("images/victory.png", 800, 600)
+
+
+def get_board():
+    return create_image_with_size("images/Background.png", 800, 600)
+
+
+def get_waiting_background():
+    return create_image_with_size("images/waiting_background.png", 800, 600)
+
+
+def get_recruitment_background():
+    return create_image_with_size("images/recruitment_backgound.png", 800, 600)
+
+
+def get_lost():
+    return create_image_with_size("images/game_over.JPG", 800, 600)
+
+
+def get_victory():
+    return create_image_with_size("images/victory.png", 800, 600)

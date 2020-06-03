@@ -19,6 +19,7 @@ def recruitment(current_player, network, screen):
     start_time = pygame.time.get_ticks()
     recruitment_visualizer(screen, heroes_display, (recruitment_time - (pygame.time.get_ticks() - start_time) // 1000))
     running = True
+    clicked_hero = None
     while running:
         timer = (recruitment_time - (pygame.time.get_ticks() - start_time) // 1000)
         timer_display(timer, 350, 400, screen, "recruitment")
@@ -35,14 +36,15 @@ def recruitment(current_player, network, screen):
                 for i in range(len(heroes)):
                     if is_clicked(pos, i):
                         if e.type == pygame.MOUSEBUTTONDOWN:
-                            recruitment_visualizer(screen, heroes_display, timer, i)
+                            clicked_hero = i
+                            recruitment_visualizer(screen, heroes_display, timer, clicked_hero)
                             player_hero = heroes[i]
                             break
                         elif e.type == pygame.MOUSEMOTION:
                             show_hero_power(heroes, i, screen)
                             break
                     else:
-                        recruitment_visualizer(screen, heroes_display, timer)
+                        recruitment_visualizer(screen, heroes_display, timer, clicked_hero)
 
         if timer == 0:
             if player_hero is None:

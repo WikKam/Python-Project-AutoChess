@@ -11,6 +11,7 @@ class MinionButton(MinionVisualiser):
 
     def onclick(self, pos, shop):
         if is_clicked(pos, self.x, self.y, self.width, self.height):
+            MinionVisualiser.hovered_minion = None
             if self.minion.get_state() == State.in_shop:  # buying
                 if self.player.get_hero().buy_minion(self.minion):
                     shop.remove_from_shop(self.get_minion())
@@ -56,23 +57,29 @@ class ShopVisualiser:
         self.roll.draw(screen)
         for mb in self.minion_btns:
             mb.draw(screen)
+        if MinionVisualiser.hovered_minion is not None:
+            offset = -200 if MinionVisualiser.hovered_minion.minion.state == State.in_hand else -50
+            screen.blit(MinionVisualiser.hovered_minion.hover_img,
+                        (MinionVisualiser.hovered_minion.hover_x,
+                         MinionVisualiser.hovered_minion.y + offset, 100, 100))
 
     def make_minion_buttons(self):
         offset = 25
+        spacing = 100
         minion_btns = []
         for m in self.minions_in_shop:
             if not (m is None):
-                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 150)
+                mb = MinionButton(m, self.player, m.position * spacing + offset, 150)
                 minion_btns.append(mb)
 
         for m in self.player.hero.minions:
             if not (m is None):
-                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 290)
+                mb = MinionButton(m, self.player, m.position * spacing + offset, 290)
                 minion_btns.append(mb)
 
         for m in self.player.hero.hand:
             if not (m is None):
-                mb = MinionButton(m, self.player, 2 * m.position * 50 + offset, 450)
+                mb = MinionButton(m, self.player, m.position * spacing / 2 + offset / 5, 450)
                 minion_btns.append(mb)
         self.minion_btns = minion_btns
 
@@ -149,7 +156,7 @@ class RollMinionsButton:
 
     def draw(self, screen):
         color = (100, 100, 100) if self.hero.can_reroll_tavern() else (220, 220, 220)
-        img = create_image_with_size("images/Buttons/roll.png",self.width, self.height)
+        img = create_image_with_size("images/Buttons/roll.png", self.width, self.height)
         # pygame.draw.rect(screen, color, (self.x, self.y, self.width, self.height))
         screen.blit(img, (self.x, self.y))
         screen.blit(self.font.render(str(self.hero.reroll_cost), True, color),
@@ -193,7 +200,8 @@ class HeroVisualiser:
         screen.blit(self.blood_img, (self.x, self.y + self.height / 1.6))
         screen.blit(self.outline_font.render(str(self.hero.current_hp), True, (0, 0, 0)),
                     (self.x + 7, self.y + self.height / 1.6))
-        screen.blit(self.font.render(str(self.hero.current_hp), True, (255,255,255)), (self.x + 7, self.y + self.height / 1.6))
+        screen.blit(self.font.render(str(self.hero.current_hp), True, (255, 255, 255)),
+                    (self.x + 7, self.y + self.height / 1.6))
 
     def onclick(self, pos):
         distance = ((pos[0] - (self.x + self.width + 45)) ** 2 + (pos[1] - (450 + round(self.height / 2))) ** 2) ** (

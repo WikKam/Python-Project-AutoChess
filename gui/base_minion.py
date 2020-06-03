@@ -1,8 +1,12 @@
 import pygame
+
+from game_elements.game_enums import State
 from static_resources import create_image_with_size, is_clicked
 
 
 class MinionVisualiser:
+    hovered_minion = None
+
     def __init__(self, minion, x, y):
         self.minion = minion
         self.x = x
@@ -20,6 +24,8 @@ class MinionVisualiser:
         self.current_y = self.y
         self.has_already_hit = False
         self.has_already_returned = False
+        self.hover_img = create_image_with_size(self.minion.card_path, 200, 300)
+        self.in_hand_img = create_image_with_size(self.minion.card_path, 150, 250)
 
     def calculate_hover_x(self):
         w, h = pygame.display.get_surface().get_size()
@@ -30,24 +36,30 @@ class MinionVisualiser:
         return pygame.transform.scale(result, (100, 120))
 
     def update_hover(self, pos, screen):
-        if is_clicked(pos, self.x, self.y, self.width, self.height):
-            self.is_hovered = True
-            img = create_image_with_size(self.minion.card_path, 200, 300)
-            screen.blit(img, (self.hover_x, self.y - 50, 100, 100))
-        else:
+        if not is_clicked(pos, self.x, self.y, self.width, self.height):
+            if MinionVisualiser.hovered_minion is self:
+                MinionVisualiser.hovered_minion = None
             self.is_hovered = False
+        else:
+            MinionVisualiser.hovered_minion = self
+            self.is_hovered = True
+
 
     def draw(self, win):
-        self.animate_attack()
-        win.blit(self.icon, (self.current_x, self.current_y))
-        win.blit(self.outline_font.render(str(self.minion.stats.attack), True, (0, 0, 0)),
-                 (self.current_x + 20, self.current_y - 2 + self.height / 1.5))
-        win.blit(self.outline_font.render(str(self.minion.stats.health), True,
-                                          (0, 0, 0)), (self.current_x + self.width - 30, self.current_y - 2 + self.height / 1.5))
-        win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)),
-                 (self.current_x + 20, self.current_y - 2 + self.height / 1.5))
-        win.blit(self.font.render(str(self.minion.stats.health), True,
-                                  (255, 255, 255)), (self.current_x + self.width - 30, self.current_y - 2 + self.height / 1.5))
+        if self.minion.state == State.in_hand:
+            win.blit(self.in_hand_img, (self.current_x, self.current_y))
+        else:
+            self.animate_attack()
+            win.blit(self.icon, (self.current_x, self.current_y))
+            win.blit(self.outline_font.render(str(self.minion.stats.attack), True, (0, 0, 0)),
+                     (self.current_x + 20, self.current_y - 2 + self.height / 1.5))
+            win.blit(self.outline_font.render(str(self.minion.stats.health), True,
+                                              (0, 0, 0)), (self.current_x + self.width - 30, self.current_y - 2 + self.height / 1.5))
+            win.blit(self.font.render(str(self.minion.stats.attack), True, (255, 255, 255)),
+                     (self.current_x + 20, self.current_y - 2 + self.height / 1.5))
+            win.blit(self.font.render(str(self.minion.stats.health), True,
+                                      (255, 255, 255)), (self.current_x + self.width - 30, self.current_y - 2 + self.height / 1.5))
+
     def set_target(self, target):
         self.target = target
         self.is_attacking = True
